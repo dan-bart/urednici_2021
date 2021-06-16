@@ -4,52 +4,230 @@
 library(statnipokladna)
 library(dplyr)
 library(stringr)
+library(tidyr)
+library(tibble)
 prev_dt<-readRDS("./data-interim/objemy_pocty_scraped_raw_2012_2018.rds")
 new_dt <- readRDS("./data-interim/sections.rds")
 
-
 #check from monitor
+validity_check_monitor <- function(y, typ_vydaju = "platy"){
+  if(!typ_vydaju %in% c("platy","oppp","platy_oppp")){
+    stop("Invalid typ_vydaju, please use one of these options: platy, oppp, platy_oppp")
+  }
 
-#for years 2015 and later
-finm_join_new<-sp_get_codelist("finmisto") %>% rename("finmisto" = "finmisto_id")
+  if(y > 2020 | y < 2013){
+    stop("Invalid year, years available range from 2013 to 2020")
+  }
 
-for (y in 2013:2014){
+
+  if(y %in% c(2013,2014)){
+    monitor_dt <-sp_get_table("budget-central-old", y)
+  } else{
+    monitor_dt <-sp_get_table("budget-central", y)
+  }
+
+  new_dt_colname <- case_when(typ_vydaju == "platy" ~ "prostredky_na_platy",
+                             typ_vydaju == "oppp" ~ "oppp",
+                             typ_vydaju == "platy_oppp" ~ "prostredky_na_platy_a_oppp")
+  polozka_vector <- case_when(typ_vydaju == "platy" ~ c("501"),
+                              typ_vydaju == "oppp" ~ c("502"),
+                              typ_vydaju == "platy_oppp" ~ c("501","502"))
+
   print(paste("Checking year:",y))
   #join the dataset on kap_num
-  monitor_dt <- sp_get_table("budget-central-old", y) %>%
+
+  monitor_dt <- monitor_dt %>%
     filter (ico != "00000000") %>%
     mutate(kapitola = as.numeric(str_sub(kapitola,2,4)))
 
   #check whether the wages (platy: 501x) for each kapitola match the new data
   KAPS <- new_dt %>% filter(name == "OSS", !is.na(kap_num)) %>% distinct(kap_num) %>% pull()
+  missing_KAPS <- data.frame(kap_num = numeric(0),kap_name = character(0))
   for (k in KAPS){
     if (!k %in% monitor_dt$kapitola){
-      print(k)
+      names <- paste(unique(new_dt[which(new_dt$kap_num == k),"kap_name"]), collapse = '-')
+      missing_KAPS[nrow(missing_KAPS)+1,] <- c(k,names)
       next
     }
-    subset_new <- new_dt %>% filter(name == "OSS",kap_num == k,rok == y) %>% select(typ_rozpoctu,prostredky_na_platy)
+    subset_new <- new_dt %>% filter(name == "OSS",kap_num == k,rok == y) %>% select(typ_rozpoctu,new_dt_colname)
 
     subset_monitor<-monitor_dt %>%
       filter(kapitola == k) %>%
-      filter(str_sub(polozka,1,3) %in% c("501")) %>%
+      filter(str_sub(polozka,1,3) %in% polozka_vector) %>%
       select(c(budget_adopted,budget_amended,budget_spending)) %>%
       colSums(na.rm = TRUE)
 
-    if(is.null(subset_monitor)){print(k)}
-    if(is.null(subset_new)){print(k)}
+    schv_new <- subset_new %>% filter(typ_rozpoctu == "SCHV") %>% select (new_dt_colname) %>% pull()
+    uprav_new <- subset_new %>% filter(typ_rozpoctu == "UPRAV") %>% select (new_dt_colname)%>% pull()
+    skut_new <- subset_new %>% filter(typ_rozpoctu == "SKUT") %>% select (new_dt_colname)%>% pull()
 
-    schv_new <- subset_new %>% filter(typ_rozpoctu == "SCHV") %>% select (prostredky_na_platy)
-    uprav_new <- subset_new %>% filter(typ_rozpoctu == "UPRAV") %>% select (prostredky_na_platy)
-    skut_new <- subset_new %>% filter(typ_rozpoctu == "SKUT") %>% select (prostredky_na_platy)
     if (subset_monitor["budget_adopted"] != schv_new){
-      print(paste("Year:", y, "Kapitola:", k, "Budget: SCHV","Monitor:",subset_monitor["budget_adopted"],"Export:",schv_new))
+      print(paste("Year:", y, "Kapitola:", k, "Budget: SCHV",
+                  "Monitor:",format(round(subset_monitor["budget_adopted"], 10), nsmall = 10),
+                  "Export:",format(round(schv_new, 10), nsmall = 10)))
     }
     if (subset_monitor["budget_amended"] != uprav_new){
-      print(paste("Year:", y, "Kapitola:", k, "Budget: UPRAV","Monitor:",subset_monitor["budget_amended"],"Export:",uprav_new))
+      print(paste("Year:", y, "Kapitola:", k, "Budget: UPRAV",
+                  "Monitor:",format(round(subset_monitor["budget_amended"], 10), nsmall = 10),
+                  "Export:",format(round(uprav_new, 10), nsmall = 10)))
     }
     if (subset_monitor["budget_spending"] != skut_new){
-      print(paste("Year:", y, "Kapitola:", k, "Budget: SKUT","Monitor:",subset_monitor["budget_spending"],"Export:",skut_new))
+      print(paste("Year:", y, "Kapitola:", k, "Budget: SKUT",
+                  "Monitor:",format(round(subset_monitor["budget_spending"], 10), nsmall = 10),
+                  "Export:",format(round(skut_new, 10), nsmall = 10)))
     }
+  }
+  if(nrow(missing_KAPS) == 0){
+    print("No missing kapitoly in monitor data")
+  } else{
+    print("Missing kapitoly in monitor data:")
+    print(missing_KAPS)
   }
 }
 
+
+
+
+for (y in 2013:2020){
+  validity_check_monitor(y,typ_vydaju = "oppp")
+}
+
+
+
+#check with previous data
+
+#first we check whether both dataframes have identical kap_nums
+prev_kaps<-prev_dt %>% distinct(kap_num) %>% pull() %>% as.numeric() %>% na.omit()
+new_kaps<-new_dt %>% distinct(kap_num) %>% pull() %>% as.numeric() %>% na.omit()
+setdiff(new_kaps,prev_kaps) #362 missing
+
+
+#now we reshape the new data from long format to wide (to match old data)
+dt_cost <- new_dt %>%
+  select(name,kap_name,kap_num,rok,typ_rozpoctu,prostredky_na_platy_a_oppp) %>%
+  reshape(timevar = "typ_rozpoctu",
+                              idvar = c("name","kap_num","kap_name","name","rok"), direction = "wide") %>%
+  mutate("indicator" = "cost") %>%
+  rename("rozp" = prostredky_na_platy_a_oppp.SCHV,
+         "upraveny" = prostredky_na_platy_a_oppp.UPRAV ,
+         "skutecnost" = prostredky_na_platy_a_oppp.SKUT,
+         "type" = name,
+         "year" = rok)
+
+dt_count <- new_dt %>%
+  select(name,kap_name,kap_num,rok,typ_rozpoctu,pocet_zamestnancu) %>%
+  reshape(timevar = "typ_rozpoctu",
+          idvar = c("name","kap_num","kap_name","name","rok"), direction = "wide") %>%
+  mutate("indicator" = "count")%>%
+  rename("rozp" = pocet_zamestnancu.SCHV,
+         "upraveny" = pocet_zamestnancu.UPRAV ,
+         "skutecnost" = pocet_zamestnancu.SKUT,
+         "type" = name,
+         "year" = rok)
+
+
+
+new_dt_reshaped <-rbind(dt_cost,dt_count) %>%
+  filter(year >= 2013, year <= 2018) %>%
+  as.tibble() %>%
+  filter(type != "ROPO") %>%
+  filter(kap_name %in% unique(prev_dt_match$kap_name))
+prev_dt_match<-prev_dt %>%
+  select(colnames(new_dt_reshaped)) %>%
+  filter(!is.na(as.numeric(kap_num))) %>%
+  mutate(kap_num = as.integer(kap_num),
+         year = as.integer(year)) %>%
+  mutate(type = case_when(
+    type == "ÚO" ~ "UO",
+    type %in% c("jedn. OSS státní správy","jedn. OSSstátní správy") ~ "OSS_SS",
+    type == "SOBCPO" ~ "SOBCPO",
+    type == "ST.SPRÁVA" ~ "SS",
+    type == "ostatní OSS" ~ "OOSS",
+    type == "OSS sum"~ "OSS",
+    type == "PO sum" ~ "PO",
+    type == "ROPO CELKEM" ~ "ROPO")) %>%
+  filter(!is.na(type)) %>%
+  filter(kap_name %in% unique(new_dt_reshaped$kap_name))
+
+head(prev_dt_match)
+head(new_dt_reshaped)
+unique(new_dt_reshaped$type)
+unique(prev_dt_match$type)
+unique(new_dt_reshaped$type)
+unique(prev_dt_match$type)
+
+
+new_dt_reshaped %>% select(type, kap_name,kap_num,year,indicator) %>% sapply(unique)
+prev_dt_match %>% select(type, kap_name,kap_num,year,indicator) %>% sapply(unique)
+
+
+
+all_equal(new_dt_reshaped,prev_dt_match)
+
+
+validity_check_prev <- function(y){
+
+  if(y > 2018 | y < 2013){
+    stop("Invalid year, years available range from 2013 to 2018")
+  }
+
+  print(paste("Checking year:",y, "Employee count"))
+
+  #check whether the wages (platy: 501x) for each kapitola match the new data
+  prev_kaps<-prev_dt %>% distinct(kap_num) %>% pull() %>% as.numeric() %>% na.omit()
+  KAPS<-new_dt %>% distinct(kap_num) %>% pull() %>% as.numeric() %>% na.omit()
+  missing_KAPS <- c()
+
+
+
+  for (k in KAPS){
+    if (!k %in% prev_kaps){
+      missing_KAPS <- append(missing_KAPS,k)
+      next
+    }
+
+
+    subset_monitor<-monitor_dt %>%
+      filter(kapitola == k) %>%
+      filter(str_sub(polozka,1,3) %in% polozka_vector) %>%
+      select(c(budget_adopted,budget_amended,budget_spending)) %>%
+      colSums(na.rm = TRUE)
+
+    schv_new <- subset_new %>% filter(typ_rozpoctu == "SCHV") %>% select (new_dt_colname) %>% pull()
+    uprav_new <- subset_new %>% filter(typ_rozpoctu == "UPRAV") %>% select (new_dt_colname)%>% pull()
+    skut_new <- subset_new %>% filter(typ_rozpoctu == "SKUT") %>% select (new_dt_colname)%>% pull()
+
+    if (subset_monitor["budget_adopted"] != schv_new){
+      print(paste("Year:", y, "Kapitola:", k, "Budget: SCHV",
+                  "Monitor:",format(round(subset_monitor["budget_adopted"], 10), nsmall = 10),
+                  "Export:",format(round(schv_new, 10), nsmall = 10)))
+    }
+    if (subset_monitor["budget_amended"] != uprav_new){
+      print(paste("Year:", y, "Kapitola:", k, "Budget: UPRAV",
+                  "Monitor:",format(round(subset_monitor["budget_amended"], 10), nsmall = 10),
+                  "Export:",format(round(uprav_new, 10), nsmall = 10)))
+    }
+    if (subset_monitor["budget_spending"] != skut_new){
+      print(paste("Year:", y, "Kapitola:", k, "Budget: SKUT",
+                  "Monitor:",format(round(subset_monitor["budget_spending"], 10), nsmall = 10),
+                  "Export:",format(round(skut_new, 10), nsmall = 10)))
+    }
+  }
+  if(length(missing_KAPS) == 0){
+    print("No missing kapitoly in monitor data")
+  } else{
+    print("Missing kapitoly in monitor data:")
+    print(missing_KAPS)
+  }
+}
+
+
+for (y in 2013:2020){
+  validity_check_monitor(y,typ_vydaju = "oppp")
+}
+
+
+
+test_df %>% filter(rok == 2015, kap_num == 335) %>% select(name,prostredky_na_platy_a_oppp.SCHV,prostredky_na_platy_a_oppp.UPRAV,prostredky_na_platy_a_oppp.SKUT)
+prev_dt %>% filter(year == 2015, kap_num == 335)
+new_dt %>% filter (rok == 2015, kap_num == 335)
