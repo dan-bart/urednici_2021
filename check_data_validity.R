@@ -86,8 +86,6 @@ validity_check_monitor <- function(y, typ_vydaju = "platy"){
 }
 
 
-
-
 for (y in 2013:2020){
   validity_check_monitor(y,typ_vydaju = "oppp")
 }
@@ -99,7 +97,7 @@ for (y in 2013:2020){
 #first we check whether both dataframes have identical kap_nums
 prev_kaps<-prev_dt %>% distinct(kap_num) %>% pull() %>% as.numeric() %>% na.omit()
 new_kaps<-new_dt %>% distinct(kap_num) %>% pull() %>% as.numeric() %>% na.omit()
-setdiff(new_kaps,prev_kaps) #362 missing
+setdiff(new_kaps,prev_kaps) #362 missing in the old data
 
 
 #now we reshape the new data from long format to wide (to match old data)
@@ -126,43 +124,52 @@ dt_count <- new_dt %>%
          "year" = rok)
 
 
-
+#now we standardize both datasets to make them comparable
 new_dt_reshaped <-rbind(dt_cost,dt_count) %>%
-  filter(year >= 2013, year <= 2018) %>%
-  as.tibble() %>%
-  filter(type != "ROPO") %>%
-  filter(kap_name %in% unique(prev_dt_match$kap_name))
+  filter(year >= 2013, year <= 2018) %>% #other years not included in previous data
+  as_tibble() %>%
+  filter(type != "ROPO") %>% #not in our the old dataset, but computable from OSS and PO
+  filter(kap_num %in% prev_kaps) #leave out the 362 - Narodni sportovni agentura
+
 prev_dt_match<-prev_dt %>%
   select(colnames(new_dt_reshaped)) %>%
   filter(!is.na(as.numeric(kap_num))) %>%
+  filter(type != "Příslušníci a vojáci") %>% #not in the main dataset
   mutate(kap_num = as.integer(kap_num),
          year = as.integer(year)) %>%
-  mutate(type = case_when(
+  mutate(type = case_when( #standardize types to those in new the dataframe
     type == "ÚO" ~ "UO",
     type %in% c("jedn. OSS státní správy","jedn. OSSstátní správy") ~ "OSS_SS",
     type == "SOBCPO" ~ "SOBCPO",
     type == "ST.SPRÁVA" ~ "SS",
     type == "ostatní OSS" ~ "OOSS",
     type == "OSS sum"~ "OSS",
-    type == "PO sum" ~ "PO",
-    type == "ROPO CELKEM" ~ "ROPO")) %>%
-  filter(!is.na(type)) %>%
-  filter(kap_name %in% unique(new_dt_reshaped$kap_name))
+    type == "PO sum" ~ "PO"))
+
+prev_dt %>% filter(!is.na(as.numeric(kap_num))) %>% distinct(type)
 
 head(prev_dt_match)
 head(new_dt_reshaped)
-unique(new_dt_reshaped$type)
-unique(prev_dt_match$type)
-unique(new_dt_reshaped$type)
-unique(prev_dt_match$type)
+
+new_dt_reshaped %>% select(type, kap_name,kap_num) %>% sapply(unique)
+prev_dt_match %>% select(type, kap_name,kap_num) %>% sapply(unique)
 
 
-new_dt_reshaped %>% select(type, kap_name,kap_num,year,indicator) %>% sapply(unique)
-prev_dt_match %>% select(type, kap_name,kap_num,year,indicator) %>% sapply(unique)
+#now we discover the differences
 
+diffs<-function(row,prev_df = prev_dt_match,ukazatel = "cost"){
+  corresponding<-prev_df %>%
+    filter(indicator == ukazatel) %>%
+    filter(kap_num == pull(row["kap_num"]),type == pull(row["type"]),year == pull(row["year"]))
+  if(corresponding["rozp"] != row["rozp"]){
+    print(corresponding["rozp"])
+    print(row["rozp"])
 
+  }
+}
 
-all_equal(new_dt_reshaped,prev_dt_match)
+diffs(new_dt_reshaped[1,],prev_dt_match,"cost")
+sapply(new_dt_reshaped,diffs)
 
 
 validity_check_prev <- function(y){
