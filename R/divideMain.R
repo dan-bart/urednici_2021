@@ -61,6 +61,7 @@ divide_sections <- function(df, sheet_name, section_names){
     res<- rbind(res, section)
   }
 
+
   #cleaning the data
   res <- res %>%
     separate(Rozpocet_a_rok, into = c("typ_rozpoctu", "rok"), sep = -4, remove = TRUE) %>%
@@ -74,7 +75,15 @@ divide_sections <- function(df, sheet_name, section_names){
       aux_names == "OOSS" ~ "OOSS",
       aux_names == "OSS (RO)"~ "OSS",
       aux_names == "PO" ~ "PO",
-      aux_names == "ROPO CELKEM" ~ "ROPO")) %>%
+      aux_names == "ROPO CELKEM" ~ "ROPO",
+      aux_names == "ZAMCI_5011_platy" ~ "ZAMCI_5011_platy",
+      aux_names == "VOJACI_5012" ~ "VOJACI_5012",
+      aux_names == "ST_ZAMCI_5013"~ "ST_ZAMCI_5013",
+      aux_names == "ST_ZASTUP_5014" ~ "ST_ZASTUP_5014",
+      aux_names == "UC_S_5022" ~ "UC_S_5022",
+      aux_names == "SOBCPO  JEDNOTLIVY" ~ "SOBCPO_JEDNOTL",
+      aux_names == "OSS SS - jednotl" ~ "OSS_SS_JEDNOTL",
+      )) %>%
     select(-"aux_names")
   res[num_names]<-sapply(res[num_names],as.numeric)
   res[int_names]<-sapply(res[int_names],as.integer)
@@ -83,6 +92,105 @@ divide_sections <- function(df, sheet_name, section_names){
   res$typ_rozpoctu[which(grepl("UPRAV",res$typ_rozpoctu))] <- "UPRAV"
   return(res)
 }
+
+
+# loads and clean the main sections of input data
+divide_jednotl <- function(df, sheet_name, section_names){
+  num_names<-c("prostredky_na_platy_a_oppp","oppp","prostredky_na_platy","prumerny_plat","schv_ke_schv","skut_k_rozp","skut_ke_skut")
+  int_names<-c("rok","kap_num","poradi_prumerneho_platu","pocet_zamestnancu")
+  res = data.frame()
+
+  #applying the fill function
+  aux<-df %>% select(1,2) %>% fill(1,2)
+  df[1:nrow(df)-1,c(1,2)]<-aux[(1:nrow(aux)-1),]
+
+  for (i in 4:ncol(df)){
+    #searching for the start of the next category
+    if(is.na(df[1,i]) || grepl("INDEX",df[1,i])) {next}
+    # last section, that has not been provided, we do not want it in the main dataframe
+    if(grepl("2021",df[1,i]) && grepl("UPRAV",df[1,i])) {break}
+    ncols = 1 # count the number of columns belonging to this section
+    for (j in i+1:ncol(df)){
+      if (is.na(df[1,j]) || grepl("INDEX",df[1,j]))
+      {
+        ncols = 1+ncols
+      }
+      else{ #next section beginning
+        break
+      }
+    }
+
+    upper_index = i+ncols-1
+
+    section <- df[6:nrow(df),c(1,2,3,i:upper_index)]
+    #there are three types of section: SKUTECNY ROZPOCET, SCHVALENY ROZPOCET, UPRAVENY ROZPOCET
+    #the sections end with index comparison to previous years, we treat each section differently
+    if(grepl("SKUT",df[1,i]) && ncol(section) == 12){
+      section<-section[,-12]
+      section<-add_column(section, NA, .after = 9)
+    }
+    else if(grepl("SCHV",df[1,i]) && ncol(section) == 11){
+      section<-add_column(section, NA, .after = 11)
+      section<-add_column(section, NA, .after = 12)
+    }
+    else if(grepl("UPRAV",df[1,i]) && ncol(section) == 9){
+      section<-add_column(section, NA, .after = 9)
+      section<-add_column(section, NA, .after = 10)
+      section<-add_column(section, NA, .after = 11)
+    }
+    #no other name or length expected
+    else{
+      print(ncol(section))
+      print(head(section))
+      print(sheet_name)
+      print(df[1,i])
+    }
+
+
+    #additional descriptive columns
+    section<-cbind(a = sheet_name, section)
+    section<-cbind(a = df[1,i], section)
+    #finally assign the colnames and merge with the main dataframe
+    print(dim(section))
+    print(head(section))
+    colnames(section) <- section_names
+    res<- rbind(res, section)
+  }
+
+
+  #cleaning the data
+  res <- res %>%
+    separate(Rozpocet_a_rok, into = c("typ_rozpoctu", "rok"), sep = -4, remove = TRUE) %>%
+    clean_names() %>%
+    mutate(aux_names = iconv(res$full_name,from="UTF-8",to="ASCII//TRANSLIT")) %>%
+    mutate(name = case_when(
+      aux_names == "UO" ~ "UO",
+      aux_names == "OSS SS" ~ "OSS_SS",
+      aux_names == "SOBCPO" ~ "SOBCPO",
+      aux_names == "STATNI SPRAVA" ~ "SS",
+      aux_names == "OOSS" ~ "OOSS",
+      aux_names == "OSS (RO)"~ "OSS",
+      aux_names == "PO" ~ "PO",
+      aux_names == "ROPO CELKEM" ~ "ROPO",
+      aux_names == "ZAMCI_5011_platy" ~ "ZAMCI_5011_platy",
+      aux_names == "VOJACI_5012" ~ "VOJACI_5012",
+      aux_names == "ST_ZAMCI_5013"~ "ST_ZAMCI_5013",
+      aux_names == "ST_ZASTUP_5014" ~ "ST_ZASTUP_5014",
+      aux_names == "UC_S_5022" ~ "UC_S_5022",
+      aux_names == "SOBCPO  JEDNOTLIVY" ~ "SOBCPO_JEDNOTL",
+      aux_names == "OSS SS - jednotl" ~ "OSS_SS_JEDNOTL",
+    )) %>%
+    select(-"aux_names")
+  res[num_names]<-sapply(res[num_names],as.numeric)
+  res[int_names]<-sapply(res[int_names],as.integer)
+  res$typ_rozpoctu[which(grepl("SKUT",res$typ_rozpoctu))] <- "SKUT"
+  res$typ_rozpoctu[which(grepl("SCHV",res$typ_rozpoctu))] <- "SCHV"
+  res$typ_rozpoctu[which(grepl("UPRAV",res$typ_rozpoctu))] <- "UPRAV"
+  return(res)
+}
+
+
+
 
 
 #slightly different procedure used for loading the SUMMARY data
