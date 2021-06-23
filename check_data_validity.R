@@ -9,6 +9,7 @@ library(tibble)
 
 prev_dt<-readRDS("./data-interim/objemy_pocty_scraped_raw_2012_2018.rds")
 new_dt <- readRDS("./data-interim/sections.rds")
+polozky_dt <- readRDS("./data-interim/organizace.rds")
 
 #check from monitor
 validity_check_monitor <- function(y, typ_vydaju = "platy"){

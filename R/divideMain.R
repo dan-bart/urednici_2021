@@ -94,7 +94,7 @@ divide_sections <- function(df, sheet_name, section_names){
 }
 
 
-# loads and clean the main sections of input data
+# loads and clean the sections of input data containing detailed granularity
 divide_jednotl <- function(df, sheet_name, section_names){
   num_names<-c("prostredky_na_platy_a_oppp","oppp","prostredky_na_platy","prumerny_plat","schv_ke_schv","skut_k_rozp","skut_ke_skut")
   int_names<-c("rok","kap_num","poradi_prumerneho_platu","pocet_zamestnancu")
@@ -121,38 +121,47 @@ divide_jednotl <- function(df, sheet_name, section_names){
     }
 
     upper_index = i+ncols-1
-
     section <- df[6:nrow(df),c(1,2,3,i:upper_index)]
     #there are three types of section: SKUTECNY ROZPOCET, SCHVALENY ROZPOCET, UPRAVENY ROZPOCET
     #the sections end with index comparison to previous years, we treat each section differently
+
     if(grepl("SKUT",df[1,i]) && ncol(section) == 12){
-      section<-section[,-12]
+      section<-section[,-12] #empty column
       section<-add_column(section, NA, .after = 9)
-    }
-    else if(grepl("SCHV",df[1,i]) && ncol(section) == 11){
-      section<-add_column(section, NA, .after = 11)
-      section<-add_column(section, NA, .after = 12)
-    }
-    else if(grepl("UPRAV",df[1,i]) && ncol(section) == 9){
+    } else if(grepl("SCHV",df[1,i])){
+      # OSS SS - jednotl: chybí index průměrného platu za schv.rozpočtem každého roku
+      if(sheet_name == "OSS SS - jednotl" && ncol(section) == 9){
+        section<-add_column(section, NA, .after = 9)
+        section<-add_column(section, NA, .after = 10)
+        section<-add_column(section, NA, .after = 11)
+      } else if(sheet_name == "SOBCPO  JEDNOTLIVY" && ncol(section) == 10) {
+        section<-add_column(section, NA, .after = 11)
+        section<-add_column(section, NA, .after = 12)
+      } else{
+        print(dim(section))
+        print(head(section))
+        print(sheet_name)
+        print(df[1,i])
+      }
+    } else if(grepl("UPRAV",df[1,i]) && ncol(section) == 9){
       section<-add_column(section, NA, .after = 9)
       section<-add_column(section, NA, .after = 10)
       section<-add_column(section, NA, .after = 11)
     }
     #no other name or length expected
     else{
-      print(ncol(section))
+      print(dim(section))
       print(head(section))
       print(sheet_name)
       print(df[1,i])
     }
 
-
     #additional descriptive columns
     section<-cbind(a = sheet_name, section)
     section<-cbind(a = df[1,i], section)
+
+
     #finally assign the colnames and merge with the main dataframe
-    print(dim(section))
-    print(head(section))
     colnames(section) <- section_names
     res<- rbind(res, section)
   }
