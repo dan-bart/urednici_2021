@@ -1,0 +1,9 @@
+1. infografika
+
+	Počty zaměstnanců - rozumné seskupení (zvlášť zaměření na učitele - placeni městem, takže je třeba je nějak vypočítat rozdílem MŠMT z sheetů samospráva-veřejný sektor), které složky jsou kde?
+	Platy absolutní - nic neříkající
+	Platy per capita -  lepší
+	Časové řady - nárust nějaké metriky o X - kde se ten pohyb stal, SKUT do 2020 (extension + SCHV 2021)
+	
+2. srovnání s ČSU
+	
