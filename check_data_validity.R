@@ -7,6 +7,7 @@ library(stringr)
 library(tidyr)
 library(tibble)
 
+
 prev_dt<-readRDS("./data-interim/objemy_pocty_scraped_raw_2012_2018.rds")
 new_dt <- readRDS("./data-interim/sections.rds")
 polozky_dt <- readRDS("./data-interim/organizace.rds")
@@ -246,3 +247,5 @@ print(counter)
 #0 data points from the old dataset are missing in the new dataset (done by switching the datasets in the function)
 
 
+
+tt<-monitor_dt <-sp_get_table("budget-central", 2017)

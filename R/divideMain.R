@@ -1,7 +1,23 @@
+
 # loads and clean the main sections of input data
 divide_sections <- function(df, sheet_name, section_names){
   num_names<-c("prostredky_na_platy_a_oppp","oppp","prostredky_na_platy","prumerny_plat","schv_ke_schv","skut_k_rozp","skut_ke_skut")
   int_names<-c("rok","kap_num","poradi_prumerneho_platu","pocet_zamestnancu")
+  kap_num<-c(301,302,303,304,306,307,308,309,312,313,314,315,317,321,322,327,328,329,333,334,335,336,343,344,345,346,348,349,
+             353,355,358,359,361,362,371,372,373,374,375,376,377,378,381)
+  full_kap_name<-c("kancelar_prezidenta","parlament","kancelar_senatu","urad_vlady","ministerstvo_zahranicnich_veci","ministerstvo_obrany",
+                   "narodni_bezpecnostni_urad","kancelar_verejneho_ochrance_prav","ministerstvo_financi","ministerstvo_prace_a_socialnich_veci",
+                   "ministerstvo_vnitra","ministerstvo_zivotniho_prostredi","ministerstvo_pro_mistni_rozvoj","grantova_agentura",
+                   "ministerstvo_prumyslu_a_obchodu","ministerstvo_dopravy","cesky_telekomunikacni_urad","ministerstvo_zemedelstvi",
+                   "ministerstvo_skolstvi_mladeze_a_telovychovy","ministerstvo_kultury","ministerstvo_zdravotnictvi","ministerstvo_spravedlnosti",
+                   "urad_pro_ochranu_osobnich_udaju","urad_prumysloveho_vlastnictvi","cesky_statisticky_urad","cesky_urad_zememericky_a_katastralni",
+                   "cesky_bansky_urad","energeticky_regulacni_urad","ministerstvo_pro_hospodarskou_soutez","ustav_pro_studium_totalitnich_rezimu",
+                   "ustavni_soud","urad_narodni_rozpoctove_rady","akademie_ved","narodni_sportovni_agentura",
+                   "urad_pro_dohled_nad_hospodarenim_politickych_stran_a_politickych_hnuti","rada_pro_rozhlasove_a_televizni_vysilani",
+                   "urad_pro_pristup_k_dopravni_infrastrukture","sprava_statnich_hmotnych_rezerv","statni_urad_pro_jadernou_bezpecnost",
+                   "generalni_inspekce_bezpecnostnich_sboru","technologicka_agentura_cr","narodni_urad_pro_kybernetickou_a_informacni_bezpecnost",
+                   "nejvyssi_kontrolni_urad")
+  names_df<-data.frame(kap_num,full_kap_name)
   res = data.frame()
 
   #leave out rows with unwanted commentary at the end of the data
@@ -82,9 +98,11 @@ divide_sections <- function(df, sheet_name, section_names){
       aux_names == "ST_ZASTUP_5014" ~ "ST_ZASTUP_5014",
       aux_names == "UC_S_5022" ~ "UC_S_5022",
       aux_names == "SOBCPO  JEDNOTLIVY" ~ "SOBCPO_JEDNOTL",
-      aux_names == "OSS SS - jednotl" ~ "OSS_SS_JEDNOTL",
-      )) %>%
-    select(-"aux_names")
+      aux_names == "OSS SS - jednotl" ~ "OSS_SS_JEDNOTL")) %>%
+    select(-c("aux_names","full_name")) %>%
+    mutate(kap_name = ifelse(str_detect(iconv(kap_name,from="UTF-8",to="ASCII//TRANSLIT"), "UDHPSH|UPDSH|UDHPS", negate = FALSE),"UDHPS",kap_name))%>%
+    mutate(kap_num = as.numeric(kap_num)) %>%
+    left_join(names_df,by="kap_num")
   res[num_names]<-sapply(res[num_names],as.numeric)
   res[int_names]<-sapply(res[int_names],as.integer)
   res$typ_rozpoctu[which(grepl("SKUT",res$typ_rozpoctu))] <- "SKUT"
@@ -189,7 +207,7 @@ divide_jednotl <- function(df, sheet_name, section_names){
       aux_names == "SOBCPO  JEDNOTLIVY" ~ "SOBCPO_JEDNOTL",
       aux_names == "OSS SS - jednotl" ~ "OSS_SS_JEDNOTL",
     )) %>%
-    select(-"aux_names")
+    select(-"aux_names","full_name")
   res[num_names]<-sapply(res[num_names],as.numeric)
   res[int_names]<-sapply(res[int_names],as.integer)
   res$typ_rozpoctu[which(grepl("SKUT",res$typ_rozpoctu))] <- "SKUT"
@@ -271,7 +289,7 @@ divide_summary <- function(df, sheet_name, section_names){
       aux_names == "Organizacni slozky statu (OSS)" ~ "OSS",
       aux_names == "Prispevkove organizace (PO)" ~ "PO",
       aux_names == "OSS A PO CELKEM" ~ "ROPO")) %>%
-    select(-"aux_names")
+    select(-"aux_names","full_name")
   res[num_names]<-sapply(res[num_names],as.numeric)
   res[int_names]<-sapply(res[int_names],as.integer)
   res$typ_rozpoctu[which(grepl("SKUT",res$typ_rozpoctu))] <- "SKUT"
