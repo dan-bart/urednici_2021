@@ -41,7 +41,9 @@ p<-plot_ly(bar_dt,x=~kap_name,y=~pocet_zamestnancu,color=~name,
          xaxis = list(title="Kapitoly",categoryorder = "array", categoryarray =arrange(abs_counts,pocet_zamestnancu)$kap_name),
          yaxis = list(title = "Počet zaměstnanců"),
          barmode="stack") %>%
-  layout(hovermode = 'compare')
+  layout(hovermode = 'compare')  %>% plotly_build()
+saveRDS(p,"data-output/bar_pocty_2020tz.html")
+
 saveWidget(as_widget(p), "data-output/bar_pocty_2020.html")
 
 
@@ -59,11 +61,6 @@ totals_abs<-dt %>%
   filter(!name %in% c("ROPO","SS","OSS")) %>%
   group_by(kap_name) %>%
   summarise(prostredky_na_platy = sum(prostredky_na_platy)) #%>% filter(pocet_zamestnancu<10000)
-
-bar_dt <- dt %>%
-  filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
-  filter(!is.na(as.numeric(kap_num))) %>%
-  filter(!name %in% c("ROPO","SS","OSS")) #%>% filter(!kap_num %in% abs_counts$kap_num)
 
 
 p<-plot_ly(bar_dt,x=~kap_name,y=~prostredky_na_platy,color=~name,
@@ -85,10 +82,6 @@ totals_mean<-dt %>%
   group_by(kap_name) %>%
   summarise(prumerny_plat = sum(prumerny_plat)) #%>% filter(pocet_zamestnancu<10000)
 
-bar_dt <- dt %>%
-  filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
-  filter(!is.na(as.numeric(kap_num))) %>%
-  filter(!name %in% c("ROPO","SS","OSS")) #%>% filter(!kap_num %in% abs_counts$kap_num)
 
 
 p<-plot_ly(bar_dt,x=~kap_name,y=~prumerny_plat,color=~name,
