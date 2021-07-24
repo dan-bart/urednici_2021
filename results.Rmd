@@ -10,13 +10,16 @@ library(dplyr)
 library(plotly)
 library(ggplot2)
 library(data.table)
+library(stringr)
+library(tidyr)
+options("scipen"=100, "digits"=8)
 dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r priprava, echo=FALSE}
+```{r priprava, echo=FALSE,warning = FALSE,message = FALSE}
 abs_metrics<-dt %>%
   filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
   filter(!is.na(as.numeric(kap_num))) %>%
@@ -32,7 +35,7 @@ bar_dt <- dt %>%
   filter(!name %in% c("ROPO","SS","OSS"))
 
 sum_all<- sum %>%
-  select(name,rok,typ_rozpoctu,prostredky_na_platy_a_oppp,pocet_zamestnancu) %>%
+  select(name,rok,typ_rozpoctu,prostredky_na_platy_a_oppp,pocet_zamestnancu, prumerny_plat) %>%
   reshape(timevar = "typ_rozpoctu",
           idvar = c("name","rok"), direction = "wide") %>%
   rename("schvaleny" = prostredky_na_platy_a_oppp.SCHV,
@@ -41,11 +44,14 @@ sum_all<- sum %>%
          "zam_schvaleny" = pocet_zamestnancu.SCHV,
          "zam_upraveny" = pocet_zamestnancu.UPRAV ,
          "zam_skutecnost" = pocet_zamestnancu.SKUT,
+         "plat_schvaleny" = prumerny_plat.SCHV,
+         "plat_upraveny" = prumerny_plat.UPRAV ,
+         "plat_skutecnost" = prumerny_plat.SKUT,
          "type" = name,
          "year" = rok) %>%
   mutate(rozdil_k_rozp = skutecnost - schvaleny,
          rozdil_ke_skut = schvaleny-skutecnost) %>%
-  group_by(type)%>%
+  group_by(type)%>% arrange(year) %>%
   mutate(plat_growth =  (skutecnost - dplyr::lag(skutecnost))/lag(skutecnost)*100,
          zam_growth =  (zam_skutecnost -  dplyr::lag(zam_skutecnost))/lag(zam_skutecnost)*100)
 
@@ -53,17 +59,216 @@ lty <- c(schvaleny = "dash", skutecnost = "solid")
 
 ```
 
-## Výsledky prvotní analýzy
+## Srovnání se studií 2014
+
+### Veřejný sektor a státní správa - kategorie podle celkového rozpočtu
+Velikosti podle celkových objemů z rozpočtu. Barevné schema je samozřejmě upravitelné.
+```{r initial, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+
+
+aux<-dt %>% filter(!is.na(kategorie_2014),typ_rozpoctu=="SKUT",kategorie_2014 != "Statni sprava", rok == 2020) %>% 
+  group_by(kategorie_2014) %>%summarise(sizes = sum(prostredky_na_platy_a_oppp)) %>% rename("labels" = kategorie_2014) %>%
+  mutate(parents = c("UO","SS","UO","OSS","","SS"))
+
+to_append <- data.frame(labels = c("UO","SS","OSS"),parents = c("SS","OSS",""),
+                        sizes = c(aux$sizes[aux$labels == "Ministerstva"] + 
+                                    aux$sizes[aux$labels == "Ostatni ustredni"],
+                                  aux$sizes[aux$labels == "Ministerstva"] + 
+                                    aux$sizes[aux$labels == "Ostatni ustredni"] + 
+                                    aux$sizes[aux$labels == "Sbory"] + 
+                                    aux$sizes[aux$labels == "Neustredni st. sprava"],
+                                  aux$sizes[aux$labels == "Ministerstva"] + 
+                                    aux$sizes[aux$labels == "Ostatni ustredni"] + 
+                                    aux$sizes[aux$labels == "Sbory"] + 
+                                    aux$sizes[aux$labels == "Neustredni st. sprava"] + 
+                                    aux$sizes[aux$labels == "Ostatní vc. armady"]))
+final<-rbind(aux,to_append)
+final %>% plot_ly(
+  type='treemap',
+  branchvalues="total",
+  labels=final$labels,
+  parents=final$parents,
+  marker=list(colorscale='Blackbody'),
+  values = final$sizes,
+  hovertemplate = ~paste("<extra></extra>"," Kategorie: ", labels,"<br>", " Rozpocet:", format(sizes, big.mark = ' ')),
+  domain=list(column=0)) 
+#fig %>% layout(treemapcolorway=c("pink","lighblue"))
+```
+
+
+### Vývoj počtu zaměstnanců v tisících
+Tady je jako první vidět, jak v nových datech jsou mnohem větší objemy. Budu muset provést analýzu let, ve který se data překrývají (2011,2012,2013) a odhalit, co se nezapočítává do starých.
+```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+dt %>% filter(typ_rozpoctu=="SKUT",kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava","Ostatni ustredni") ) %>%
+  plot_ly(x=~rok,y=~pocet_zamestnancu,color=~kategorie_2014) %>% add_bars() %>% 
+  layout(title="Počet zaměstnanců",
+         xaxis = list(title="Rok"),
+         yaxis = list(title = ""),
+         barmode = "stack") %>%
+    config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d","pan2d","lasso2d","select2d","autoScale2d"),displaylogo = FALSE)
+```
+
+### Kumulovaná změna reálných výdajů na platy státních úředníků od roku 2003
+Dávám jen do let 2012, pak už se napojují nová data, a ty procenta vylétnou do statisíců - jak říkám, musím se podívat, co se nezařazuje.
+```{r cost_cumsum_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+aux<-dt %>% filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava","Ostatni ustredni","Statni sprava"),typ_rozpoctu=="SKUT") %>% 
+  filter(rok<2013) %>%
+  filter(!kap_num %in% c(314,306)) %>% #not included in previous
+  filter(kap_num != 355) %>% #ustav_pro_studium_totalitnich_rezimu dostal v roce 2008 300x větší budget, což zkresluje analýzu
+  group_by(kategorie_2014, rok) %>% summarise(cum_pct_wage_change_real = mean(cum_pct_wage_change_real))
+
+zk<-dt %>% filter(typ_rozpoctu == "SCHV", kategorie_2014 == "Statni sprava", kap_num == 312)
+
+aux %>% plot_ly(x=~rok,y=~cum_pct_wage_change_real,type = "scatter",color=~kategorie_2014, mode="lines+markers", linetypes = lty,
+          legendgroup = ~kategorie_2014) %>%
+  layout(title="Kumulovaná změna reálných výdajů na platy státních úředníků od roku 2003",
+         xaxis = list(title="Rok"),
+         yaxis = list(title = "",ticksuffix  = "%")) %>%
+    config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d","pan2d","lasso2d","select2d","autoScale2d"),displaylogo = FALSE)
+```
+
+
+
+### Reálné průměrné hrubé měsíční platy
+```{r mean_wage_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+dt %>% filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava","Ostatni ustredni","Statni sprava"),typ_rozpoctu=="SKUT") %>% 
+  filter(!kap_num %in% c(314,306)) %>% #not included in previous
+  group_by(kategorie_2014, rok) %>% summarise(wage_in_2020 = mean(wage_in_2020)) %>%
+  plot_ly(x=~rok,y=~wage_in_2020,type = "scatter",color=~kategorie_2014, mode="lines+markers", linetypes = lty,
+          legendgroup = ~kategorie_2014) %>%
+  layout(title="Reálné průměrné hrubé měsíční platy (Kč; v cenách roku 2020)",
+         xaxis = list(title="Rok"),
+         yaxis = list(title = "")) %>%
+    config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d","pan2d","lasso2d","select2d","autoScale2d"),displaylogo = FALSE)
+
+
+```
+
+### Kumulovaná změna reálných průměrných platů od roku 2003
+```{r mean_wage_pct_change_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+dt %>% filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava","Ostatni ustredni","Statni sprava"),typ_rozpoctu=="SKUT") %>% 
+  filter(!kap_num %in% c(314,306)) %>% #not included in previous
+  #filter(kap_num != 355) %>% #ustav_pro_studium_totalitnich_rezimu dostal v roce 2008 300x větší budget, což zkresluje analýzu
+  group_by(kategorie_2014, rok) %>% summarise(cum_pct_wage_change = mean(cum_pct_wage_change)) %>%
+  plot_ly(x=~rok,y=~cum_pct_wage_change,type = "scatter",color=~kategorie_2014, mode="lines+markers", linetypes = lty,
+          legendgroup = ~kategorie_2014) %>%
+  layout(title="Kumulovaná změna reálných průměrných platů od roku 2003 (V procentech)",
+         xaxis = list(title="Rok"),
+         yaxis = list(title = "",ticksuffix  = "%")) %>%
+    config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d","pan2d","lasso2d","select2d","autoScale2d"),displaylogo = FALSE)
+
+
+```
+
+### Průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství (pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze)
+```{r wage_to_general, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+dt %>% filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava","Ostatni ustredni","Statni sprava"),typ_rozpoctu=="SKUT") %>% 
+  filter(!kap_num %in% c(314,306)) %>% #not included in previous
+  #filter(kap_num != 355) %>% #ustav_pro_studium_totalitnich_rezimu dostal v roce 2008 300x větší budget, což zkresluje analýzu
+  group_by(kategorie_2014, rok) %>% summarise(wage_to_general = mean(wage_to_general)) %>%
+  plot_ly(x=~rok,y=~wage_to_general,type = "scatter",color=~kategorie_2014, mode="lines+markers", linetypes = lty,
+          legendgroup = ~kategorie_2014) %>%
+  layout(title="Průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství",
+         xaxis = list(title="Rok"),
+         yaxis = list(title = "",ticksuffix  = "%")) %>%
+    config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d","pan2d","lasso2d","select2d","autoScale2d"),displaylogo = FALSE)
+
+
+```
+
+
+### Snižování platů a počtů zaměstnanců v období 2010-2011
+
+```{r 2011_effect, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+
+line <- list(
+  type = "line",
+  line = list(color = "pink"),
+  xref = "paper",
+  yref = "paper",
+  'y0'= 0,
+  'y1'= 1,
+  'x0'= 0,
+  'x1'= 1
+)
+
+dt %>% filter(!is.na(kategorie_2014),typ_rozpoctu=="SKUT",kategorie_2014 != "Statni sprava") %>% 
+  filter(!kap_num %in% c(314,306),rok %in% c(2010,2011)) %>% #not included in previous
+  group_by(kategorie_2014,rok) %>%
+  summarise(zam_skutecnost = sum(pocet_zamestnancu),
+            plat_skutecnost = sum(prumerny_plat)) %>%
+  as.data.table() %>%
+  dcast(kategorie_2014 ~ rok, value.var = c("zam_skutecnost", "plat_skutecnost")) %>%
+  mutate(zam_change = (zam_skutecnost_2011-zam_skutecnost_2010)/zam_skutecnost_2010*100,
+         plat_change = (plat_skutecnost_2011-plat_skutecnost_2010)/plat_skutecnost_2010*100) %>%
+  plot_ly(x = ~ plat_change, y = ~ zam_change,color = ~ kategorie_2014) %>%
+    layout(title="Snižování platů a počtů zaměstnanců v období 2010-2011",
+           showlegend = FALSE,
+         xaxis = list(title="",range = c(-8, 8),ticksuffix  = "%"),
+         yaxis = list(title="",range = c(-8, 8),ticksuffix  = "%"),
+         shapes = line) %>%
+  add_markers() %>%
+  add_text(text = ~kategorie_2014, textposition = "top right")
+
+
+sum_all %>%
+  filter(!type %in% c("OSS","SS","ROPO")) %>%
+  group_by(type) %>% filter(year %in% c(2010,2011)) %>% arrange(year) %>% select(type,year,zam_skutecnost,plat_skutecnost) %>%
+  as.data.table() %>%
+  dcast(type ~ year, value.var = c("zam_skutecnost", "plat_skutecnost")) %>%
+  mutate(zam_change = (zam_skutecnost_2011-zam_skutecnost_2010)/zam_skutecnost_2010*100,
+         plat_change = (plat_skutecnost_2011-plat_skutecnost_2010)/plat_skutecnost_2010*100) %>%
+  plot_ly(x = ~ plat_change, y = ~ zam_change,color = ~ type) %>%
+    layout(title="Snižování platů a počtů zaměstnanců v období 2010-2011",
+           showlegend = FALSE,
+         xaxis = list(title="",range = c(-8, 8),ticksuffix  = "%"),
+         yaxis = list(title="",range = c(-8, 8),ticksuffix  = "%"),
+         shapes = line) %>%
+  add_markers() %>%
+  add_text(text = ~type, textposition = "top right")
+
+
+```
+
+
+### Neobsazená pracovní místa: Rozdíl mezi rozpočtovým a skutečným počtem zaměstnanců
+
+```{r prac_mista_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+sum_all %>%
+  filter(!type %in% c("OSS","PO","SOBCPO","ROPO","SS_bez_SOBCPO")) %>%
+  mutate (perc_diff_skut_rozp = (zam_skutecnost - zam_upraveny)/zam_upraveny*100) %>%
+  group_by(type) %>% arrange(year) %>% 
+  group_map(~ plot_ly(data=., x = ~year, y = ~perc_diff_skut_rozp, type = "bar",name=~type), keep=TRUE) %>%
+  subplot(nrows = 1, shareX = TRUE, shareY = TRUE)
+
+```
+
+
+
+
+### Rozdíl v průměrných platech mezi státním rozpočtem a skutečností (v % rozpočtovaných průměrných platů)
+
+```{r platy_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,warning = FALSE,message = FALSE}
+sum_all %>%
+  filter(!type %in% c("OSS","PO","SOBCPO","ROPO","SS_bez_SOBCPO")) %>%
+  mutate (perc_diff_skut_rozp = (plat_skutecnost  - plat_upraveny)/plat_upraveny*100) %>%
+  group_by(type) %>% arrange(year) %>% 
+  group_map(~ plot_ly(data=., x = ~year, y = ~perc_diff_skut_rozp, type = "bar",name=~type), keep=TRUE) %>%
+  subplot(nrows = 1, shareX = TRUE, shareY = TRUE)
+
+```
+
+## Výsledky nové analýzy
 
 Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam "Reset axes" button.
 
 ### Počty zaměstnanců per kapitola
 MŠMT očividně zkreslená kvůli příspěvkovým organizacím.
 
-```{r counts, echo=FALSE, out.width="100%"}
+```{r counts, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 plot_ly(bar_dt,x=~kap_name,y=~pocet_zamestnancu,color=~name,
-        text = ~ifelse(pocet_zamestnancu>0,paste(" Zdroj:", name, "<br>","Kapitola:", full_kap_name, "<br>", "Zaměstnanců:", format(pocet_zamestnancu, big.mark = ' ')),""),
-        hoverinfo = "text")  %>%
+        text = ~ifelse(pocet_zamestnancu>0,paste(" Zdroj:", name, "<br>","Kapitola:", full_kap_name, "<br>", "Zaměstnanců:", 
+                                                 format(pocet_zamestnancu, big.mark = ' ')),""),hoverinfo = "text")  %>%
   add_bars() %>%
   layout(hovermode = 'x unified',
          title="Vizualizace zaměstnanců",
@@ -74,7 +279,7 @@ plot_ly(bar_dt,x=~kap_name,y=~pocet_zamestnancu,color=~name,
 
 ### Kumulativní platy státních zaměstnanců per kapitola
 Znovu značně zkreslené MŠMT. Pomocí toho "zoom" toolu je to přehlednější.
-```{r costs, echo=FALSE, out.width="100%"}
+```{r costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 plot_ly(bar_dt,x=~kap_name,y=~prostredky_na_platy,color=~name,
            text = ~ifelse(prostredky_na_platy>0,paste(" Zdroj:", name, "<br>","Kapitola:", full_kap_name, "<br>", "Platy kumulativně:", format(prostredky_na_platy, big.mark = ' ')),""),
            hoverinfo = "text")  %>%
@@ -90,7 +295,7 @@ plot_ly(bar_dt,x=~kap_name,y=~prostredky_na_platy,color=~name,
 
 ### Průměrné platy státních zaměstnanců per kapitola
 Tady by bylo lepší mít platy seřazené bez ohledu na skupinu (OSS/SOBCPO/PO/UO), ale nevešlo by se tam vše. Tady je podle mě praktické využití to vypínání jednotlivých skupin v legendě.
-```{r mean_costs, echo=FALSE, out.width="100%"}
+```{r mean_costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 plot_ly(bar_dt,x=~kap_name,y=~prumerny_plat,color=~name,
            text = ~ifelse(prumerny_plat>0,paste(" Zdroj:", name, "<br>","Kapitola:", full_kap_name, "<br>", "Prumerny plat:", format(prumerny_plat, big.mark = ' ')),""),
            hoverinfo = "text")  %>%
