@@ -7,220 +7,295 @@ library(here)
 library(stringr)
 library(janitor)
 library(czso)
-source(here::here('R', 'listSheets.R'))
-source(here::here('R', 'divideMain.R'))
-options("scipen"=100, "digits"=4)
+source(here::here("R", "listSheets.R"))
+source(here::here("R", "divideMain.R"))
+options("scipen" = 100, "digits" = 4)
 catalogue <- czso_get_catalogue()
 
 catalogue %>%
   filter(str_detect(title, "[Mm]zd[ay]")) %>%
   select(dataset_id, title, description)
 
-#load new data
-input<-read_excel_allsheets("./data-input/data_2021.xls")
-#load old data
-chapters_old <- read.csv("./data-input/legacy/chapters_ALL.csv", encoding="UTF-8")
-grp_old <- read.csv("./data-input/legacy/groups_ALL.csv", encoding="UTF-8")
+# load new data
+input <- read_excel_allsheets("./data-input/data_2021.xls")
+# load old data
+chapters_old <- read.csv("./data-input/legacy/chapters_ALL.csv", encoding = "UTF-8")
+grp_old <- read.csv("./data-input/legacy/groups_ALL.csv", encoding = "UTF-8")
 
-sapply(input,ncol)
-sapply(input,nrow)
+sapply(input, ncol)
+sapply(input, nrow)
 
 
 # divide sheets to groups with similar format
-main_sheets <- c("ROPO CELKEM","OSS (RO)","PO","OOSS","STÁTNÍ SPRÁVA","ÚO","OSS SS","SOBCPO")
-sub_sheets <- c("ZAMCI_5011_platy", "VOJACI_5012","ST_ZAMCI_5013","ST_ZASTUP_5014","UC_S_5022")
-jednotl_sheets <-c("SOBCPO  JEDNOTLIVY","OSS SS - jednotl")
+main_sheets <- c("ROPO CELKEM", "OSS (RO)", "PO", "OOSS", "STÁTNÍ SPRÁVA", "ÚO", "OSS SS", "SOBCPO")
+sub_sheets <- c("ZAMCI_5011_platy", "VOJACI_5012", "ST_ZAMCI_5013", "ST_ZASTUP_5014", "UC_S_5022")
+jednotl_sheets <- c("SOBCPO  JEDNOTLIVY", "OSS SS - jednotl")
 
 main_names <- vector(mode = "list")
-polozky_names<-vector(mode = "list")
-jednotl_names<-vector(mode = "list")
+polozky_names <- vector(mode = "list")
+jednotl_names <- vector(mode = "list")
 
 for (name in names(input)) {
   print(name)
-  if (name %in% main_sheets){
-    main_names<-append(main_names, input[name])
-  }
-  else if(name %in% sub_sheets){
-    polozky_names<-append(polozky_names, input[name])
-  }
-  else if(name %in% jednotl_sheets){
-    jednotl_names<-append(jednotl_names, input[name])
+  if (name %in% main_sheets) {
+    main_names <- append(main_names, input[name])
+  } else if (name %in% sub_sheets) {
+    polozky_names <- append(polozky_names, input[name])
+  } else if (name %in% jednotl_sheets) {
+    jednotl_names <- append(jednotl_names, input[name])
   }
 }
 
-#load excel data into clean dataframe
+# load excel data into clean dataframe
 
 
-#main sheets
-section_names <- c("Rozpocet_a_rok","full_name","kap_num","kap_name","Prostředky na platy a OPPP", "OPPP", "Prostředky na platy",
-                   "Počet zaměstnanců", "Průměrný plat", "Pořadí průměrného platu","Schv ke schv", "Skut k rozp", "Skut ke skut")
-main_df<-data.frame(matrix(ncol =  length(section_names), nrow = 0))
-colnames(main_df)<-section_names
+# main sheets
+section_names <- c(
+  "Rozpocet_a_rok", "full_name", "kap_num", "kap_name", "Prostredky na platy a OPPP", "OPPP", "Prostredky na platy",
+  "Pocet zamestnancu", "Prumerný plat", "Poradí prumerného platu", "Schv ke schv", "Skut k rozp", "Skut ke skut"
+)
+main_df <- data.frame(matrix(ncol = length(section_names), nrow = 0))
+colnames(main_df) <- section_names
 
-for (i in 1:length(main_names)){
-  res <- divide_sections(main_names[[i]],names(main_names[i]),section_names)
+for (i in 1:length(main_names)) {
+  res <- divide_sections(main_names[[i]], names(main_names[i]), section_names)
   main_df <- rbind(main_df, res)
 }
 
 
-#sheets with various types of polozky
-polozky<-data.frame(matrix(ncol =  length(section_names), nrow = 0))
-colnames(polozky)<-section_names
+# sheets with various types of polozky
+polozky <- data.frame(matrix(ncol = length(section_names), nrow = 0))
+colnames(polozky) <- section_names
 
-for (i in 1:length(polozky_names)){
-  res <- divide_sections(polozky_names[[i]],names(polozky_names[i]),section_names)
+for (i in 1:length(polozky_names)) {
+  res <- divide_sections(polozky_names[[i]], names(polozky_names[i]), section_names)
   polozky <- rbind(polozky, res)
 }
 
-#sheets with subgroups
-source(here::here('R', 'divideMain.R'))
+# sheets with subgroups
+source(here::here("R", "divideMain.R"))
 
-jednotl_section_names <- c("Rozpocet_a_rok","full_name","kap_num","kap_name","Organizace","Prostředky na platy a OPPP", "OPPP", "Prostředky na platy",
-                           "Počet zaměstnanců", "Průměrný plat", "Pořadí průměrného platu","Schv ke schv", "Skut k rozp", "Skut ke skut")
-jednotl_df<-data.frame(matrix(ncol =  length(jednotl_section_names), nrow = 0))
-for (i in 1:length(jednotl_names)){
-  res <- divide_jednotl(jednotl_names[[i]],names(jednotl_names[i]),jednotl_section_names)
+jednotl_section_names <- c(
+  "Rozpocet_a_rok", "full_name", "kap_num", "kap_name", "Organizace", "Prostredky na platy a OPPP", "OPPP", "Prostredky na platy",
+  "Pocet zamestnancu", "Prumerný plat", "Poradí prumerného platu", "Schv ke schv", "Skut k rozp", "Skut ke skut"
+)
+jednotl_df <- data.frame(matrix(ncol = length(jednotl_section_names), nrow = 0))
+for (i in 1:length(jednotl_names)) {
+  res <- divide_jednotl(jednotl_names[[i]], names(jednotl_names[i]), jednotl_section_names)
   jednotl_df <- rbind(jednotl_df, res)
 }
 
 
-#summary sheet
-summary_names <- c("Rozpocet_a_rok","full_name","Prostředky na platy a OPPP", "OPPP", "Prostředky na platy",
-                   "Počet zaměstnanců", "Průměrný plat", "Pořadí průměrného platu","Schv ke schv", "Skut k rozp", "Skut ke skut")
+# summary sheet
+summary_names <- c(
+  "Rozpocet_a_rok", "full_name", "Prostredky na platy a OPPP", "OPPP", "Prostredky na platy",
+  "Pocet zamestnancu", "Prumerný plat", "Poradí prumerného platu", "Schv ke schv", "Skut k rozp", "Skut ke skut"
+)
 
-summary <- divide_summary(input[[length(input)]],"Summary",summary_names)
-
-
-#now we will extend the new datasets with data from previous years
-
-#chapter dataframe
-kap_slovnik <- main_df %>% select(kap_num,kap_name,full_kap_name) %>% filter(!is.na(kap_num)) %>% unique()
-df_addition <- data.frame(c(347,338,341),c("KCP","MI","UVIS"),c("komise_pro_cenne_papiry","ministerstvo_informatiky","urad_pro_verejne_informacni_systemy"))
-names(df_addition)<-c("kap_num","kap_name","full_kap_name")
-kap_slovnik<-rbind(kap_slovnik,df_addition)
+summary <- divide_summary(input[[length(input)]], "Summary", summary_names)
 
 
-old_dt<-chapters_old %>% select(rok = Year, name = grp, kap_num = KapNum,variable,value) %>%
-  mutate(typ_rozpoctu = case_when(str_detect(variable,"schvaleny") ~ "SCHV",
-                                  str_detect(variable,"upraveny") ~ "UPRAV",
-                                  str_detect(variable,"skutecnost") ~ "SKUT")) %>%
-  mutate(variable = case_when(str_detect(variable,"schvaleny") ~ str_remove(variable, "_schvaleny"),
-                                  str_detect(variable,"upraveny") ~ str_remove(variable, "_upraveny"),
-                                  str_detect(variable,"skutecnost") ~ str_remove(variable, "_skutecnost"))) %>%
-  filter(!is.na(typ_rozpoctu))%>% filter(!is.na(value)) %>% filter(name != "Exekutiva")%>%
-  mutate(name = case_when( name == "SOBCPO" ~ "SOBCPO",
-                          name == "St. sprava se SOBCPO" ~ "SS",
-                          name == "UO - Ministerstva" ~ "UO",
-                          name == "UO - Ostatní" ~ "UO",
-                          name == "UO" ~ "UO",
-                          name == "OSS-RO" ~ "OSS",
-                          name == "OSS-SS"~"OSS_SS",
-                          name == "PO"~"PO",
-                          name == "OOSS"~"OOSS",
-                          name =="ROPO celkem" ~ "ROPO")) %>%
+# now we will extend the new datasets with data from previous years
+
+# chapter dataframe
+kap_slovnik <- main_df %>%
+  select(kap_num, kap_name, full_kap_name, cz_kap_name) %>%
+  filter(!is.na(kap_num)) %>%
+  unique()
+df_addition <- data.frame(
+  c(347, 338, 341), c("KCP", "MI", "UVIS"), c("komise_pro_cenne_papiry", "ministerstvo_informatiky", "urad_pro_verejne_informacni_systemy"),
+  c("Komise pro cenn\u00E9 pap\u00EDry", "Ministerstvo informatiky", "\u00DA\u0159ad pro ve\u0159ejn\u00E9 informa\u010Dn\u00ED syst\u00E9my")
+)
+names(df_addition) <- c("kap_num", "kap_name", "full_kap_name", "cz_kap_name")
+kap_slovnik <- rbind(kap_slovnik, df_addition)
+
+
+old_dt <- chapters_old %>%
+  select(rok = Year, name = grp, kap_num = KapNum, variable, value) %>%
+  mutate(typ_rozpoctu = case_when(
+    str_detect(variable, "schvaleny") ~ "SCHV",
+    str_detect(variable, "upraveny") ~ "UPRAV",
+    str_detect(variable, "skutecnost") ~ "SKUT"
+  )) %>%
+  mutate(variable = case_when(
+    str_detect(variable, "schvaleny") ~ str_remove(variable, "_schvaleny"),
+    str_detect(variable, "upraveny") ~ str_remove(variable, "_upraveny"),
+    str_detect(variable, "skutecnost") ~ str_remove(variable, "_skutecnost")
+  )) %>%
+  filter(!is.na(typ_rozpoctu)) %>%
+  filter(!is.na(value)) %>%
+  filter(name != "Exekutiva") %>%
+  mutate(name = case_when(
+    name == "SOBCPO" ~ "SOBCPO",
+    name == "St. sprava se SOBCPO" ~ "SS",
+    name == "UO - Ministerstva" ~ "UO",
+    name == "UO - Ostatní" ~ "UO",
+    name == "UO" ~ "UO",
+    name == "OSS-RO" ~ "OSS",
+    name == "OSS-SS" ~ "OSS_SS",
+    name == "PO" ~ "PO",
+    name == "OOSS" ~ "OOSS",
+    name == "ROPO celkem" ~ "ROPO"
+  )) %>%
   mutate(rok = substr(rok, 1, 4)) %>%
-  reshape(timevar = "variable",idvar = c("rok","name","kap_num","typ_rozpoctu"), direction = "wide") %>%
-  rename("prostredky_na_platy_a_oppp" = value.PlatyOPPP,
-         "prostredky_na_platy" = "value.Platy",
-         "oppp" = value.OPPP,
-         "pocet_zamestnancu" =  value.Zam,
-         "prumerny_plat" = value.AvgSal) %>%
-  left_join(kap_slovnik,by = "kap_num") %>%
-  mutate (skut_k_rozp = NA, schv_ke_schv = NA, skut_ke_skut = NA,poradi_prumerneho_platu = NA) %>%
+  reshape(timevar = "variable", idvar = c("rok", "name", "kap_num", "typ_rozpoctu"), direction = "wide") %>%
+  rename(
+    "prostredky_na_platy_a_oppp" = value.PlatyOPPP,
+    "prostredky_na_platy" = "value.Platy",
+    "oppp" = value.OPPP,
+    "pocet_zamestnancu" = value.Zam,
+    "prumerny_plat" = value.AvgSal
+  ) %>%
+  left_join(kap_slovnik, by = "kap_num") %>%
+  mutate(
+    skut_k_rozp = NA, schv_ke_schv = NA, skut_ke_skut = NA, poradi_prumerneho_platu = NA,
+    prostredky_na_platy_a_oppp = prostredky_na_platy_a_oppp * 1000,
+    prostredky_na_platy = prostredky_na_platy * 1000,
+    oppp = oppp * 1000
+  ) %>%
   filter(rok != 2013)
 
 
-main_df<-rbind(main_df,old_dt)
+main_df <- rbind(main_df, old_dt)
 
-#group dataframe
+# group dataframe
 
-grp_slovnik <- summary %>% select(name,full_name) %>% unique()
+grp_slovnik <- summary %>%
+  select(name, full_name) %>%
+  unique()
 
-old_dt<-grp_old %>% select(rok = Year, name = grp, variable,value) %>%
-  mutate(typ_rozpoctu = case_when(str_detect(variable,"schvaleny") ~ "SCHV",
-                                  str_detect(variable,"upraveny") ~ "UPRAV",
-                                  str_detect(variable,"skutecnost") ~ "SKUT")) %>%
-  mutate(variable = case_when(str_detect(variable,"schvaleny") ~ str_remove(variable, "_schvaleny"),
-                              str_detect(variable,"upraveny") ~ str_remove(variable, "_upraveny"),
-                              str_detect(variable,"skutecnost") ~ str_remove(variable, "_skutecnost"))) %>%
-  filter(!is.na(typ_rozpoctu))%>% filter(!is.na(value)) %>% filter(name != "Exekutiva")%>%
-  mutate(name = case_when( name == "SOBCPO" ~ "SOBCPO",
-                           name == "St. sprava se SOBCPO" ~ "SS",
-                           name == "UO - Ministerstva" ~ "UO",
-                           name == "UO - Ostatní" ~ "UO",
-                           name == "UO" ~ "UO",
-                           name == "OSS-RO" ~ "OSS",
-                           name == "OSS-SS"~"OSS_SS",
-                           name == "PO"~"PO",
-                           name == "OOSS"~"OOSS",
-                           name =="ROPO celkem" ~ "ROPO")) %>%
+old_dt <- grp_old %>%
+  select(rok = Year, name = grp, variable, value) %>%
+  mutate(typ_rozpoctu = case_when(
+    str_detect(variable, "schvaleny") ~ "SCHV",
+    str_detect(variable, "upraveny") ~ "UPRAV",
+    str_detect(variable, "skutecnost") ~ "SKUT"
+  )) %>%
+  mutate(variable = case_when(
+    str_detect(variable, "schvaleny") ~ str_remove(variable, "_schvaleny"),
+    str_detect(variable, "upraveny") ~ str_remove(variable, "_upraveny"),
+    str_detect(variable, "skutecnost") ~ str_remove(variable, "_skutecnost")
+  )) %>%
+  filter(!is.na(typ_rozpoctu)) %>%
+  filter(!is.na(value)) %>%
+  filter(name != "Exekutiva") %>%
+  mutate(name = case_when(
+    name == "SOBCPO" ~ "SOBCPO",
+    name == "St. sprava se SOBCPO" ~ "SS",
+    name == "UO - Ministerstva" ~ "UO",
+    name == "UO - Ostatní" ~ "UO",
+    name == "UO" ~ "UO",
+    name == "OSS-RO" ~ "OSS",
+    name == "OSS-SS" ~ "OSS_SS",
+    name == "PO" ~ "PO",
+    name == "OOSS" ~ "OOSS",
+    name == "ROPO celkem" ~ "ROPO"
+  )) %>%
   mutate(rok = substr(rok, 1, 4)) %>%
-  reshape(timevar = "variable",idvar = c("rok","name","typ_rozpoctu"), direction = "wide") %>%
-  rename("prostredky_na_platy_a_oppp" = value.PlatyOPPP,
-         "prostredky_na_platy" = "value.Platy",
-         "oppp" = value.OPPP,
-         "pocet_zamestnancu" =  value.Zam,
-         "prumerny_plat" = value.AvgSal) %>%
-  left_join(grp_slovnik,by = "name") %>%
-  mutate (skut_k_rozp = NA, schv_ke_schv = NA, skut_ke_skut = NA,poradi_prumerneho_platu = NA) %>%
+  reshape(timevar = "variable", idvar = c("rok", "name", "typ_rozpoctu"), direction = "wide") %>%
+  rename(
+    "prostredky_na_platy_a_oppp" = value.PlatyOPPP,
+    "prostredky_na_platy" = "value.Platy",
+    "oppp" = value.OPPP,
+    "pocet_zamestnancu" = value.Zam,
+    "prumerny_plat" = value.AvgSal
+  ) %>%
+  left_join(grp_slovnik, by = "name") %>%
+  mutate(
+    skut_k_rozp = NA, schv_ke_schv = NA, skut_ke_skut = NA, poradi_prumerneho_platu = NA,
+    prostredky_na_platy_a_oppp = prostredky_na_platy_a_oppp * 1000,
+    prostredky_na_platy = prostredky_na_platy * 1000,
+    oppp = oppp * 1000
+  ) %>%
   filter(rok != 2013)
 
-summary<-rbind(summary,old_dt)
+summary <- rbind(summary, old_dt)
 
 
-##extend other useful columns
+## extend other useful columns
+# special signs
+kategorie_2014 <- c("UO", "SS", "OSS", "Ministerstva", "Ostatni ustredni", "Sbory", "Neustredni st. sprava", "Ostatní vc. armady", "Prispevkove organizace", "Statni sprava")
+kategorie_2014_cz <- c(
+  "UO", "SS", "OSS", "Ministerstva", "Ostatn\u00ED \u00FAst\u0159edn\u00ED", "Sbory",
+  "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va", "Ostatn\u00ED v\u010D. arm\u00E1dy", "P\u0159\u00EDsp\u011Bvkov\u00E9 organizace", "St\u00E1tni spr\u00E1va"
+)
+czech_signs_dict <- data.frame(kategorie_2014, kategorie_2014_cz)
+
 ### wages
-wages_later<-czso_get_table("110080") %>% filter(is.na(POHLAVI_txt),is.na(SPKVANTIL_txt),uzemi_kod %in% c(19,3018)) %>%
-  select(rok, hodnota, uzemi_kod) %>% spread(key = uzemi_kod, value = hodnota) %>%rename("czsal_all"=2, "phasal_all"=3)
+wages_later <- czso_get_table("110080") %>%
+  filter(is.na(POHLAVI_txt), is.na(SPKVANTIL_txt), uzemi_kod %in% c(19, 3018)) %>%
+  select(rok, hodnota, uzemi_kod) %>%
+  spread(key = uzemi_kod, value = hodnota) %>%
+  rename("czsal_all" = 2, "phasal_all" = 3)
 
-wages_early<-chapters_old %>% select(Year,czsal_all,phasal_all) %>% unique() %>% mutate(Year = substr(Year, 1, 4))
-wages_benchmark<-wages_early %>% filter(Year<2011)%>% rename("rok" = Year) %>% rbind(wages_later) %>% mutate(rok = as.integer(rok))
+wages_early <- chapters_old %>%
+  select(Year, czsal_all, phasal_all) %>%
+  unique() %>%
+  mutate(Year = substr(Year, 1, 4))
+wages_benchmark <- wages_early %>%
+  filter(Year < 2011) %>%
+  rename("rok" = Year) %>%
+  rbind(wages_later) %>%
+  mutate(rok = as.integer(rok))
 
 
 ### inflation
-MINISTERSTVA <- c(304,306,307,312,313,314,315,317,322,327,329,333,334,335,336,338)
-OSTATNI_UO <- c(301,302,303,304,308,309,321,328,341,343,344,345,346,347,348,349,353,355,358,361,362,371,372,373,374,375,376,377,378,381)
-df_infl<- data.frame(rok = seq(2003,2020),
-                                inflation = c(0.1, 2.8, 1.9, 2.5, 2.8, 6.3, 1.0, 1.5, 1.9, 3.3, 1.4, 0.4, 0.3, 0.7, 2.5, 2.1, 2.8, 3.2)/100+1)
+MINISTERSTVA <- c(304, 306, 307, 312, 313, 314, 315, 317, 322, 327, 329, 333, 334, 335, 336, 338)
+OSTATNI_UO <- c(301, 302, 303, 304, 308, 309, 321, 328, 341, 343, 344, 345, 346, 347, 348, 349, 353, 355, 358, 361, 362, 371, 372, 373, 374, 375, 376, 377, 378, 381)
+df_infl <- data.frame(
+  rok = seq(2003, 2020),
+  inflation = c(0.1, 2.8, 1.9, 2.5, 2.8, 6.3, 1.0, 1.5, 1.9, 3.3, 1.4, 0.4, 0.3, 0.7, 2.5, 2.1, 2.8, 3.2) / 100 + 1
+)
 df_infl$base_2003 <- NA
 df_infl$base_2020 <- NA
-df_infl[1,"base_2003"] <- 1
-df_infl[nrow(df_infl),"base_2020"] <- df_infl$inflation[nrow(df_infl)]
+df_infl[1, "base_2003"] <- 1
+df_infl[nrow(df_infl), "base_2020"] <- df_infl$inflation[nrow(df_infl)]
 
 
-for (i in 2:nrow(df_infl)){
-  df_infl[i,"base_2003"] = df_infl[i-1,"base_2003"]*df_infl[i,"inflation"]
+for (i in 2:nrow(df_infl)) {
+  df_infl[i, "base_2003"] <- df_infl[i - 1, "base_2003"] * df_infl[i, "inflation"]
 }
 
-for (i in (nrow(df_infl)-1):1){
-  df_infl[i,"base_2020"] = df_infl[i+1,"base_2020"]*df_infl[i,"inflation"]
+for (i in (nrow(df_infl) - 1):1) {
+  df_infl[i, "base_2020"] <- df_infl[i + 1, "base_2020"] * df_infl[i, "inflation"]
 }
 
-main_df_update<-main_df %>% mutate(kategorie_2014 = case_when(
-                                             (prostredky_na_platy>0 & name == "OSS_SS")~"Neustredni st. sprava",
-                                             (prostredky_na_platy>0 & name == "SS") ~ "Statni sprava",
-                                             (prostredky_na_platy>0 & name == "OOSS") ~ "Ostatní vc. armady",
-                                             (prostredky_na_platy>0 & name == "PO")~"Prispevkove organizace",
-                                             (prostredky_na_platy>0 & name == "SOBCPO")~"Sbory",
-                                             (name == "UO" & kap_num %in% MINISTERSTVA) ~ "Ministerstva",
-                                             (name == "UO" & kap_num %in% OSTATNI_UO) ~ "Ostatni ustredni")) %>%
-
-  group_by(kategorie_2014, typ_rozpoctu,kap_num) %>%
+main_df_update <- main_df %>%
+  mutate(kategorie_2014 = case_when(
+    (prostredky_na_platy > 0 & name == "OSS_SS") ~ "Neustredni st. sprava",
+    (prostredky_na_platy > 0 & name == "SS") ~ "Statni sprava",
+    (prostredky_na_platy > 0 & name == "OOSS") ~ "Ostatní vc. armady",
+    (prostredky_na_platy > 0 & name == "PO") ~ "Prispevkove organizace",
+    (prostredky_na_platy > 0 & name == "SOBCPO") ~ "Sbory",
+    (name == "UO" & kap_num %in% MINISTERSTVA) ~ "Ministerstva",
+    (name == "UO" & kap_num %in% OSTATNI_UO) ~ "Ostatni ustredni"
+  )) %>%
+  filter(!is.na(kap_num)) %>%
+  filter(prostredky_na_platy_a_oppp > 0) %>%
+  group_by(kategorie_2014, typ_rozpoctu, kap_num) %>%
   mutate(rok = as.integer(rok)) %>%
-  left_join(df_infl,by = "rok") %>%
-  left_join(wages_benchmark,by = "rok") %>%
-  arrange(rok) %>% filter(prostredky_na_platy>0) %>%
+  left_join(df_infl, by = "rok") %>%
+  left_join(wages_benchmark, by = "rok") %>%
+  arrange(rok) %>%
+  mutate(platy_skut_ke_skut = (prostredky_na_platy - lag(prostredky_na_platy)) / lag(prostredky_na_platy)) %>%
+  mutate(mzda_prumer_skut_ke_skut = (prumerny_plat / lag(prumerny_plat) - 1)) %>%
   mutate(plat_base = prostredky_na_platy[1]) %>%
-  mutate(cum_pct_wage_change_real = (prostredky_na_platy/base_2003-plat_base)/plat_base*100)  %>%
-  mutate(wage_in_2020 = prumerny_plat*base_2020) %>%
+  mutate(cum_pct_wage_change_real = (prostredky_na_platy / base_2003 - plat_base) / plat_base) %>%
+  mutate(wage_in_2020 = prumerny_plat * base_2020) %>%
+  mutate(wage_in_2020_change = wage_in_2020 / lag(wage_in_2020) - 1) %>%
   mutate(wage_base = wage_in_2020[1]) %>%
-  mutate(cum_pct_wage_change = (wage_in_2020-wage_base)/wage_base*100) %>%
-  mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"),prumerny_plat/phasal_all,prumerny_plat/czsal_all)-1)*100)
+  mutate(cum_pct_wage_change = (wage_in_2020 - wage_base) / wage_base) %>%
+  mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"), prumerny_plat / phasal_all, prumerny_plat / czsal_all))) %>%
+  mutate(mzda_k_nh = wage_to_general / lag(wage_to_general) - 1) %>%
+  ungroup() %>%
+  left_join(czech_signs_dict, by = "kategorie_2014")
 
-zk<-main_df_update %>% filter(typ_rozpoctu == "SCHV", kategorie_2014 == "Statni sprava", kap_num == 312)
 
 
-#save all dataframes
+
+
+
+# save all dataframes
 saveRDS(main_df_update, file = "./data-interim/sections.rds")
 saveRDS(jednotl_df, file = "./data-interim/jednotlivci.rds")
 saveRDS(polozky, file = "./data-interim/organizace.rds")
