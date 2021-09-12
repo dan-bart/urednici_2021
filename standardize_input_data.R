@@ -48,7 +48,6 @@ for (name in names(input)) {
 
 # load excel data into clean dataframe
 
-
 # main sheets
 section_names <- c(
   "Rozpocet_a_rok", "full_name", "kap_num", "kap_name", "Prostredky na platy a OPPP", "OPPP", "Prostredky na platy",
@@ -216,9 +215,10 @@ summary <- rbind(summary, old_dt)
 # special signs
 kategorie_2014 <- c("UO", "SS", "OSS", "Ministerstva", "Ostatni ustredni", "Sbory", "Neustredni st. sprava", "Ostatní vc. armady", "Prispevkove organizace", "Statni sprava")
 kategorie_2014_cz <- c(
-  "UO", "SS", "OSS", "Ministerstva", "Ostatn\u00ED \u00FAst\u0159edn\u00ED", "Sbory",
+  "\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "Ministerstva", "Ostatn\u00ED \u00FAst\u0159edn\u00ED", "Sbory",
   "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va", "Ostatn\u00ED v\u010D. arm\u00E1dy", "P\u0159\u00EDsp\u011Bvkov\u00E9 organizace", "St\u00E1tni spr\u00E1va"
 )
+
 czech_signs_dict <- data.frame(kategorie_2014, kategorie_2014_cz)
 
 ### wages
