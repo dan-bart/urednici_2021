@@ -27,7 +27,7 @@ sapply(input, nrow)
 
 
 # divide sheets to groups with similar format
-main_sheets <- c("ROPO CELKEM", "OSS (RO)", "PO", "OOSS", "STÁTNÍ SPRÁVA", "ÚO", "OSS SS", "SOBCPO")
+main_sheets <- c("ROPO CELKEM", "OSS (RO)", "PO", "OOSS", "STÁTNÍ SPRÁVA", "UO", "OSS SS", "SOBCPO")
 sub_sheets <- c("ZAMCI_5011_platy", "VOJACI_5012", "ST_ZAMCI_5013", "ST_ZASTUP_5014", "UC_S_5022")
 jednotl_sheets <- c("SOBCPO  JEDNOTLIVY", "OSS SS - jednotl")
 
@@ -55,6 +55,7 @@ section_names <- c(
 )
 main_df <- data.frame(matrix(ncol = length(section_names), nrow = 0))
 colnames(main_df) <- section_names
+
 
 for (i in 1:length(main_names)) {
   res <- divide_sections(main_names[[i]], names(main_names[i]), section_names)
@@ -293,8 +294,8 @@ main_df_update <- main_df %>%
 
 
 
-
-
+main_df_update %>% filter( typ_rozpoctu == "SCHV", rok == 2021) %>% select("kategorie_2014") %>% unique()
+main_df %>% filter( typ_rozpoctu == "SCHV", rok == 2021) %>% select(kap_num,name) %>% unique()
 # save all dataframes
 saveRDS(main_df_update, file = "./data-interim/sections.rds")
 saveRDS(jednotl_df, file = "./data-interim/jednotlivci.rds")
