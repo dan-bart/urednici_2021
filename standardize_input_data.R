@@ -27,7 +27,7 @@ sapply(input, nrow)
 
 
 # divide sheets to groups with similar format
-main_sheets <- c("ROPO CELKEM", "OSS (RO)", "PO", "OOSS", "STÁTNÍ SPRÁVA", "UO", "OSS SS", "SOBCPO")
+main_sheets <- c("ROPO CELKEM", "OSS (RO)", "PO", "OOSS", "STATNI SPRAVA", "UO", "OSS SS", "SOBCPO")
 sub_sheets <- c("ZAMCI_5011_platy", "VOJACI_5012", "ST_ZAMCI_5013", "ST_ZASTUP_5014", "UC_S_5022")
 jednotl_sheets <- c("SOBCPO  JEDNOTLIVY", "OSS SS - jednotl")
 
