@@ -154,6 +154,8 @@ divide_sections <- function(df, sheet_name, section_names) {
     mutate(kap_num = as.numeric(kap_num)) %>%
     left_join(names_df, by = "kap_num")
   res[num_names] <- sapply(res[num_names], as.numeric)
+  res["pocet_zamestnancu"] <- sapply(res["pocet_zamestnancu"], as.numeric)
+  res["pocet_zamestnancu"] <- sapply(res["pocet_zamestnancu"], round,digits = 0)
   res[int_names] <- sapply(res[int_names], as.integer)
   res$typ_rozpoctu[which(grepl("SKUT", res$typ_rozpoctu))] <- "SKUT"
   res$typ_rozpoctu[which(grepl("SCHV", res$typ_rozpoctu))] <- "SCHV"

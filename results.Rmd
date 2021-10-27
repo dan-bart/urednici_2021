@@ -21,6 +21,32 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+```{r check_2014_2019,include = F}
+zam_2014<-dt %>% filter(rok == 2014,typ_rozpoctu == "SKUT") %>%
+  filter(!is.na(as.numeric(kap_num))) %>%
+  filter(name %in% c("PO", "OSS")) %>%
+  group_by(name) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
+
+
+zk<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT",name == "UO") %>%
+  #filter(!is.na(as.numeric(kap_num))) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
+
+#2018
+#SOBCPO 121 800
+#OSS_SS (krajské a obecní úřady?) 94 900
+#OOSS 70 900
+#UO 12 600
+zam_2019<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT") %>%
+  filter(!is.na(as.numeric(kap_num))) %>%
+  filter(!name %in% c("ROPO", "SS", "OSS")) %>%
+  group_by(kategorie_2014_cz) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
+
+```
+
+
 ```{r priprava, echo=FALSE,warning = FALSE,message = FALSE}
 abs_metrics <- dt %>%
   filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
@@ -146,7 +172,7 @@ tree_data %>%
     labels = tree_data$labels,
     parents = tree_data$parents,
     values = tree_data$cost,
-    hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>", " Rozpo\u010Det:", format(cost, big.mark = " "), "K\u010D", "<br>", " Pod\u00EDl na celku:", round(count_perc*100,1), "%"),
+    hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>", " Rozpo\u010Det:", format(cost, big.mark = " "), "K\u010D", "<br>", " Pod\u00EDl na celku:", round(cost_perc*100,1), "%"),
     domain = list(column = 0)
   ) %>%
   layout(title = list(text = "Celkov\u00FD objem platu", y = 0.98)) %>%
