@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/827858/8242cc305b934727953720de1cd059d0
+bundleId: https://api.rpubs.com/api/v1/document/827858/8242cc305b934727953720de1cd059d0
+url: http://rpubs.com/danbart/827858
+when: 1636659430.51829
+lastSyncTime: 1636659430.5183

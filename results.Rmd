@@ -695,13 +695,11 @@ dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   filter(!kap_num %in% c(kaps_to_exclude, 312)) %>%
-  select(rok, kategorie_2014_cz, typ_rozpoctu, kap_name, prumerny_plat, cz_kap_name) %>%
+  select(rok, kategorie_2014_cz, typ_rozpoctu, kap_name, prostredky_na_platy,pocet_zamestnancu, cz_kap_name) %>%
+  group_by(rok, cz_kap_name,kap_name, typ_rozpoctu) %>%
+  summarise(prumerny_plat = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)) / 12) %>%
   spread(key = typ_rozpoctu, value = prumerny_plat) %>%
   group_by(rok, kap_name, cz_kap_name) %>%
-  summarise(
-    SKUT = sum(SKUT),
-    UPRAV = sum(UPRAV)
-  ) %>%
   mutate(diff = (SKUT - UPRAV) / UPRAV) %>%
   group_by(kap_name) %>%
   arrange(rok) %>%
@@ -729,6 +727,7 @@ dt %>%
     layout(yaxis = list(title = "", range = c(0, 30), ticksuffix = "%"), xaxis = list(tickangle = 90), legend = list(x = 100, y = 0.5)), keep = TRUE) %>%
   subplot(nrows = 5, shareX = TRUE, shareY = T) %>%
   layout(title = list(text = "Rozd\u00EDl v pr\u016Fm\u011Brn\u00FDch platech mezi schv\u00E1len\u00FDm rozpo\u010Dtem a skute\u010Dnost\u00ED (v %)", y = 0.98), showlegend = FALSE)
+
 ```
 
 ```{r prac_mista_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
