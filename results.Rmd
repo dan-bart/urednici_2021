@@ -1,7 +1,6 @@
 ---
-title: "Results"
-author: "Daniel Bartušek"
-date: "17/07/2021"
+title: "St\u00E1tn\u00ED zam\u011Bstnanci a \u00FA\u0159edn\u00EDci: kde pracuj\u00ED a za kolik?"
+author: "Daniel Bartu\u0161ek, Petr Bouchal, Petr Jansk\u00FD"
 output:
   html_document: default
   pdf_document: default
@@ -53,9 +52,6 @@ bar_dt <- dt %>%
     prostredky_na_platy_agg = sum(prostredky_na_platy),
     prumerny_plat_agg = sum(prumerny_plat))
 
-
-
-
 sum_all <- sum %>%
   select(name, rok, typ_rozpoctu, prostredky_na_platy_a_oppp, pocet_zamestnancu, prumerny_plat) %>%
   reshape(
@@ -90,9 +86,39 @@ lty <- c(schvaleny = "dash", skutecnost = "solid")
 ```
 
 
-## Skutečný rozpočet 2020
+<style>
+body {
+text-align: justify}
+</style>
 
-Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam "Reset axes" button.
+
+# Shrnutí
+Český veřejný sektor zaměstnává zhruba 1 milion osob, tedy zhruba pětinu pracovní síly země. Zhruba 450 tisíc z nich hradí platy přímo státní rozpočet. A z nich zhruba jen 80 tisíc lze chápat jako státní úředníky. 
+
+# Úvod
+
+Kde a za jaké platy pracují státní zaměstnanci a státní úředníci především jsou hlavními otázkami, které v této studii zodpovídáme pomocí skutečných rozpočtových dat získaných od Ministerstva financí pro roky 2003 až 2020.
+
+Zodpovězení těchto hlavních otázek nám umožní chápat vývoj výše platů v kontextu vývoje celé ekonomiky, lépe pochopit potenciál diskutovaných konsolidačních opatření týkajících se státních zaměstnanců, pozorovat zda došlo zavedením Zákona o státní službě k výrazným změnám v počtech či platech státních úředníků nebo zda se změnila efektivita rozpočtového procesu vzhledem k tzv. neobsazeným místům.
+
+Pro zodpovězení otázek v této studii využíváme stejný metodologický přístup (datová analýza) a stejný datový zdroj (detailní informace od Ministerstva financí ze Státního závěrečného účtu) jako ve studii vydané v červnu 2014 (https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji). (Počty i platy jsou přepočtené na plné úvazky.)
+
+# Výsledky
+
+## Počet zaměstnanců dle regulace zaměstnanosti
+
+Počet zaměstnanců placených přímo ze státního rozpočtu ukazuje graf 1 na základě informací o skutečném rozpočtu pro rok 2020.^[Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam “Reset axes” button.] 
+
+Státní zaměstnanci v grafu 1 jsou podle tzv. regulace zaměstnanosti rozděleni do šesti skupin. Ministerstva (1. skupina) a Ostatní ústřední úřady (2.) spolu dávají Ústřední orgány státní správy (ÚO). Když k nim přidáme Neústřední státní správu (3.) a Správu ve složkách obrany, bezpečnostní, celní a právní ochrany (4., SOBCPO), mluvíme dohromady o Státní správě. Když k nim dále přidáme Ostatní organizační složky státu (5., OOSS), včetně Armády, máme Organizační složky státu (OSS) nebo také Rozpočtové organizace (RO). Konečně, přidáním Příspěvkových organizací (6., PO), získáváme rozpočtové organizace a příspěvkové organizace (ROPO). Státní zaměstnanci jsou tedy rozděleni do šesti skupin, které všechny dohromady dávají ROPO. 
+
+Státní úředníci nejlépe odpovídají součtu prvních tří skupin (78 tisíc). (Plus se nabízí možnost odečtení od tohoto čísla zhruba 5 tisíc zaměstnanců, které podobně jako ve studii z roku 2014 lze jen stěží počítat jako státní úředníky a jedná se spíše o čelny sborů, například část vojáků formálně vedených pod ministerstvem obrany.) (Například pro rok 2020 je podobný komentář na straně 96 části C zde, ale důsledek pro počty státních úředníků z toho jasné nejsou https://www.mfcr.cz/cs/verejny-sektor/statni-rozpocet/plneni-statniho-rozpoctu/2020/statni-zaverecny-ucet-za-rok-2020-41689)
+
+Na ministerstvech pracuje 23 tisíc lidí, na ostatních ústředních úřadech (například Úřad vlády, Český úřad zeměměřický a katastrální nebo Český statistický úřad) pak pracuje dalších 5 tisíc lidí. Největší část státních úředníků, 51 tisíc, pracuje na úřadech neústřední státní správy, mezi které patří Generální finanční ředitelství, Úřad práce nebo Česká správa sociálního zabezpečení.
+
+Mezi sbory (82 tisíc) jsou například policisté a hasiči, ale i vězeňští dozorci. V ostatní včetně armády (39 tisíc) je právě armáda pod kapitolou ministerstva vnitra zodpovědná za většinu zaměstnanců (32 tisíc). 
+
+Příspěvkové organizace mají 265 tisíc zaměstnanců a naprostá většina z nich spadá pod kapitolu Ministerstva školství a tělevýchovy, tedy veřejných základních a středních škol a necelá polovina (254 tisíc). Tato skupina tedy tvoří většinu státních zaměstnanců. Nejvýznamnější jednotlivou skupinou jsou Příspěvkové organizace, včetně učitelů a dalších zaměstnanců škol, což lze vidět dobře i v členění zaměstnanců dle rozpočtových kapitol.
+
 
 ```{r tree_prep, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
@@ -147,7 +173,7 @@ tree_data<-tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$pare
 
 ```{r tree_plot, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
-tree_data %>%
+tree_plot_cost<-tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
@@ -157,10 +183,10 @@ tree_data %>%
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>", " Rozpo\u010Det:", format(cost, big.mark = " "), "K\u010D", "<br>", " Pod\u00EDl na celku:", round(cost_perc*100,1), "%"),
     domain = list(column = 0)
   ) %>%
-  layout(title = list(text = "Celkov\u00FD objem platu", y = 0.98)) %>%
+  layout(title = list(text = "Graf A1. Výdaje na platy státních zaměstnanců (dle regulace zaměstnanosti)", y = 0.98)) %>%
   layout(treemapcolorway = c("lightsalmon", "steelblue"), annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", x = 1, y = -0.05, showarrow = FALSE))
 
-tree_data %>%
+tree_plot_count<-tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
@@ -170,13 +196,21 @@ tree_data %>%
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>", " Po\u010Det zam\u011Bstnanc\u016F:", format(count, big.mark = " "), "<br>", " Pod\u00EDl na celku:", round(count_perc*100,1), "%"),
     domain = list(column = 0)
   ) %>%
-  layout(title = list(text = "Po\u010Det zam\u011Bstnanc\u016F", y = 0.98)) %>%
+  layout(title = list(text = "Graf 1. Počet státních zaměstnanců (dle regulace zaměstnanosti)", y = 0.98)) %>%
   layout(treemapcolorway = c("lightsalmon", "steelblue"), annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", x = 1, y = -0.05, showarrow = FALSE))
+
+tree_plot_count
 ```
 
 
-### Počty zaměstnanců
-MŠMT zkresluje graf vzhledem k zahrnutí učitelů v kategorii "Příspěvkové organizace". Lze odflitrovat v legendě nebo v grafu.
+## Počet zaměstnanců dle rozpočtových kapitol
+
+Počty zaměstnanců a objem platů dle rozpočtových kapitol ukazuje následující graf. Z jedné rozpočtové kapitoly mohou být placeny zaměstnanci lišící se dle regulace zaměstnanosti. Například Ministerstvo vnitra má velké množství zaměstnanců SOBCPO a UO, ale také nezanedbatelné množství OSS a OOSS. Většina má jen jednu regulaci zaměstnanosti - například Český statistický úřad zaměstnává je jen UO.
+
+Zdaleka největší díl zaměstnanosti ve státní správě představují tři velká ministerstva (financí, vnitra, práce a sociálních věcí) a jimi řízené organizace (například Úřad práce, Česká
+správa sociálního zabezpečení nebo Generální finanční ředitelství), které společně zaměstnávají zhruba 80% státních úředníků (zhruba 63 tisíc).
+^[Grafy A1 a A2 v příloze ukazují celkové součty platů státních zaměstnanců, které jsou podobně rozděleny jako jejich počty v grafech 1 a 2 (i protože rozdíly v počtech zaměstnanců hrají výraznější roli než rozdíly v průměrných platech).]
+
 
 ```{r counts, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 plot_ly(bar_dt,
@@ -189,7 +223,17 @@ plot_ly(bar_dt,
   add_bars() %>%
   layout(
     hovermode = "closest", legend = list(x = 100, y = 0.5),
-    title = list(text = "Vizualizace zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", y = 0.98),
+    annotations = list(text = str_wrap("Poznámka: MŠMT zkresluje graf vzhledem k zahrnutí  učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.",40),
+                align='left',
+                xref='paper',
+                yref='paper',
+                x=1.30,
+                y=0,
+                font = list(size = 8),
+                bordercolor='white',
+                borderwidth=1,
+                showarrow = FALSE),
+    title = list(text = "Graf 2. Po\u010Det st\u00E1tn\u00EDch zam\u011Bstnanc\u016F dle rozpo\u010Dtov\u00FDch kapitol (v tis\u00EDc\u00EDch)", y = 0.98),
     xaxis = list(title = "Kapitoly",tickmode = "array",categoryorder = "array", categoryarray = arrange(bar_dt, pocet_zamestnancu_agg)$kap_name),
     yaxis = list(title = "Po\u010Det zam\u011Bstnanc\u016F"), barmode = "stack"
   ) %>%
@@ -197,9 +241,8 @@ plot_ly(bar_dt,
 
 ```
 
-### Výdaje na platy
-```{r costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-plot_ly(bar_dt,
+```{r costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE, include = F}
+cost_per_chapter<-plot_ly(bar_dt,
   x = ~kap_name, y = ~ prostredky_na_platy / 1000000000, color = ~kategorie_2014_cz,
   hovertemplate = ~ ifelse(prostredky_na_platy > 0, paste("<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Platy kumulativn\u011B:", format(prostredky_na_platy, big.mark = " "), "K\u010D", "<br>", "Celkem za kapitolu: ",format(prostredky_na_platy_agg, big.mark = " "), "K\u010D"), ""),
   hoverinfo = "text"
@@ -216,8 +259,10 @@ plot_ly(bar_dt,
 ```
 
 
-### Průměrné platy státních zaměstnanců
-Tady by bylo lepší mít platy seřazené bez ohledu na skupinu (OSS/SOBCPO/PO/UO), ale nevešlo by se tam vše. Tady je podle mě praktické využití to vypínání jednotlivých skupin v legendě.
+## Průměrné platy státních zaměstnanců
+
+Průměrné platy státních zaměstnanců po jednotlivých rozpočtových kapitolách rozdělených podle regulace zaměstnanosti ukazuje graf 3.^[Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.]
+
 
 ```{r mean_costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 bar_dt %>%
@@ -244,13 +289,13 @@ bar_dt %>%
     ) %>%
     layout(
       yaxis = list(title = "", range = c(20, 60)), xaxis = list(tickfont = list(size = 10), showticklabels = T, tickangle = 0, "categoryorder" = "total ascending"),
-      title = list(text = "Pr\u016Fm\u011Brn\u00E9 m\u011Bs\u00ED\u010Dn\u00ED platy (v tis\u00EDc\u00EDch)", x = 50, y = 0.98), legend = list(x = 50, y = 0.5), showlegend = F
+      title = list(text = "Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", x = 50, y = 0.98), legend = list(x = 50, y = 0.5), showlegend = F
     ), keep = TRUE) %>%
   subplot(nrows = 5, shareY = TRUE)
 ```
 
 ```{r mean_costs_v2, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-bar_dt %>%
+wages_to_national<-bar_dt %>%
   group_by(kategorie_2014_cz) %>%
   filter(kategorie_2014 != "Prispevkove organizace") %>%
   filter(kategorie_2014_cz != "Sbory") %>%
@@ -274,7 +319,7 @@ bar_dt %>%
     ) %>%
     layout(
       yaxis = list(title = "",range=c(-50,70),ticksuffix="%"), xaxis = list(tickfont = list(size = 10), showticklabels = T, tickangle = 90, "categoryorder" = "total ascending"),
-      title = list(text = "Pr\u016Fm\u011Brn\u00E9 m\u011Bs\u00ED\u010Dn\u00ED platy ve st\u00E1tn\u00ED spr\u00E1v\u011B ve vztahu k pr\u016Fm\u011Brn\u00E9 mzd\u011B v n\u00E1rodn\u00EDm hospod\u00E1\u0159stv\u00ED", x = 50, y = 0.98), legend = list(x = 50, y = 0.5), showlegend = F
+      title = list(text = "Graf A3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (ve vztahu k pr\u016Fm\u011Brn\u00E9 mzd\u011B v n\u00E1rodn\u00EDm hospod\u00E1\u0159stv\u00ED )", x = 50, y = 0.98), legend = list(x = 50, y = 0.5), showlegend = F
     ), keep = TRUE) %>%
   subplot(nrows = 2, shareY = F)
 ```
@@ -841,6 +886,15 @@ zam_2019<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT") %>%
 # zk <-dt %>% filter(rok == 2012, kap_name == "MV",typ_rozpoctu == "SKUT") %>% select(typ_rozpoctu,name,pocet_zamestnancu) %>%
 #   pivot_wider(names_from = "typ_rozpoctu",values_from = "pocet_zamestnancu") %>% mutate("rozdil" = UPRAV-SCHV)
 
+```
+
+
+# Příloha. Doplňkové výsledky
+
+```{r appendix, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+tree_plot_cost
+cost_per_chapter
+wages_to_national
 ```
 
 
