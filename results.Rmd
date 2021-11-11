@@ -5,6 +5,12 @@ date: "17/07/2021"
 output:
   html_document: default
   pdf_document: default
+  
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 ---
 
 ```{r setup, include=FALSE}
@@ -21,30 +27,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r check_2014_2019,include = F}
-zam_2014<-dt %>% filter(rok == 2014,typ_rozpoctu == "SKUT") %>%
-  filter(!is.na(as.numeric(kap_num))) %>%
-  filter(name %in% c("PO", "OSS")) %>%
-  group_by(name) %>%
-  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
-
-
-zk<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT",name == "UO") %>%
-  #filter(!is.na(as.numeric(kap_num))) %>%
-  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
-
-#2018
-#SOBCPO 121 800
-#OSS_SS (krajské a obecní úřady?) 94 900
-#OOSS 70 900
-#UO 12 600
-zam_2019<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT") %>%
-  filter(!is.na(as.numeric(kap_num))) %>%
-  filter(!name %in% c("ROPO", "SS", "OSS")) %>%
-  group_by(kategorie_2014_cz) %>%
-  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
-
-```
 
 
 ```{r priprava, echo=FALSE,warning = FALSE,message = FALSE}
@@ -314,7 +296,7 @@ zk<-dt %>% filter(rok %in% c(2011,2012)) %>%
 
 dt %>%
   filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni")) %>%
-    filter(!kap_num %in% c(314, 306)) %>%
+    #filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014_cz, rok) %>%
   summarise(pocet_zamestnancu = sum(pocet_zamestnancu)) %>%
   group_by(rok) %>%
@@ -832,6 +814,33 @@ dt %>%
 
 ```
 
+```{r check_2014_2019,include = F}
+zam_2014<-dt %>% filter(rok == 2014,typ_rozpoctu == "SKUT") %>%
+  filter(!is.na(as.numeric(kap_num))) %>%
+  filter(name %in% c("PO", "OSS")) %>%
+  group_by(name) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
 
+
+zk<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT",name == "UO") %>%
+  #filter(!is.na(as.numeric(kap_num))) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
+
+#2018
+#SOBCPO 121 800
+#OSS_SS (krajské a obecní úřady?) 94 900
+#OOSS 70 900
+#UO 12 600
+zam_2019<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT") %>%
+  filter(!is.na(as.numeric(kap_num))) %>%
+  filter(!name %in% c("ROPO", "SS", "OSS")) %>%
+  group_by(kategorie_2014_cz) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
+
+
+# zk <-dt %>% filter(rok == 2012, kap_name == "MV",typ_rozpoctu == "SKUT") %>% select(typ_rozpoctu,name,pocet_zamestnancu) %>%
+#   pivot_wider(names_from = "typ_rozpoctu",values_from = "pocet_zamestnancu") %>% mutate("rozdil" = UPRAV-SCHV)
+
+```
 
 
