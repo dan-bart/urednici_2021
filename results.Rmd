@@ -92,32 +92,18 @@ text-align: justify}
 </style>
 
 
-# Shrnutí
-Český veřejný sektor zaměstnává zhruba 1 milion osob, tedy zhruba pětinu pracovní síly země. Zhruba 450 tisíc z nich hradí platy přímo státní rozpočet. A z nich zhruba jen 80 tisíc lze chápat jako státní úředníky. 
+## Shrnutí
 
-# Úvod
 
-Kde a za jaké platy pracují státní zaměstnanci a státní úředníci především jsou hlavními otázkami, které v této studii zodpovídáme pomocí skutečných rozpočtových dat získaných od Ministerstva financí pro roky 2003 až 2020.
+## Úvod
 
-Zodpovězení těchto hlavních otázek nám umožní chápat vývoj výše platů v kontextu vývoje celé ekonomiky, lépe pochopit potenciál diskutovaných konsolidačních opatření týkajících se státních zaměstnanců, pozorovat zda došlo zavedením Zákona o státní službě k výrazným změnám v počtech či platech státních úředníků nebo zda se změnila efektivita rozpočtového procesu vzhledem k tzv. neobsazeným místům.
+### Metodologie a Data
 
-Pro zodpovězení otázek v této studii využíváme stejný metodologický přístup (datová analýza) a stejný datový zdroj (detailní informace od Ministerstva financí ze Státního závěrečného účtu) jako ve studii vydané v červnu 2014 (https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji). (Počty i platy jsou přepočtené na plné úvazky.)
+## Výsledky
 
-# Výsledky
+### Počet zaměstnanců dle regulace zaměstnanosti
 
-## Počet zaměstnanců dle regulace zaměstnanosti
-
-Počet zaměstnanců placených přímo ze státního rozpočtu ukazuje graf 1 na základě informací o skutečném rozpočtu pro rok 2020.^[Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam “Reset axes” button.] 
-
-Státní zaměstnanci v grafu 1 jsou podle tzv. regulace zaměstnanosti rozděleni do šesti skupin. Ministerstva (1. skupina) a Ostatní ústřední úřady (2.) spolu dávají Ústřední orgány státní správy (ÚO). Když k nim přidáme Neústřední státní správu (3.) a Správu ve složkách obrany, bezpečnostní, celní a právní ochrany (4., SOBCPO), mluvíme dohromady o Státní správě. Když k nim dále přidáme Ostatní organizační složky státu (5., OOSS), včetně Armády, máme Organizační složky státu (OSS) nebo také Rozpočtové organizace (RO). Konečně, přidáním Příspěvkových organizací (6., PO), získáváme rozpočtové organizace a příspěvkové organizace (ROPO). Státní zaměstnanci jsou tedy rozděleni do šesti skupin, které všechny dohromady dávají ROPO. 
-
-Státní úředníci nejlépe odpovídají součtu prvních tří skupin (78 tisíc). (Plus se nabízí možnost odečtení od tohoto čísla zhruba 5 tisíc zaměstnanců, které podobně jako ve studii z roku 2014 lze jen stěží počítat jako státní úředníky a jedná se spíše o čelny sborů, například část vojáků formálně vedených pod ministerstvem obrany.) (Například pro rok 2020 je podobný komentář na straně 96 části C zde, ale důsledek pro počty státních úředníků z toho jasné nejsou https://www.mfcr.cz/cs/verejny-sektor/statni-rozpocet/plneni-statniho-rozpoctu/2020/statni-zaverecny-ucet-za-rok-2020-41689)
-
-Na ministerstvech pracuje 23 tisíc lidí, na ostatních ústředních úřadech (například Úřad vlády, Český úřad zeměměřický a katastrální nebo Český statistický úřad) pak pracuje dalších 5 tisíc lidí. Největší část státních úředníků, 51 tisíc, pracuje na úřadech neústřední státní správy, mezi které patří Generální finanční ředitelství, Úřad práce nebo Česká správa sociálního zabezpečení.
-
-Mezi sbory (82 tisíc) jsou například policisté a hasiči, ale i vězeňští dozorci. V ostatní včetně armády (39 tisíc) je právě armáda pod kapitolou ministerstva vnitra zodpovědná za většinu zaměstnanců (32 tisíc). 
-
-Příspěvkové organizace mají 265 tisíc zaměstnanců a naprostá většina z nich spadá pod kapitolu Ministerstva školství a tělevýchovy, tedy veřejných základních a středních škol a necelá polovina (254 tisíc). Tato skupina tedy tvoří většinu státních zaměstnanců. Nejvýznamnější jednotlivou skupinou jsou Příspěvkové organizace, včetně učitelů a dalších zaměstnanců škol, což lze vidět dobře i v členění zaměstnanců dle rozpočtových kapitol.
+^[Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam “Reset axes” button.] 
 
 
 ```{r tree_prep, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
@@ -173,7 +159,7 @@ tree_data<-tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$pare
 
 ```{r tree_plot, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
-tree_plot_cost<-tree_data %>%
+A1<-tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
@@ -203,12 +189,8 @@ tree_plot_count
 ```
 
 
-## Počet zaměstnanců dle rozpočtových kapitol
+### Počet zaměstnanců dle rozpočtových kapitol
 
-Počty zaměstnanců a objem platů dle rozpočtových kapitol ukazuje následující graf. Z jedné rozpočtové kapitoly mohou být placeny zaměstnanci lišící se dle regulace zaměstnanosti. Například Ministerstvo vnitra má velké množství zaměstnanců SOBCPO a UO, ale také nezanedbatelné množství OSS a OOSS. Většina má jen jednu regulaci zaměstnanosti - například Český statistický úřad zaměstnává je jen UO.
-
-Zdaleka největší díl zaměstnanosti ve státní správě představují tři velká ministerstva (financí, vnitra, práce a sociálních věcí) a jimi řízené organizace (například Úřad práce, Česká
-správa sociálního zabezpečení nebo Generální finanční ředitelství), které společně zaměstnávají zhruba 80% státních úředníků (zhruba 63 tisíc).
 ^[Grafy A1 a A2 v příloze ukazují celkové součty platů státních zaměstnanců, které jsou podobně rozděleny jako jejich počty v grafech 1 a 2 (i protože rozdíly v počtech zaměstnanců hrají výraznější roli než rozdíly v průměrných platech).]
 
 
@@ -242,7 +224,7 @@ plot_ly(bar_dt,
 ```
 
 ```{r costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE, include = F}
-cost_per_chapter<-plot_ly(bar_dt,
+A2<-plot_ly(bar_dt,
   x = ~kap_name, y = ~ prostredky_na_platy / 1000000000, color = ~kategorie_2014_cz,
   hovertemplate = ~ ifelse(prostredky_na_platy > 0, paste("<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Platy kumulativn\u011B:", format(prostredky_na_platy, big.mark = " "), "K\u010D", "<br>", "Celkem za kapitolu: ",format(prostredky_na_platy_agg, big.mark = " "), "K\u010D"), ""),
   hoverinfo = "text"
@@ -259,9 +241,9 @@ cost_per_chapter<-plot_ly(bar_dt,
 ```
 
 
-## Průměrné platy státních zaměstnanců
+### Průměrné platy státních zaměstnanců
 
-Průměrné platy státních zaměstnanců po jednotlivých rozpočtových kapitolách rozdělených podle regulace zaměstnanosti ukazuje graf 3.^[Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.]
+^[Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.]
 
 
 ```{r mean_costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
@@ -295,7 +277,7 @@ bar_dt %>%
 ```
 
 ```{r mean_costs_v2, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-wages_to_national<-bar_dt %>%
+A3<-bar_dt %>%
   group_by(kategorie_2014_cz) %>%
   filter(kategorie_2014 != "Prispevkove organizace") %>%
   filter(kategorie_2014_cz != "Sbory") %>%
@@ -325,10 +307,7 @@ wages_to_national<-bar_dt %>%
 ```
 
 
-## Vývoj v čase
-
-
-### Vývoj počtu zaměstnanců
+### Počty a platy státních úředníků 2003-2020
 ```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 #kapitoly s velkým nárůstem zaměstnanců v období 2011-2012
 zk<-dt %>% filter(rok %in% c(2011,2012)) %>% 
@@ -341,7 +320,7 @@ zk<-dt %>% filter(rok %in% c(2011,2012)) %>%
 
 dt %>%
   filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni")) %>%
-    #filter(!kap_num %in% c(314, 306)) %>%
+  filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014_cz, rok) %>%
   summarise(pocet_zamestnancu = sum(pocet_zamestnancu)) %>%
   group_by(rok) %>%
@@ -357,8 +336,18 @@ dt %>%
   ) %>%
   add_bars() %>%
   layout(
-    title = list(text = "V\u00FDvoj po\u010Dtu zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", y = 0.98),
-    xaxis = list(title = "Rok"),
+    title = list(text = "Graf 4. Počet státních úředníků 2003-2020 (v tisících)", y = 0.98),
+    annotations = list(text = str_wrap("Pro přehlednost vynechány kapitoly MZV a MV, které by vzhledem ke strukturálním změnám způsobily kumulativní nárůst o zhruba 60% na Ministerstvech mezi roky 2011-2012. Graf s kapitolami MZV a MV je v příloze",40),
+                align='left',
+                xref='paper',
+                yref='paper',
+                x=1.30,
+                y=0,
+                font = list(size = 8),
+                bordercolor='white',
+                borderwidth=1,
+                showarrow = FALSE),
+    xaxis = list(title = ""),
     yaxis = list(title = ""),
     barmode = "stack", legend = list(x = 100, y = 0.5)
   ) %>%
@@ -366,11 +355,10 @@ dt %>%
 ```
 
 
-### Vývoj prostředků na platy
 ```{r cost_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 vyvoj_bar <- dt %>%
   filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni")) %>%
-      filter(!kap_num %in% c(314, 306)) %>%
+  filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014_cz, rok) %>%
   summarise(
     prostredky_na_platy_nom = sum(prostredky_na_platy),
@@ -379,7 +367,7 @@ vyvoj_bar <- dt %>%
   group_by(rok) %>%
   mutate(prostredky_na_platy_nom_agg = sum(prostredky_na_platy_nom),
          prostredky_na_platy_real_agg = sum(prostredky_na_platy_real))
-vyvoj_bar %>%
+A4<-vyvoj_bar %>%
   plot_ly(
     x = ~rok, y = ~ prostredky_na_platy_nom / 1000000000, color = ~kategorie_2014_cz,
     hovertemplate = ~ paste(
@@ -392,14 +380,24 @@ vyvoj_bar %>%
   ) %>%
   add_bars() %>%
   layout(
-    title = list(text = "V\u00FDvoj v\u00FDdaj\u016F na platy (v miliard\u00E1ch)", y = 0.98),
-    xaxis = list(title = "Rok"),
+    title = list(text = "Graf A4. Výdaje na platy státních úředníků 2003-2020 (v miliardách Kč)", y = 0.98),
+    annotations = list(text = str_wrap("Pro přehlednost vynechány kapitoly MZV a MV, které by vzhledem ke strukturálním změnám způsobily kumulativní nárůst o zhruba 60% na Ministerstvech mezi roky 2011-2012.<br> V roce 2011 došlo k změně klasifikace státních zaměstnanců, která způsobila část změny v počtu státních úředníků z roku 2010 na rok 2011. Detaily viz text.",40),
+            align='left',
+            xref='paper',
+            yref='paper',
+            x=1.30,
+            y=0,
+            font = list(size = 8),
+            bordercolor='white',
+            borderwidth=1,
+            showarrow = FALSE),
+    xaxis = list(title = ""),
     yaxis = list(title = ""),
     barmode = "stack", legend = list(x = 100, y = 0.5)
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
 
-vyvoj_bar %>%
+A5<-vyvoj_bar %>%
   plot_ly(
     x = ~rok, y = ~ prostredky_na_platy_real / 1000000000, color = ~kategorie_2014_cz,
     hovertemplate = ~ paste(
@@ -412,8 +410,18 @@ vyvoj_bar %>%
   ) %>%
   add_bars() %>%
   layout(
-    title = list(text = "V\u00FDvoj re\u00E1ln\u00FDch v\u00FDdaj\u016F na platy (v miliard\u00E1ch; ceny roku 2020)", y = 0.98),
-    xaxis = list(title = "Rok"),
+    title = list(text = "Graf A5. Reálné výdaje na platy státních úředníků 2003-2020 (v miliardách Kč, ceny roku 2020)", y = 0.98),
+    annotations = list(text = str_wrap("Pro přehlednost vynechány kapitoly MZV a MV, které by vzhledem ke strukturálním změnám způsobily kumulativní nárůst o zhruba 60% na Ministerstvech mezi roky 2011-2012.<br> V roce 2011 došlo k změně klasifikace státních zaměstnanců, která způsobila část změny v počtu státních úředníků z roku 2010 na rok 2011. Detaily viz text.",40),
+            align='left',
+            xref='paper',
+            yref='paper',
+            x=1.30,
+            y=0,
+            font = list(size = 8),
+            bordercolor='white',
+            borderwidth=1,
+            showarrow = FALSE),
+    xaxis = list(title = ""),
     yaxis = list(title = ""),
     barmode = "stack", legend = list(x = 100, y = 0.5)
   ) %>%
@@ -438,7 +446,7 @@ aux2 <- dt %>%
   mutate(output = (prostredky_na_platy / (base_2003 * plat_base) - 1)) %>%
   mutate(output_weighted = (prostredky_na_platy / base_2003 - plat_base) / plat_base)
 
-aux2 %>%
+A6<-aux2 %>%
   plot_ly(
     x = ~rok, y = ~ output * 100, type = "scatter", color = ~kategorie_2014_cz, mode = "line", linetypes = lty,
     text = ~ paste(
@@ -449,8 +457,18 @@ aux2 %>%
     legendgroup = ~kategorie_2014_cz
   ) %>%
   layout(
-    title = list(text = "Kumulovan\u00E1 zm\u011Bna re\u00E1ln\u00FDch v\u00FDdaj\u016F na platy (v %)", y = 0.98),
-    xaxis = list(title = "Rok"),
+    title = list(text = "Graf A6. Kumulovaná změna reálných výdajů na platy státních úředníků 2003-2020 (v %)", y = 0.98),
+    annotations = list(text = str_wrap("Pro přehlednost vynechány kapitoly MZV a MV, které by vzhledem ke strukturálním změnám způsobily kumulativní nárůst o zhruba 60% na Ministerstvech mezi roky 2011-2012.<br> V roce 2011 došlo k změně klasifikace státních zaměstnanců, která způsobila část změny v počtu státních úředníků z roku 2010 na rok 2011. Detaily viz text.",40),
+        align='left',
+        xref='paper',
+        yref='paper',
+        x=1.30,
+        y=0,
+        font = list(size = 8),
+        bordercolor='white',
+        borderwidth=1,
+        showarrow = FALSE),
+    xaxis = list(title = ""),
     yaxis = list(title = "", tickprefix = "+", ticksuffix = "%"), legend = list(x = 100, y = 0.5)
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
@@ -458,11 +476,10 @@ aux2 %>%
 
 
 
-### Vývoj průměrných platů
 ```{r mean_wage_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
-  # filter(!kap_num %in% c(314,306)) %>% #not included in previous
+  #filter(!kap_num %in% c(314,306)) %>% #not included in previous
   group_by(rok, kategorie_2014_cz) %>%
   summarise(
     prumerny_plat_agg = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)) / 12,
@@ -484,8 +501,8 @@ dt %>%
     legendgroup = ~kategorie_2014_cz
   ) %>%
   layout(
-    title = list(text = "Re\u00E1ln\u00E9 pr\u016Fm\u011Brn\u00E9 hrub\u00E9 m\u011Bs\u00ED\u010Dn\u00ED platy (v tis\u00EDc\u00EDch; ceny roku 2020)", y = 0.98),
-    xaxis = list(title = "Rok"),
+    title = list(text = "Graf 5. Reálné průměrné hrubé měsíční platy (v tisících; ceny roku 2020)", y = 0.98),
+    xaxis = list(title = ""),
     yaxis = list(title = ""), legend = list(x = 100, y = 0.5)
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
@@ -496,7 +513,7 @@ dt %>%
 
 
 ```{r mean_wage_pct_change_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-dt %>%
+A7<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
   filter(!kap_num %in% c(314, 306)) %>%
   # not included in previous
@@ -525,8 +542,18 @@ dt %>%
     legendgroup = ~kategorie_2014_cz
   ) %>%
   layout(
-    title = list(text = "Kumulovan\u00E1 zm\u011Bna re\u00E1ln\u00FDch pr\u016Fm\u011Brn\u00FDch plat\u016F (v %)", y = 0.98),
-    xaxis = list(title = "Rok"),
+    title = list(text = "Graf A7. Kumulovaná změna reálných průměrných platů státních úředníků (v %)", y = 0.98),
+    annotations = list(text = str_wrap("Pro přehlednost vynechány kapitoly MZV a MV, které by vzhledem ke strukturálním změnám způsobily kumulativní nárůst o zhruba 60% na Ministerstvech mezi roky 2011-2012.",40),
+        align='left',
+        xref='paper',
+        yref='paper',
+        x=1.30,
+        y=0,
+        font = list(size = 8),
+        bordercolor='white',
+        borderwidth=1,
+        showarrow = FALSE),
+    xaxis = list(title = ""),
     yaxis = list(title = "", tickprefix = "+", ticksuffix = "%"), legend = list(x = 100, y = 0.5)
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
@@ -534,16 +561,11 @@ dt %>%
 
 ```
 
-### Průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství (pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze)
-Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství.
-Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.
-Popisky "Největší a nejmenší nárust" zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárust by byl 15%. 
+
 ```{r wage_to_general, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
-  filter(!kap_num %in% c(314, 306)) %>%
-  # not included in previous
-  # filter(kap_num != 355) %>% #ustav_pro_studium_totalitnich_rezimu dostal v roce 2008 300x vetší budget, což zkresluje analýzu
+  #filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014, kategorie_2014_cz, rok) %>%
   summarise(
     wage_to_general_ = mean(wage_to_general),
@@ -567,17 +589,25 @@ dt %>%
     legendgroup = ~kategorie_2014_cz
   ) %>%
   layout(
-    title = list(text = "Pr\u016Fm\u011Brn\u00FD plat ve st\u00E1tn\u00ED spr\u00E1v\u011B ve vztahu k pr\u016Fm\u011Brn\u00E9 mzd\u011B v n\u00E1rodn\u00EDm hospod\u00E1\u0159stv\u00ED", y = 0.98),
-    xaxis = list(title = "Rok"),
-    yaxis = list(title = "", ticksuffix = "%"), legend = list(x = 100, y = 0.5)
+    title = list(text = "Graf 6. Průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství", y = 0.98),
+        annotations = list(text = str_wrap("Poznámky: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství. Popisky “Největší a nejmenší nárust” zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárůst by byl 15%.",40),
+        align='left',
+        xref='paper',
+        yref='paper',
+        x=1.30,
+        y=0,
+        font = list(size = 8),
+        bordercolor='white',
+        borderwidth=1,
+        showarrow = FALSE),
+    xaxis = list(title = ""),
+    yaxis = list(title = "", ticksuffix = "%"), legend = list(x = 100, y =0.8)
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
 
 
 ```
 
-
-### Celkové reálné změny platů a počtu zaměstnanců v období 2004-2020
 
 ```{r 2020_effect, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
@@ -593,9 +623,10 @@ line <- list(
 )
 
 infl <- dt %>% filter(rok == 2004) %>% select(base_2020) %>% first() %>% pull()
-dt %>%
+A8<-dt %>%
   filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava") %>%
   filter(rok %in% c(2004, 2020)) %>%
+  filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014_cz, rok) %>%
   summarise(
     base_2020 = base_2020[1],
@@ -618,17 +649,24 @@ dt %>%
     legendgroup = ~kategorie_2014_cz
   ) %>%
   layout(
-    title = list(text = "Celkov\u00E9 re\u00E1ln\u00E9 zm\u011Bny plat\u016F a po\u010Dtu zam\u011Bstnanc\u016F v obdob\u00ED 2004-2020", y = 0.98),
+    title = list(text = "Graf A8. Celkové reálné změny platů a počtu zaměstnanců v období 2004-2020", y = 0.98),
+    annotations = list(text = str_wrap("Pro přehlednost vynechány kapitoly MZV a MV, které by vzhledem ke strukturálním změnám způsobily kumulativní nárůst o zhruba 60% na Ministerstvech mezi roky 2011-2012.",40),
+        align='left',
+        xref='paper',
+        yref='paper',
+        x=1,
+        y=0,
+        font = list(size = 8),
+        bordercolor='white',
+        borderwidth=1,
+        showarrow = FALSE),
     showlegend = FALSE,
-    xaxis = list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu", ticksuffix = "%"),
-    yaxis = list(title = "Zm\u011Bna po\u010Dtu zam\u011Bstnanc\u016F", showtickprefix = "last", tickprefix = "+", ticksuffix = "%", showticksuffix = "all"), legend = list(x = 100, y = 0.5),
-    shapes = line
+    xaxis = list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu", ticksuffix = "%",range = c(-5,60)),
+    yaxis = list(title = "Zm\u011Bna po\u010Dtu zam\u011Bstnanc\u016F", showtickprefix = "last",range = c(-20,15), tickprefix = "+", ticksuffix = "%", showticksuffix = "all"), legend = list(x = 100, y = 0.5)
   ) %>%
   add_markers() %>%
   add_text(text = ~ str_wrap(kategorie_2014_cz, 10), textposition = "top center")
 ```
-
-### Neobsazená pracovní místa: Rozdíl mezi schváleným a skutečným počtem zaměstnanců
 
 
 ```{r prac_mista_skut_rozp_kap, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
@@ -649,7 +687,7 @@ kaps_to_exclude <- dt %>%
   pull(kap_num)
 
 
-dt %>%
+A9<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   filter(!kap_num %in% c(kaps_to_exclude, 312)) %>%
@@ -686,12 +724,12 @@ dt %>%
     ) %>%
     layout(yaxis = list(title = "", range = c(-30, 5), ticksuffix = "%"), xaxis = list(tickangle = 90), legend = list(x = 100, y = 0.5)), keep = TRUE) %>%
   subplot(nrows = 5, shareX = TRUE, shareY = TRUE) %>%
-  layout(title = list(text = "Rozd\u00EDl mezi schv\u00E1len\u00FDm a skute\u010Dn\u00FDm po\u010Dtem zam\u011Bstnanc\u016F (v %)", y = 0.98), showlegend = FALSE)
+  layout(title = list(text = "Graf A9. Rozdíl mezi schváleným a skutečným počtem zaměstnanců (v %)", y = 0.98), showlegend = FALSE)
 ```
 
 
 ```{r platy_skut_rozp_kap, echo=FALSE, out.width="100%",warning = FALSE,warning = FALSE,message = FALSE}
-dt %>%
+A10<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   filter(!kap_num %in% c(kaps_to_exclude, 312)) %>%
@@ -726,12 +764,12 @@ dt %>%
     ) %>%
     layout(yaxis = list(title = "", range = c(0, 30), ticksuffix = "%"), xaxis = list(tickangle = 90), legend = list(x = 100, y = 0.5)), keep = TRUE) %>%
   subplot(nrows = 5, shareX = TRUE, shareY = T) %>%
-  layout(title = list(text = "Rozd\u00EDl v pr\u016Fm\u011Brn\u00FDch platech mezi schv\u00E1len\u00FDm rozpo\u010Dtem a skute\u010Dnost\u00ED (v %)", y = 0.98), showlegend = FALSE)
+  layout(title = list(text = "Graf A10. Rozdíl v průměrných platech mezi schváleným rozpočtem a skutečností (v %)", y = 0.98), showlegend = FALSE)
 
 ```
 
 ```{r prac_mista_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-dt %>%
+A11<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   select(rok, kategorie_2014_cz, typ_rozpoctu, kap_num, pocet_zamestnancu) %>%
@@ -766,14 +804,14 @@ dt %>%
     ) %>%
     layout(yaxis = list(title = "", range = c(-15, 1), ticksuffix = "%"), legend = list(x = 100, y = 0.5), showlegend = F), keep = TRUE) %>%
   subplot(nrows = 2, shareX = TRUE, shareY = TRUE) %>%
-  layout(title = list(text = "Rozd\u00EDl mezi schv\u00E1len\u00FDm a skute\u010Dn\u00FDm po\u010Dtem zam\u011Bstnanc\u016F (v %)", y = 0.98))
+  layout(title = list(text = "Graf A11. Rozdíl mezi schváleným a skutečným počtem zaměstnanců (v %)", y = 0.98))
 ```
 
 
 
 
 ```{r platy_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,warning = FALSE,message = FALSE}
-dt %>%
+A12<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   select(rok, kategorie_2014_cz, typ_rozpoctu, kap_num, prostredky_na_platy, pocet_zamestnancu) %>%
@@ -810,30 +848,30 @@ dt %>%
     ) %>%
     layout(yaxis = list(title = "", range = c(0, 15), ticksuffix = "%"), legend = list(x = 100, y = 0.5), showlegend = F), keep = TRUE) %>%
   subplot(nrows = 2, shareX = TRUE, shareY = TRUE) %>%
-  layout(title = list(text = "Rozd\u00EDl v pr\u016Fm\u011Brn\u00FDch platech mezi schv\u00E1len\u00FDm rozpo\u010Dtem a skute\u010Dnost\u00ED (v %)", y = 0.98))
+  layout(title = list(text = "Graf A12. Rozdíl v průměrných platech mezi schváleným rozpočtem a skutečností (v %)", y = 0.98))
 ```
 
 
 ```{r Scatter plat narust, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
 
-dt %>%
+A13<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu == "SKUT") %>%
-  filter(rok %in% c(2004,2020)) %>%
+  filter(rok %in% c(2003,2020)) %>%
   select(rok, kategorie_2014_cz, cz_kap_name,kap_name, prumerny_plat, pocet_zamestnancu) %>%
   pivot_wider(names_from = c("rok"),values_from = c("prumerny_plat","pocet_zamestnancu")) %>%
   mutate( #wont be used
-    zam_change = (pocet_zamestnancu_2020/pocet_zamestnancu_2004 - 1),
-    plat_change = (prumerny_plat_2020/(prumerny_plat_2004*infl) - 1)
+    zam_change = (pocet_zamestnancu_2020/pocet_zamestnancu_2003 - 1),
+    plat_change = (prumerny_plat_2020/(prumerny_plat_2003*infl) - 1)
   ) %>%
   group_by(kategorie_2014_cz) %>% 
   group_map(~ plot_ly(
-    data = ., x = ~prumerny_plat_2004/1000, y = ~ plat_change*100, type = "scatter" , mode = "markers", name = ~kategorie_2014_cz,
+    data = ., x = ~prumerny_plat_2003/1000, y = ~ plat_change*100, type = "scatter" , mode = "markers", name = ~kategorie_2014_cz,
     hovertemplate = ~ paste(
       "<extra></extra>",
       "Kapitola: ", cz_kap_name, "<br>",
-      "Pr\u016Fm\u011Brn\u00FD plat 2004 ", ": ", format(round(prumerny_plat_2004, 0), big.mark = " "), "K\u010D", "<br>",
+      "Pr\u016Fm\u011Brn\u00FD plat 2003 ", ": ", format(round(prumerny_plat_2003, 0), big.mark = " "), "K\u010D", "<br>",
       "Pr\u016Fm\u011Brn\u00FD plat 2020", ": ", format(round(prumerny_plat_2020, 0), big.mark = " "), "K\u010D", "<br>",
       "Zm\u011Bna", ": ", format(round(plat_change*100, 1),big.mark = " "), "%" 
     )
@@ -849,12 +887,12 @@ dt %>%
       yanchor = "top",
       showarrow = FALSE
     ) %>%
-    layout(yaxis = list(title = "", range = c(10, 60), ticksuffix = "%"),
-           xaxis = list(title = "Pr\u016Fm\u011Brn\u00FD plat  v roce 2004", range = c(15, 35)),
+    layout(yaxis = list(title = "", range = c(15, 75), ticksuffix = "%"),
+           xaxis = list(title = "Pr\u016Fm\u011Brn\u00FD plat  v roce 2003", range = c(15, 35)),
            legend = list(x = 100, y = 0.5), showlegend = F) %>%
     add_text(text = ~ str_wrap(kap_name, 10), textposition = "bottom left",textfont =list(size = 8)),keep = TRUE) %>%
   subplot(nrows = 2, shareX = T, shareY = T) %>%
-  layout(title = list(text = "Procentu\u00E1ln\u00ED n\u00E1rust pr\u016Fm\u011Brn\u00FDch plat\u016F (v tis\u00EDc\u00EDch, ceny roku 2020)",xaxis = list(title = "Pr\u016Fm\u011Brn\u00FD plat  v roce 2004"), y = 0.98))
+  layout(title = list(text = "Graf A13. Procentuální nárůst průměrných platů vs průměrný plat v roce 2003",xaxis = list(title = "Pr\u016Fm\u011Brn\u00FD plat  v roce 2003"), y = 0.98))
 
 ```
 
@@ -882,18 +920,68 @@ zam_2019<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT") %>%
   summarise(pocet_zamestnancu = sum(pocet_zamestnancu))
 
 
-# zk <-dt %>% filter(rok == 2012, kap_name == "MV",typ_rozpoctu == "SKUT") %>% select(typ_rozpoctu,name,pocet_zamestnancu) %>%
-#   pivot_wider(names_from = "typ_rozpoctu",values_from = "pocet_zamestnancu") %>% mutate("rozdil" = UPRAV-SCHV)
+ zk <-dt %>% filter(rok == 2012, kap_name == "MV",typ_rozpoctu == "SKUT") %>% select(typ_rozpoctu,name,pocet_zamestnancu) %>%
+  pivot_wider(names_from = "typ_rozpoctu",values_from = "pocet_zamestnancu")
 
 ```
+## Závěry
 
+## Literatura
+https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji
 
-# Příloha. Doplňkové výsledky
+## Příloha. Doplňkové výsledky
 
 ```{r appendix, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-tree_plot_cost
-cost_per_chapter
-wages_to_national
+A1
+A2
+A3
+A4
+A5
+A6
+A7
+A8
+A10
+A11
+A12
+A13
 ```
 
+### Časové grafy obsahující kapitoly MZV a MV
+
+```{r full graphs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+dt %>%
+  filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni")) %>%
+  #filter(!kap_num %in% c(314, 306)) %>%
+  group_by(kategorie_2014_cz, rok) %>%
+  summarise(pocet_zamestnancu = sum(pocet_zamestnancu)) %>%
+  group_by(rok) %>%
+  mutate(pocet_zamestnancu_agg = sum(pocet_zamestnancu)) %>%
+  plot_ly(
+    x = ~rok, y = ~ pocet_zamestnancu / 1000, color = ~kategorie_2014_cz,
+    hovertemplate = ~ paste(
+      "<extra></extra>", "Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
+      "Zam\u011Bstnanc\u016F:", format(pocet_zamestnancu, big.mark = " "), "<br>",
+      "Celkem za rok: ", format(pocet_zamestnancu_agg, big.mark = " ")
+    ),
+    hoverinfo = "text"
+  ) %>%
+  add_bars() %>%
+  layout(
+    title = list(text = "Graf B4. Počet státních úředníků 2003-2020 (v tisících)", y = 0.98),
+    annotations = list(text = str_wrap("Zahrnuty kapitoly MZV a MV.",40),
+                align='left',
+                xref='paper',
+                yref='paper',
+                x=1.30,
+                y=0,
+                font = list(size = 8),
+                bordercolor='white',
+                borderwidth=1,
+                showarrow = FALSE),
+    xaxis = list(title = ""),
+    yaxis = list(title = ""),
+    barmode = "stack", legend = list(x = 100, y = 0.5)
+  ) %>%
+  config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
+```
 
