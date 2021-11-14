@@ -247,24 +247,24 @@ A2<-plot_ly(bar_dt,
 
 
 ```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-
-B3<-plot_ly(bar_dt,
+bar_dt%>%filter(prumerny_plat>25000) %>%
+plot_ly(
   x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz, 
-  type = "scatter" , mode = "markers",
+  type = "scatter" , mode = "line+markers",line = list( color='gainsboro',width=3),
   hovertemplate = ~ ifelse(prostredky_na_platy > 0, paste("<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Pr\u016Fm\u011Brn\u00FD plat:", format(prumerny_plat, big.mark = " "), "K\u010D"), ""),
   hoverinfo = "text"
 ) %>%
   layout(
     hovermode = "closest",
-    title = list(text = "Graf B3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", y = 0.98),
-    xaxis = list(title = "", categoryorder = "array", categoryarray = arrange(bar_dt, prostredky_na_platy_agg)$kap_name),
+    title = list(text = "Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", y = 0.98),
+    xaxis = list(title = ""),
     yaxis = list(title = ""),
     showlegend = F
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
 ```
 
-```{r mean_costs_main, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_costs_SS,include = FALSE, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
 aux<-bar_dt %>% 
   filter(name %in% c("UO","OSS_SS")) %>% ungroup()
@@ -470,7 +470,7 @@ aux2 <- dt %>%
 A6<-aux2 %>%
   plot_ly(
     x = ~rok, y = ~ output * 100, type = "scatter", color = ~kategorie_2014_cz, 
-    linetypes = lty,
+    linetypes = lty,mode = "line",
     text = ~ paste(
       " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
       "Hodnota:", round(output, 4) * 100, "%"
@@ -957,7 +957,6 @@ https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-k
 A1
 A2
 A3
-B3
 A4
 A5
 A6
