@@ -166,13 +166,26 @@ text-align: justify}
 
 ## Úvod
 
-### Metodologie a Data
+Veřejný sektor celkem zaměstnává téměř 1 milion lidí. Necelá polovina z těchto zaměstnanců veřejného sektoru je dle údajů pro rok 2020 placena ze státního rozpočtu: 265 tisíc skrz příspěvkové organizace, pod které spadají i učitelé a další zaměstnanci škol, a dalších 198 tisíc skrz organizace, které zahrnují například policii, armádu, ministerstva a další úřady. Platy těchto celkem 464 tisíc **státních zaměstnanců** jsou hrazeny ze státního rozpočtu (a takto i definujeme státní zaměstnance, tj. když je jejich plat hrazen ze státního rozpočtu, což je jiné chápání tohoto pojmu než dle zákona o státní službě). Díky tomuto pro ně máme od Ministerstva financí detailní informace o jejich počtech a platech. Tato detailní data v první části této studie analyzujeme. 
 
-## Výsledky
+Z těchto státních zaměstnanců se dá 78 tisíc považovat za **státní úředníky**. Státní úředníci jsou častým předmětem veřejných diskuzí, je to napříč organizacemi relativně srovnatelná skupina zaměstnanců (alespoň na rozdíl od ostatních státních zaměstnanců) a je to důležitá skupina zaměstnanců z hlediska fungování státu a realizace jeho veřejných politik.
+Proto v druhé části této studie analyzujeme vývoj jejich počtů a platů mezi roky 2003 a 2020.
 
-### Počet zaměstnanců dle regulace zaměstnanosti
+**Kde a za jaké platy pracují** státní zaměstnanci, a státní úředníci především, jsou hlavními otázkami pro tuto studii. Zodpovězení těchto otázek nám umožní chápat vývoj výše platů v kontextu vývoje celé ekonomiky, lépe pochopit potenciál diskutovaných konsolidačních opatření týkajících se státních zaměstnanců, pozorovat zda došlo zavedením Zákona o státní službě k výrazným změnám v počtech či platech státních úředníků nebo zda se změnila efektivita rozpočtového procesu vzhledem k tzv. neobsazeným místům.
 
-^[Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam “Reset axes” button.] 
+Pro zodpovězení otázek v této studii využíváme odpovídající metodologický přístup (analýza dat) a nejvhodnější dostupná data. Konkrétně se jedná o stejný datový zdroj (detailní **data od Ministerstva financí ze Státního závěrečného účtu**) jako ve studii IDEA vydané v červnu 2014. Data z této dřívější [studie](https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji) pro roky 2003 až 2012 rozšiřujeme o data pro roky 2013 až 2020, která jsme obdrželi od Ministerstva financí 10. 3. 2021. Metodologické a datové detaily popisujeme v separátní sekci v příloze.
+
+## Státní zaměstnanci
+### Počet státních zaměstnanců
+
+Celkem 464 tisíc zaměstnanců je placeno ze státního rozpočtu dle údajů pro rok 2020. Tyto státní zaměstnance můžeme dále členit dle regulace zaměstnanosti (graf 1) nebo dle rozpočtových kapitol (graf 2).^[Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam “Reset axes” button.] V příloze vysvětlujeme základní logiku těchto dvou členění, které při diskuzi výsledků níže kombinujeme.
+
+**Státní úředníci** nejlépe odpovídají součtu prvních tří skupin dle regulace zaměstnanosti (graf 1): ministerstva, úřady ústřední i neústřední státní správy (78 tisíc). Na ministerstvech pracuje 23 tisíc lidí, na ostatních ústředních úřadech (například Úřad vlády, Český úřad zeměměřický a katastrální nebo Český statistický úřad) pak pracuje dalších 4 tisíc lidí. Největší část státních úředníků, 51 tisíc, pracuje na úřadech neústřední státní správy, mezi které patří Generální finanční ředitelství, Úřad práce nebo Česká správa sociálního zabezpečení. Z členění dle rozpočtových kapitol (graf 2) vidíme, že zdaleka největší díl zaměstnanosti ve státní správě představují tři velká ministerstva (financí, vnitra, práce a sociálních věcí) a jimi řízené organizace (například Úřad práce, Česká správa sociálního zabezpečení nebo Generální finanční ředitelství), které společně zaměstnávají zhruba 80% státních úředníků (zhruba 63 tisíc).^[Grafy A1 a A2 v příloze ukazují celkové součty platů státních zaměstnanců, které jsou podobně rozděleny jako jejich počty v grafech 1 a 2 (i protože rozdíly v počtech zaměstnanců hrají výraznější roli než rozdíly v průměrných platech).]
+Takto vymezeným státním úředníkům se dále věnujeme pomocí analýzy časové řady 2003-2020 v druhé části studie.
+
+**Sbory** (82 tisíc) zahrnují například policisty a hasiče, ale i vězeňské dozorce. V ostatní včetně armády (39 tisíc) je právě armáda pod kapitolou ministerstva obrany zodpovědná za většinu zaměstnanců (32 tisíc). 
+
+**Příspěvkové organizace** mají 265 tisíc zaměstnanců a naprostá většina z nich (254 tisíc) spadá pod kapitolu Ministerstva školství a tělovýchovy, tedy veřejných základních a středních škol. Tato skupina tedy tvoří většinu státních zaměstnanců (byť prakticky jde o zaměstnance škol, které zřizují samosprávy, viz výše). Důležitost příspěvkových organizací včetně učitelů a dalších zaměstnanců škol lze vidět dobře i v členění zaměstnanců dle rozpočtových kapitol (graf 2). 
 
 
 
@@ -212,8 +225,6 @@ tree_plot_count
 
 ### Počet zaměstnanců dle rozpočtových kapitol
 
-^[Grafy A1 a A2 v příloze ukazují celkové součty platů státních zaměstnanců, které jsou podobně rozděleny jako jejich počty v grafech 1 a 2 (i protože rozdíly v počtech zaměstnanců hrají výraznější roli než rozdíly v průměrných platech).]
-
 
 
 
@@ -221,7 +232,7 @@ tree_plot_count
 
 
 plot_ly(bar_dt,
-  x = ~kap_name, y = ~ pocet_zamestnancu / 1000,name=~kategorie_2014_cz,type="bar",marker = list(color = cols),
+  x = ~kap_name, y = ~ pocet_zamestnancu / 1000,color=~kategorie_2014_cz,type="bar",
   hovertemplate = ~ ifelse(pocet_zamestnancu > 0, paste(
     "<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Po\u010Det zam\u011Bstnanc\u016F:",
     format(pocet_zamestnancu, big.mark = " "), "<br>", "Celkem za kapitolu: ",format(pocet_zamestnancu_agg, big.mark = " ")
@@ -266,8 +277,9 @@ A2<-plot_ly(bar_dt,
 
 
 ### Průměrné platy státních zaměstnanců
+Průměrné platy státních zaměstnanců po jednotlivých rozpočtových kapitolách rozdělených podle regulace zaměstnanosti ukazuje graf 3.^[Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.] 
 
-^[Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.]
+Průměrné platy státních zaměstnanců se liší dle typu organizací i napříč jednotlivými organizacemi. Na ministerstvech jsou průměrné platy od 40 tisíc Kč (měsíčně hrubého) na Ministerstvu pro životní prostředí až po 56 tisíc Kč na Ministerstvu obrany, ale všude jsou vyšší než na některých úřadech ústřední státní správy jako je Český statistický úřad (39 tisíc Kč) nebo neústřední státní správy jako je Český úřad zeměměřický a katastrální (34 tisíc Kč). (Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.) Tyto rozdílné platy pravděpodobně odrážejí především rozdíly například v charakteru práce, lokalitě, požadovaném i průměrném vzdělání, průměrné délce služby nebo podílu vedoucích pracovníků. O těchto relevantních charakteristikách nemáme v dostupných datech žádné informace a proto nejsme schopni tyto rozdíly nijak osvětlit. Místo toho se v další části věnujeme skupině státních zaměstnanců, která je v některých těchto charakteristikách relativně podobná: státním úředníkům.
 
 
 ```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
@@ -289,11 +301,11 @@ plot_ly(
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
 ```
 
-```{r mean_costs_SS,include = FALSE, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_costs_SS, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
 aux<-bar_dt %>% 
   filter(name %in% c("UO","OSS_SS")) %>% ungroup()
-aux %>%
+B3<-aux %>%
   group_by(kategorie_2014_cz) %>%
   mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"),
                                    prumerny_plat / phasal_all-1, prumerny_plat / czsal_all-1))) %>%
@@ -317,7 +329,7 @@ aux %>%
     ) %>%
     layout(
       yaxis = list(title = "", range = c(20, 60)), xaxis = list(tickfont = list(size = 10), showticklabels = T, tickangle = 0, "categoryorder" = "total ascending"),
-      title = list(text = "Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", x = 50, y = 0.98), legend = list(x = 50, y = 0.5), showlegend = F
+      title = list(text = "Graf B3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", x = 50, y = 0.98), legend = list(x = 50, y = 0.5), showlegend = F
     ), keep = TRUE) %>%
   subplot(nrows = 3, shareY = TRUE)
 ```
@@ -352,8 +364,15 @@ A3<-bar_dt %>%
   subplot(nrows = 2, shareY = F)
 ```
 
-
+## Státní úředníci
 ### Počty a platy státních úředníků 2003-2020
+Státní úředníci jsou důležitou podskupinou státních zaměstnanců a proto ukazujeme vývoj jejich počtu a platů v čase mezi lety 2003 a 2020.
+
+Graf 4 ukazuje počet státních úředníků. Mezi lety 2003 a 2010 mírný nárůst o necelé dva tisíce z 59 na 61 tisíc. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády (detailněji viz studie z roku 2014). Mezi lety 2010 a 2015 došlo k celkovému nárůst o pět tisíc státních úředníků a do roku 2020 jejich počet kolísal kolem 64 tisíc.^[Pro konzistentnost v průběhu let graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz popis dat. Bez nich máme v roce 2020 64 tisíc státních úředníků, s nimi by to bylo 78 tisíc, viz graf B4 v příloze.]
+Graf 5 ukazuje reálné průměrné hrubé měsíční platy státních úředníků (v tisících; ceny roku 2020), které v roce 2020 byly 52 tisíc Kč na ministerstvech, 47 tisíc Kč na ostatních ústředních úřadech, 45 tisíc ve státní správě a 38 tisíc v neústřední státní správě. Podobné rozdíly se udržovaly v průběhu celého období, během něhož pozorujeme podobný vývoj ve všech typech organizací. Reálné průměrné hrubé měsíční platy rostly z průměrů 28 až 39 tisíc Kč v roce 2003 do roku 2008 či 2009 a pak klesaly až do roku 2013, odkdy rostou. Tyto o inflaci upravené platy ale nezachycují všechny změny v čase, kdy došlo k výrazným nárůstům mezd v celém národním hospodářství.
+
+Graf 6 ukazuje průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství a pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze (vzhledem k jejich předpokládané většinové lokaci v hlavním městě). Dle tohoto ukazatele průměrné platy klesly mezi roky 2003 a 2020 ve všech typech organizací. K výraznému poklesu došlo kolem let 2009-2012, ale znatelný pokles zaznamenal tento ukazatel i mezi roky 2018 a 2020. Ačkoliv reálné průměrné hrubé měsíční platy státních úředníků v těchto nedávných letech rostly (Graf 5), zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.^[Graf A4 ukazuje reálné výdaje na platy státních úředníků mezi lety 2003 a 2020 v miliardách Kč a Graf A5 ukazuje to stejné v cenách roku 2020 a tedy očištěné o inflaci. ukazuje kumulovanou změnu reálných výdajů na platy státních úředníků 2003-2020. Nárůst výdajů na platy státních úředníků z části kopírují trend počtu státních úředníků a částečně také odráží ekonomický vývoj.]
+
 ```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 #kapitoly s velkým nárůstem zaměstnanců v období 2011-2012
 zk<-dt %>% filter(rok %in% c(2011,2012)) %>% 
@@ -971,13 +990,59 @@ zam_2019<-dt %>% filter(rok == 2018,typ_rozpoctu == "SKUT") %>%
   pivot_wider(names_from = "typ_rozpoctu",values_from = "pocet_zamestnancu")
 
 ```
-## Závěry
 
 ## Literatura
 https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji
 
-## Příloha. Doplňkové výsledky
+Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2020: https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om)
 
+https://voxeu.org/article/bureaucracy-and-development
+
+
+## Příloha 1: Data a metodologie
+### Zdroje dat a základní sledované koncepty
+V datech jsou počty i platy přepočtené na plné úvazky a v této studii pracujeme především se **skutečnými výdaji** a tedy i s reálně obsazenými zaměstnaneckými místy. Výjimkou je analýza tzv. neobsazených míst, pro jejíž účely porovnáváme schválený rozpočet se skutečností. Neobsazená místa ukazujeme v grafech A9 a A11 a podobným způsobem porovnáváme rozdíly v průměrných platech mezi schváleným rozpočtem a skutečností v grafech A10 a A12.
+
+Státní zaměstnance pro účely této studie definujeme jako ty, placené ze státního rozpočtu a můžeme je dále členit dle regulace zaměstnanosti nebo dle rozpočtových kapitol. Tato členění shrnuje box níže. 
+
+
+### Regulace zaměstnanosti
+
+Státní zaměstnanci jsou podle tzv. regulace zaměstnanosti rozděleni do šesti skupin. Ministerstva (1. skupina) a Ostatní ústřední úřady (2.) spolu dávají Ústřední orgány státní správy. Když k nim přidáme Neústřední státní správu (3.) a Správu ve složkách obrany, bezpečnostní, celní a právní ochrany (4.), mluvíme dohromady o Státní správě. Když k nim dále přidáme Ostatní organizační složky státu (5.), včetně Armády, máme Organizační složky státu nebo také Rozpočtové organizace. Konečně, přidáním Příspěvkových organizací (6.), získáváme rozpočtové organizace a příspěvkové organizace, které souhrnně označujeme jako státní zaměstnance. 
+
+Zaměstnanci ve školství jsou sice vesměs zaměstnanci škol zřizovaných samosprávami, v rozpočtové dokumentaci jsou ale vedeni jako zaměstnanci příspěvkových organizací v kapitole Ministerstva školství, protože peníze na jejich platy obce dostávají ze státního rozpočtu ve výši stanovené legislativou na centrální úrovni.
+
+### Rozpočtové kapitoly
+
+Počty zaměstnanců je možné uvádět dle rozpočtových kapitol, do nichž se člení výdaje státního rozpočtu a tedy výdaje které spadají do působnosti jednoho z ústředních orgánů státní správy. Z jedné rozpočtové kapitoly mohou být placeny zaměstnanci lišící se dle regulace zaměstnanosti. Například Ministerstvo vnitra má velké množství zaměstnanců ve sborech a ústředních orgánech státní správy, ale také nezanedbatelné množství v organizačních složkách státu a ostatních organizačních složkách státu. Většina kapitol má zaměstnance jen v jedné kategorii - například Český statistický úřad sestává pouze z ústředních orgánů státní správy.
+
+Pro časové řady, kde se počítá s absolutními metrikami (počty zaměstnanců, prostředky na platy), jsme **odebrali kapitoly ministerstev vnitra a zahraničních věcí**, aby byly výsledky srovnatelné v čase. Počet zaměstnanců pro kapitolu ministerstva vnitra se mezi roky 2011 a 2012  zvýšily vzhledem ke změně organizační struktury o 321% Pro kapitolu ministerstva zahraničí je to pak 157%. Ponecháním těchto kapitol v grafech časových řad by došlo ke značnému zkreslení zejména grafů  A6. Kumulovaná změna reálných výdajů na platy státních úředníků  a  A8. Celkové reálné změny platů a počtu zaměstnanců. Příloha studie obsahuje variantu Grafu 4. Počet státních úředníků 2003-2020 (v tisících), ve které jsou kapitoly ministerstev vnitra a zahraničí zahrnuty. U časových řad průměrných platů jsme ministerstva vnitra a zahraničních věcí nechali zahrnutá, i když i u nich může dojít k mírnému zkreslení (například pokud došlo k přesunu zaměstnanců s vysokými platy). 
+Podobně jako u těchto dvou ministerstev mohlo dojít k výrazným změnám v počtech zaměstnanců kvůli změnám organizačních struktur, o kterých nevíme.
+Zároveň upozorňujeme, že pohyby v časových řadách mohou být způsobené i přesuny agend a útvarů mezi úřady, které v analýze nemůžeme zohlednit. Podobné změny nejsou konzistentně a dohledatelně dokumentovány.
+ 
+Dodatečná data používáme z **Českého statistického úřadu**: při porovnávání platů používáme průměrnou pražskou mzdu pro ústřední orgány a průměrnou celorepublikovou mzdu pro ostatní a, dále, pro údaje o cenových hladinách a inflaci (například pro výpočet reálné průměrné hrubé měsíční platy).
+
+Nejlepší data o státních zaměstnancích od Ministerstva financí využíváme v této studii, ale pro ostatní **zaměstnance veřejného sektoru** poskytují jediné systematické údaje **Statistické ročenky** Českého statistického úřadu pro jednotlivé roky. Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje, kromě státních zaměstnanců, například obce a kraje nebo i veřejné finanční i nefinanční firmy. Poslední dostupný údaj je z [ročenky za rok 2020](https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om) s předběžnými informacemi pro rok 2018 (konkrétně tabulka 10-3 k trhu práce). Podle tohoto zdroje veřejný sektor celkem v roce 2018 zaměstnával 993,3 tisíc zaměstnanců (přepočtených na plné úvazky). Pro další roky (1995, 1999-2018; ostatní roky nejsou podle všeho dostupné online) shrnujeme tyto informace v grafu A0 v příloze. Mezi lety 1995 (1646 tisíc) a 2012 (921,4 tisíc) došlo k výraznému poklesu počtu zaměstnanců veřejného sektoru a mezi roky 2012 a 2018 došlo k postupnému, mírnému nárůstu. Jediné další informace ve Statické ročence jsou, že, například pro rok 2018, z celkového počtu 993,3 tisíc zaměstnanců veřejného sektoru jich 319,6 tisíc pracovalo ve veřejných nefinančních podnicích, 1,6 tisíc ve veřejných finančních institucích a 672,1 tisíc ve vládních institucích (z toho 290.5 tisíc ústřední, 375.7 neústřední a 6.0 fondy sociálního zabezpečení) a jejich průměrné hrubé měsíční mzdy ve stejném členění. Toto jsou relativně málo detailní informace, které neumožňují analýzu na úrovni jednotlivých organizací veřejného sektoru. Zaměřujeme se tedy v této studii na analýzu dat od Ministerstva financí, z kterých toho víme více o tom, kolik a kde a za jaké průměrné platy státních zaměstnanců pracuje. 
+
+### Definice a pojmy
+#### Výdaje na platy
+Pracujeme pouze s výdaji na platy, nezahrnujeme tzv. ostatní platby za provedenou práci, které zahrnují např. odměny pracovníků zaměstnaných na dohody o provedení práce. Tato data sice v datové sadě jsou, není je ale možné vztáhnout k počtům těchto osob, které sledovány nejsou.
+
+Stejně tak naše data nezahrnují odvody zaměstnavatele a další náklady na zaměstnance, takže jde opravdu o hrubé platy, nikoli o náklady práce.
+
+Ve vztahu k platům zaměstnanců škol (příspěvkové organizace v kapitole MŠMT) také platí, že skutečné platy těchto zaměstnanců mohou být jiné, např. protože na ně z vlastních zdrojů přispívá samospráva, která zřizuje školy. Máme za to, že pokud např. některé obce doplácejí na platy svých učitelů, výsledný vyšší průměrný plat (ani dodatečné výdaje na platy) nejsou zahrnuty v datech, která využíváme, protože nejde o výdaj státního rozpočtu.
+
+A konečně pracujeme pouze s platy zaměstnanců, kteří podléhají rozpočtové regulaci a jako takové je stát sleduje, tj. nejde o veškeré platy hrazené z prostředků státního rozpočtu (nejsou zde např. platy vysokoškolských učitelů či zaměstnanců organizací, které jsou např. příjemci dotací, prostředků na výzkum a vývoj či dodavateli veřejných zakázek.)
+
+#### “Státní zaměstnanci” a zákon o státní službě
+
+S pojmem “státní zaměstnanec” pracuje i zákon o státní službě, který jím označuje zaměstnance ve služebním poměru. Ve služebních úřadech ale pracují i zaměstnanci v běžném zaměstnaneckém poměru. V datech, se kterými pracujeme, nejsou zaměstnanci ve služebním poměru zvlášť sledováni. Proto v této studii jako státní zaměstnance označujeme všechny, kteří spadají do výše zmíněných kategorií regulace zaměstnanosti.
+
+Část informací o zaměstnancích ve služebním poměru poskytuje Státní pokladna (výdaje na platy zaměstnanců ve služebním poměru podle příslušné položky druhového členění, ale bez informací o počtech a průměrných platech), další informace pak i [Výroční zpráva o státní službě](https://www.mvcr.cz/sluzba/clanek/vyrocni-zprava-vyrocni-zprava-o-statni-sluzbe.aspx) (poslední dostupná je za rok 2019).
+
+## Příloha 2: Doplňkové výsledky
+
+Graf A0. Počet zaměstnanců veřejného sektoru celkem (v tisících přepočtených osob) - TO BE ADDED^[Poznámky: Informace pro roky 1996-1998 a období před rokem 1995 nejsou dostupné online. Zdroj: Autoři na základě údajů Českého statistického úřadu ze Statistické ročenky pro jednotlivé roky. Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje například obce a kraje nebo i veřejné finanční i nefinanční firmy.]
 ```{r appendix, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 A1
 A2
