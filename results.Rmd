@@ -153,6 +153,10 @@ lty <- c(schvaleny = "dash", skutecnost = "solid")
 <style>
 body {
 text-align: justify}
+
+h1 {
+text-align: left}
+
 </style>
 
 
