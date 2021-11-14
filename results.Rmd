@@ -3,7 +3,10 @@ title: "St\u00E1tn\u00ED zam\u011Bstnanci a \u00FA\u0159edn\u00EDci: kde pracuj\
 author: "Daniel Bartu\u0161ek, Petr Bouchal, Petr Jansk\u00FD"
 date: listopad 2021 (pracovní verze)
 output:
-  html_document: default
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 3
   pdf_document: default
   
 knit: (function(input_file, encoding) {
