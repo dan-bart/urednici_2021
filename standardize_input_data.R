@@ -250,15 +250,16 @@ df_infl <- data.frame(
 df_infl$base_2003 <- NA
 df_infl$base_2020 <- NA
 df_infl[1, "base_2003"] <- 1
-df_infl[nrow(df_infl), "base_2020"] <- df_infl$inflation[nrow(df_infl)]
+df_infl[nrow(df_infl), "base_2020"] <- 1
 
 
 for (i in 2:nrow(df_infl)) {
   df_infl[i, "base_2003"] <- df_infl[i - 1, "base_2003"] * df_infl[i, "inflation"]
 }
 
+
 for (i in (nrow(df_infl) - 1):1) {
-  df_infl[i, "base_2020"] <- df_infl[i + 1, "base_2020"] * df_infl[i, "inflation"]
+  df_infl[i, "base_2020"] <- df_infl[i + 1, "base_2020"] * df_infl[i+1, "inflation"]
 }
 
 main_df_update <- main_df %>%

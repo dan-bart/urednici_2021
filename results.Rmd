@@ -93,6 +93,11 @@ text-align: justify}
 
 
 ## Shrnutí
+* Téměř polovina z milionu zaměstnanců veřejného sektoru je placena ze státního rozpočtu: 464 tisíc státních zaměstnanců dle údajů pro rok 2020. 
+* Větší část těchto státních zaměstnanců spadá pod příspěvkové organizace (265 tisíc), zahrnující především školy, a menší část ostatních státních zaměstnanců (198 tisíc) spadá pod řadu různorodých organizací, od armády a policii až po ministerstva a úřady práce.
+* Jen malou část státních zaměstnanců lze označit za státní úředníky (zhruba 78 tisíc).
+* Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůst o pět tisíc státních úředníků a do roku 2020 jejich počet nedoznal významnější změny.
+* Ačkoliv reálné průměrné platy státních úředníků od roku 2013 soustavně rostly, od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.
 
 
 ## Úvod
@@ -590,7 +595,7 @@ dt %>%
   #filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014, kategorie_2014_cz, rok) %>%
   summarise(
-    wage_to_general_ = mean(wage_to_general),
+    wage_to_general = mean(wage_to_general),
     prumerny_plat_agg = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)) / 12,
     max_change_kap = kap_name[which.max(mzda_k_nh)],
     phasal_all = mean(phasal_all),
@@ -683,7 +688,7 @@ A8<-dt %>%
         borderwidth=1,
         showarrow = FALSE),
     showlegend = FALSE,
-    xaxis = list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu", ticksuffix = "%",range = c(-5,60)),
+    xaxis = list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu", ticksuffix = "%",range = c(-5,65)),
     yaxis = list(title = "Zm\u011Bna po\u010Dtu zam\u011Bstnanc\u016F", showtickprefix = "last",range = c(-20,15), tickprefix = "+", ticksuffix = "%", showticksuffix = "all"), legend = list(x = 100, y = 0.5)
   ) %>%
   add_markers() %>%
@@ -876,7 +881,7 @@ A12<-dt %>%
 
 ```{r Scatter plat narust, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
-
+infl <- dt %>% filter(rok == 2003) %>% select(base_2020) %>% first() %>% pull()
 A13<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu == "SKUT") %>%
