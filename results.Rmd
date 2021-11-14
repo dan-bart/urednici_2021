@@ -304,8 +304,10 @@ plot_ly(
 ```{r mean_costs_SS, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
 aux<-bar_dt %>% 
-  filter(name %in% c("UO","OSS_SS")) %>% ungroup()
+  filter(name %in% c("UO","OSS_SS")) %>% 
+  ungroup()
 B3<-aux %>%
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% fct_relevel("Ministerstva", "Ostatní ústřední")) %>% 
   group_by(kategorie_2014_cz) %>%
   mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"),
                                    prumerny_plat / phasal_all-1, prumerny_plat / czsal_all-1))) %>%
@@ -340,6 +342,9 @@ A3<-bar_dt %>%
   filter(kategorie_2014 != "Prispevkove organizace") %>%
   filter(kategorie_2014_cz != "Sbory") %>%
   mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"), prumerny_plat / phasal_all-1, prumerny_plat / czsal_all-1))) %>%
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
+           fct_relevel("Ministerstva", "Ostatní ústřední",
+                       "Neústřední st. správa")) %>% 
   group_map(~ plot_ly(
     data = ., x = ~kap_name, y = ~ (wage_to_general)*100, type = "bar", name = ~kategorie_2014_cz,
     hovertemplate = ~  paste(
@@ -846,6 +851,9 @@ A11<-dt %>%
     UPRAV = sum(UPRAV)
   ) %>%
   mutate(diff = (SKUT - UPRAV) / UPRAV) %>%
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
+           fct_relevel("Ministerstva", "Ostatní ústřední",
+                       "Neústřední st. správa")) %>% 
   group_by(kategorie_2014_cz) %>%
   arrange(rok) %>%
   group_map(~ plot_ly(
@@ -884,6 +892,9 @@ A12<-dt %>%
   group_by(rok, kategorie_2014_cz, typ_rozpoctu) %>%
   summarise(prumerny_plat_agg = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)) / 12) %>%
   spread(key = typ_rozpoctu, value = prumerny_plat_agg) %>%
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
+           fct_relevel("Ministerstva", "Ostatní ústřední",
+                       "Neústřední st. správa")) %>% 
   group_by(rok, kategorie_2014_cz) %>%
   summarise(
     SKUT = sum(SKUT),
@@ -931,6 +942,9 @@ A13<-dt %>%
     zam_change = (pocet_zamestnancu_2020/pocet_zamestnancu_2003 - 1),
     plat_change = (prumerny_plat_2020/(prumerny_plat_2003*infl) - 1)
   ) %>%
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
+           fct_relevel("Ministerstva", "Ostatní ústřední",
+                       "Neústřední st. správa")) %>% 
   group_by(kategorie_2014_cz) %>% 
   group_map(~ plot_ly(
     data = ., x = ~prumerny_plat_2003/1000, y = ~ plat_change*100, type = "scatter" , mode = "markers", name = ~kategorie_2014_cz,
