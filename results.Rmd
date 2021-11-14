@@ -19,16 +19,80 @@ library(ggplot2)
 library(data.table)
 library(stringr)
 library(tidyr)
+library(forcats)
+library(ggokabeito)
 options("scipen"=100, "digits"=8)
 dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+kat_order_ss <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa")
+kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa", "Ostatní vč. armády", "Sbory", "Příspěvkové organizace")
 
 
+cols <- RColorBrewer::brewer.pal(length(unique(dt$kategorie_2014_cz))-1, name = "Set3")
+
+df_col<-cbind("kategorie_2014_cz" = unique(dt$kategorie_2014_cz),cols) %>% as.data.frame()
+dt<-left_join(dt,df_col,by="kategorie_2014_cz")
+dt$cols <- factor(dt$kategorie_2014_cz, labels = cols)
+```
+
+```{r tree_prep, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+
+aux <- dt %>%
+  filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>%
+  group_by(kategorie_2014_cz) %>%
+  summarise(cost = sum(prostredky_na_platy),
+            count = sum(pocet_zamestnancu)) %>%
+  rename("labels" = kategorie_2014_cz) %>%
+  mutate(parents = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "\u00DAst\u0159edn\u00ED org\u00E1ny", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "", "St\u00E1tn\u00ED spr\u00E1va"))
+
+#UO = Ministrerstva + Ostatni ustrednu
+#SS = UO+Sbory+Neustredni SS
+
+to_append <- data.frame(
+  labels = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu"), parents = c("St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", ""),
+  cost = c(
+    aux$cost[aux$labels == "Ministerstva"] +
+      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
+    aux$cost[aux$labels == "Ministerstva"] +
+      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
+      aux$cost[aux$labels == "Sbory"] +
+      aux$cost[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"],
+    aux$cost[aux$labels == "Ministerstva"] +
+      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
+      aux$cost[aux$labels == "Sbory"] +
+      aux$cost[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"] +
+      aux$cost[aux$labels == "Ostatn\u00ED v\u010D. arm\u00E1dy"]
+  ),
+  count = c(
+    aux$count[aux$labels == "Ministerstva"] +
+      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
+    aux$count[aux$labels == "Ministerstva"] +
+      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
+      aux$count[aux$labels == "Sbory"] +
+      aux$count[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"],
+    aux$count[aux$labels == "Ministerstva"] +
+      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
+      aux$count[aux$labels == "Sbory"] +
+      aux$count[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"] +
+      aux$count[aux$labels == "Ostatn\u00ED v\u010D. arm\u00E1dy"]
+  )
+)
+
+tree_data <- rbind(aux, to_append)
+
+tree_data<-tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$parents == "")]),
+                     "count_perc" = count/sum(count[which(tree_data$parents  == "")]),
+                     labels = as.character(labels))
+```
 
 ```{r priprava, echo=FALSE,warning = FALSE,message = FALSE}
+dt <- dt %>% 
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% fct_relevel(kat_order_all) %>% fct_rev())
+
 abs_metrics <- dt %>%
   filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
   filter(!is.na(as.numeric(kap_num))) %>%
@@ -111,54 +175,6 @@ text-align: justify}
 ^[Všechny grafy byly vytvořeny pomocí plotly. Pro detailnější analýzu se může hodit udělat drag+drop výseč přímo v grafu (Zoom button), nebo odškrtnout některé z kategorií v legendě napravo. Double-clickem na kategorii v legendě je možné skrýt všechny kategorie až na tu vybranou kategorii. Pro reset je tam “Reset axes” button.] 
 
 
-```{r tree_prep, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-
-aux <- dt %>%
-  filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>%
-  group_by(kategorie_2014_cz) %>%
-  summarise(cost = sum(prostredky_na_platy),
-            count = sum(pocet_zamestnancu)) %>%
-  rename("labels" = kategorie_2014_cz) %>%
-  mutate(parents = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "\u00DAst\u0159edn\u00ED org\u00E1ny", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "", "St\u00E1tn\u00ED spr\u00E1va"))
-
-#UO = Ministrerstva + Ostatni ustrednu
-#SS = UO+Sbory+Neustredni SS
-
-to_append <- data.frame(
-  labels = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu"), parents = c("St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", ""),
-  cost = c(
-    aux$cost[aux$labels == "Ministerstva"] +
-      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
-    aux$cost[aux$labels == "Ministerstva"] +
-      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
-      aux$cost[aux$labels == "Sbory"] +
-      aux$cost[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"],
-    aux$cost[aux$labels == "Ministerstva"] +
-      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
-      aux$cost[aux$labels == "Sbory"] +
-      aux$cost[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"] +
-      aux$cost[aux$labels == "Ostatn\u00ED v\u010D. arm\u00E1dy"]
-  ),
-  count = c(
-    aux$count[aux$labels == "Ministerstva"] +
-      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
-    aux$count[aux$labels == "Ministerstva"] +
-      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
-      aux$count[aux$labels == "Sbory"] +
-      aux$count[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"],
-    aux$count[aux$labels == "Ministerstva"] +
-      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
-      aux$count[aux$labels == "Sbory"] +
-      aux$count[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"] +
-      aux$count[aux$labels == "Ostatn\u00ED v\u010D. arm\u00E1dy"]
-  )
-)
-
-tree_data <- rbind(aux, to_append)
-
-tree_data<-tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$parents == "")]),
-                     "count_perc" = count/sum(count[which(tree_data$parents  == "")]))
-```
 
 
 
@@ -168,7 +184,7 @@ A1<-tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
-    labels = tree_data$labels,
+    labels = ~tree_data$labels,
     parents = tree_data$parents,
     values = tree_data$cost,
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>", " Rozpo\u010Det:", format(cost, big.mark = " "), "K\u010D", "<br>", " Pod\u00EDl na celku:", round(cost_perc*100,1), "%"),
@@ -181,7 +197,7 @@ tree_plot_count<-tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
-    labels = tree_data$labels,
+    labels = ~tree_data$labels,
     parents = tree_data$parents,
     values = tree_data$count,
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>", " Po\u010Det zam\u011Bstnanc\u016F:", format(count, big.mark = " "), "<br>", " Pod\u00EDl na celku:", round(count_perc*100,1), "%"),
@@ -199,15 +215,18 @@ tree_plot_count
 ^[Grafy A1 a A2 v příloze ukazují celkové součty platů státních zaměstnanců, které jsou podobně rozděleny jako jejich počty v grafech 1 a 2 (i protože rozdíly v počtech zaměstnanců hrají výraznější roli než rozdíly v průměrných platech).]
 
 
+
+
 ```{r counts, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+
+
 plot_ly(bar_dt,
-  x = ~kap_name, y = ~ pocet_zamestnancu / 1000, color = ~kategorie_2014_cz,
+  x = ~kap_name, y = ~ pocet_zamestnancu / 1000,name=~kategorie_2014_cz,type="bar",marker = list(color = cols),
   hovertemplate = ~ ifelse(pocet_zamestnancu > 0, paste(
     "<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Po\u010Det zam\u011Bstnanc\u016F:",
     format(pocet_zamestnancu, big.mark = " "), "<br>", "Celkem za kapitolu: ",format(pocet_zamestnancu_agg, big.mark = " ")
   ), ""), hoverinfo = "text"
 ) %>%
-  add_bars() %>%
   layout(
     hovermode = "closest", legend = list(x = 100, y = 0.5),
     annotations = list(text = str_wrap("Poznámka: MŠMT zkresluje graf vzhledem k zahrnutí  učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.",40),
@@ -221,7 +240,7 @@ plot_ly(bar_dt,
                 borderwidth=1,
                 showarrow = FALSE),
     title = list(text = "Graf 2. Po\u010Det st\u00E1tn\u00EDch zam\u011Bstnanc\u016F dle rozpo\u010Dtov\u00FDch kapitol (v tis\u00EDc\u00EDch)", y = 0.98),
-    xaxis = list(title = "Kapitoly",tickmode = "array",categoryorder = "array", categoryarray = arrange(bar_dt, pocet_zamestnancu_agg)$kap_name),
+    xaxis = list(title = "Kapitoly",tickmode = "array",categoryorder = "array", categoryarray = arrange(bar_dt, desc(pocet_zamestnancu_agg))$kap_name),
     yaxis = list(title = "Po\u010Det zam\u011Bstnanc\u016F"), barmode = "stack"
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
@@ -237,8 +256,8 @@ A2<-plot_ly(bar_dt,
   add_bars() %>%
   layout(
     hovermode = "closest",
-    title = list(text = "Vizualizace v\u00FDdaj\u016F na platy (v miliard\u00E1ch)", y = 0.98),
-    xaxis = list(title = "Kapitoly", categoryorder = "array", categoryarray = arrange(bar_dt, prostredky_na_platy_agg)$kap_name),
+    title = list(text = "Graf A2. Výdaje na platy státních zaměstnanců (v miliard\u00E1ch)", y = 0.98),
+    xaxis = list(title = "Kapitoly", categoryorder = "array", categoryarray = arrange(bar_dt, desc(prostredky_na_platy_agg))$kap_name),
     yaxis = list(title = "Platy"),
     barmode = "stack", legend = list(x = 100, y = 0.5)
   ) %>%
@@ -255,6 +274,7 @@ A2<-plot_ly(bar_dt,
 bar_dt%>%filter(prumerny_plat>25000) %>%
 plot_ly(
   x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz, 
+  colorscale='Plotly3',
   type = "scatter" , mode = "line+markers",line = list( color='gainsboro',width=3),
   hovertemplate = ~ ifelse(prostredky_na_platy > 0, paste("<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Pr\u016Fm\u011Brn\u00FD plat:", format(prumerny_plat, big.mark = " "), "K\u010D"), ""),
   hoverinfo = "text"
