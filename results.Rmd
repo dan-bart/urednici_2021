@@ -164,7 +164,6 @@ text-align: justify}
 * Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůst o pět tisíc státních úředníků a do roku 2020 jejich počet nedoznal významnější změny.
 * Ačkoliv reálné průměrné platy státních úředníků od roku 2013 soustavně rostly, od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.
 
-
 ## Úvod
 
 Veřejný sektor celkem zaměstnává téměř 1 milion lidí. Necelá polovina z těchto zaměstnanců veřejného sektoru je dle údajů pro rok 2020 placena ze státního rozpočtu: 265 tisíc skrz příspěvkové organizace, pod které spadají i učitelé a další zaměstnanci škol, a dalších 198 tisíc skrz organizace, které zahrnují například policii, armádu, ministerstva a další úřady. Platy těchto celkem 464 tisíc **státních zaměstnanců** jsou hrazeny ze státního rozpočtu (a takto i definujeme státní zaměstnance, tj. když je jejich plat hrazen ze státního rozpočtu, což je jiné chápání tohoto pojmu než dle zákona o státní službě). Díky tomuto pro ně máme od Ministerstva financí detailní informace o jejich počtech a platech. Tato detailní data v první části této studie analyzujeme. 
@@ -188,10 +187,6 @@ Takto vymezeným státním úředníkům se dále věnujeme pomocí analýzy ča
 **Sbory** (82 tisíc) zahrnují například policisty a hasiče, ale i vězeňské dozorce. V ostatní včetně armády (39 tisíc) je právě armáda pod kapitolou ministerstva obrany zodpovědná za většinu zaměstnanců (32 tisíc). 
 
 **Příspěvkové organizace** mají 265 tisíc zaměstnanců a naprostá většina z nich (254 tisíc) spadá pod kapitolu Ministerstva školství a tělovýchovy, tedy veřejných základních a středních škol. Tato skupina tedy tvoří většinu státních zaměstnanců (byť prakticky jde o zaměstnance škol, které zřizují samosprávy, viz výše). Důležitost příspěvkových organizací včetně učitelů a dalších zaměstnanců škol lze vidět dobře i v členění zaměstnanců dle rozpočtových kapitol (graf 2). 
-
-
-
-
 
 ```{r tree_plot, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
@@ -223,7 +218,6 @@ tree_plot_count<-tree_data %>%
 
 tree_plot_count
 ```
-
 
 ### Počet zaměstnanců dle rozpočtových kapitol
 
