@@ -1,0 +1,98 @@
+---
+title: "dotplot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(plotly)
+library(ggplot2)
+library(data.table)
+library(stringr)
+library(tidyr)
+library(forcats)
+library(ggokabeito)
+options("scipen"=100, "digits"=8)
+
+dt <- readRDS("./data-interim/sections.rds")
+sum <- readRDS("./data-interim/summary.rds")
+```
+
+```{r}
+kat_order_ss <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa")
+kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa", "Ostatní vč. armády", "Sbory", "Příspěvkové organizace")
+```
+
+```{r}
+dt <- dt %>% 
+  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% fct_relevel(kat_order_all) %>% fct_rev())
+```
+
+
+```{r}
+aux <- dt %>%
+  filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>%
+  group_by(kategorie_2014_cz) %>%
+  summarise(cost = sum(prostredky_na_platy),
+            count = sum(pocet_zamestnancu)) %>%
+  rename("labels" = kategorie_2014_cz) %>%
+  mutate(parents = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "\u00DAst\u0159edn\u00ED org\u00E1ny", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "", "St\u00E1tn\u00ED spr\u00E1va"))
+
+```
+
+```{r}
+dt_sum_for_plot <- dt %>% 
+  filter(typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>% 
+  summarise(prumerny_plat = round(sum(prostredky_na_platy)/sum(pocet_zamestnancu)/12)) %>% 
+  rename(`Průměrný plat` = prumerny_plat)
+
+dt_kat_sum_for_plot <- dt %>% 
+  filter(typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>% 
+  group_by(kategorie_2014_cz) %>% 
+  mutate(min = min(prumerny_plat), max = max(prumerny_plat)) %>% 
+  group_by(kategorie_2014_cz, min, max) %>% 
+  summarise(prumerny_plat = round(sum(prostredky_na_platy)/sum(pocet_zamestnancu)/12)) %>% 
+  rename(`Průměrný plat` = prumerny_plat)
+
+ppp <- dt %>% 
+  filter(typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>%
+  rename(`Průměrný plat` = prumerny_plat) %>% 
+  mutate(Kapitola = paste(kap_name, "\nPrůměrný plat:", 
+                          format(`Průměrný plat`, big.mark = " "),
+                          " Kč")) %>% 
+  ggplot(aes(`Průměrný plat`, kategorie_2014_cz)) +
+  geom_vline(aes(xintercept = `Průměrný plat`), data = dt_sum_for_plot) +
+  scale_colour_okabe_ito(order = c(1, 2, 3, 5, 6, 7)) +
+  geom_linerange(aes(y = kategorie_2014_cz,
+                     xmin = min, xmax = max,
+                     colour = kategorie_2014_cz), 
+                 data = dt_kat_sum_for_plot,
+                 size = 3, alpha = .3) +
+  geom_point(alpha = .4, 
+             aes(label = Kapitola,
+                 colour = kategorie_2014_cz)) +
+  geom_point(aes(y = kategorie_2014_cz, x = `Průměrný plat`),
+             colour = "black",
+             data = dt_kat_sum_for_plot, shape = "|", size = 2) +
+  guides(fill = "none", colour = "none") +
+  theme_minimal() +
+  theme(axis.title.y = element_blank())
+```
+
+
+```{r}
+ggplotly(ppp, 
+         tooltip = c("Kapitola")) %>% 
+  config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE) %>% 
+  layout(showlegend = FALSE)
+```
+
+```{r}
+dt_kat_sum_for_plot2 <- dt %>% 
+  filter(typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>% .infla
+  group_by(kategorie_2014_cz) %>% 
+  summarise(prumerny_plat = mean(prumerny_plat))
+```
+
