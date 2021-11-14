@@ -155,7 +155,7 @@ lty <- c(schvaleny = "dash", skutecnost = "solid")
 
 
 <style>
-body {
+p {
 text-align: justify}
 
 h1 {
