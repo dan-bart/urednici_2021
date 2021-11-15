@@ -4,9 +4,13 @@ author: "Daniel Bartu\u0161ek, Petr Bouchal, Petr Jansk\u00FD"
 date: listopad 2021 (pracovní verze)
 output:
   html_document:
+    css: docs/custom.css
+    self_contained: no
     toc: yes
     toc_float: yes
     toc_depth: 3
+    theme:
+      version: 5
   pdf_document: default
   
 knit: (function(input_file, encoding) {
@@ -25,6 +29,7 @@ library(stringr)
 library(tidyr)
 library(forcats)
 library(ggokabeito)
+library(bslib)
 options("scipen"=100, "digits"=8)
 dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
@@ -163,6 +168,7 @@ text-align: left}
 
 </style>
 
+::::{.bs-callout .bs-callout-green}
 
 ## Shrnutí
 
@@ -171,6 +177,8 @@ text-align: left}
 * Jen malou část státních zaměstnanců lze označit za státní úředníky (zhruba 78 tisíc). ([více + graf](#ured))
 * Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůstu o pět tisíc státních úředníků a do roku 2020 jejich počet nedoznal významnější změny. ([více + graf](#ured))
 * Ačkoliv reálné průměrné platy státních úředníků od roku 2013 soustavně rostly, od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice. ([více + graf](#ured))
+
+::::
 
 ## Úvod
 
@@ -1013,6 +1021,8 @@ V datech jsou počty i platy přepočtené na plné úvazky a v této studii pra
 
 Státní zaměstnance pro účely této studie definujeme jako ty, placené ze státního rozpočtu a můžeme je dále členit dle regulace zaměstnanosti nebo dle rozpočtových kapitol. Tato členění shrnuje box níže. 
 
+:::::{.bs-callout .bs-callout-blue}
+
 ### Regulace zaměstnanosti
 
 Státní zaměstnanci jsou podle tzv. regulace zaměstnanosti rozděleni do šesti skupin. Ministerstva (1. skupina) a Ostatní ústřední úřady (2.) spolu dávají Ústřední orgány státní správy. (Kategorii Ústředních orgánů jsme na ministerstva a jiné rozdělili, přestože toto dělení ve vstupních datech MF není.) Když k nim přidáme Neústřední státní správu (3.) a Správu ve složkách obrany, bezpečnostní, celní a právní ochrany (4.), mluvíme dohromady o Státní správě. Když k nim dále přidáme Ostatní organizační složky státu (5.), včetně Armády, máme Organizační složky státu nebo také Rozpočtové organizace. Konečně, přidáním Příspěvkových organizací (6.), získáváme rozpočtové organizace a příspěvkové organizace, které souhrnně označujeme jako státní zaměstnance. 
@@ -1026,6 +1036,8 @@ Počty zaměstnanců je možné uvádět dle rozpočtových kapitol, do nichž s
 Pro časové řady, kde se počítá s absolutními metrikami (počty zaměstnanců, prostředky na platy), jsme **odebrali kapitoly ministerstev vnitra a zahraničních věcí**, aby byly výsledky srovnatelné v čase. Počet zaměstnanců pro kapitolu ministerstva vnitra se mezi roky 2011 a 2012  zvýšily vzhledem ke změně organizační struktury o 321% Pro kapitolu ministerstva zahraničí je to pak 157%. Ponecháním těchto kapitol v grafech časových řad by došlo ke značnému zkreslení zejména grafů  A6. Kumulovaná změna reálných výdajů na platy státních úředníků  a  A8. Celkové reálné změny platů a počtu zaměstnanců. Příloha studie obsahuje variantu Grafu 4. Počet státních úředníků 2003-2020 (v tisících), ve které jsou kapitoly ministerstev vnitra a zahraničí zahrnuty. U časových řad průměrných platů jsme ministerstva vnitra a zahraničních věcí nechali zahrnutá, i když i u nich může dojít k mírnému zkreslení (například pokud došlo k přesunu zaměstnanců s vysokými platy). 
 Podobně jako u těchto dvou ministerstev mohlo dojít k výrazným změnám v počtech zaměstnanců kvůli změnám organizačních struktur, o kterých nevíme.
 Zároveň upozorňujeme, že pohyby v časových řadách mohou být způsobené i přesuny agend a útvarů mezi úřady, které v analýze nemůžeme zohlednit. Podobné změny nejsou konzistentně a dohledatelně dokumentovány.
+
+:::::
 
 ### Další zdroje dat
  
