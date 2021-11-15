@@ -286,6 +286,7 @@ Průměrné platy státních zaměstnanců se liší dle typu organizací i nap�
 
 ```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 bar_dt%>%filter(prumerny_plat>25000) %>%
+  mutate(prumerny_plat = prumerny_plat/1e3)
 plot_ly(
   x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz, 
   colorscale='Plotly3',
