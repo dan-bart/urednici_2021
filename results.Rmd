@@ -18,6 +18,9 @@ knit: (function(input_file, encoding) {
   rmarkdown::render(input_file,
  encoding=encoding,
  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+bibliography: [references.json, packages.bib]
+csl: chicago-author-date.csl
+nocite: '@*'
 ---
 
 ```{r setup, include=FALSE}
@@ -32,10 +35,23 @@ library(ggokabeito)
 library(RColorBrewer)
 library(gplots)
 library(bslib)
+library(readr)
+library(readxl)
+library(tibble)
+library(tidyr)
+library(here)
+library(stringr)
+library(janitor)
+library(czso)
+
 options("scipen"=100, "digits"=8)
 dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+knitr::write_bib(file = 'packages.bib')
 ```
 
 ```{r echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
@@ -969,15 +985,14 @@ A13<-dt %>%
 
 ```
 
+## Literatura a zdroje {#lit}
 
-## Literatura {#lit}
+::: {#refs}
+:::
 
-https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji
+### Detaily
 
-Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2020: https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om)
-
-https://voxeu.org/article/bureaucracy-and-development
-
+Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2020: <https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om>)
 
 ## Příloha 1: Data a metodologie {#ap1}
 

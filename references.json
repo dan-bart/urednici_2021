@@ -1,0 +1,138 @@
+[
+    {
+        "URL": "https://www.mfcr.cz/cs/verejny-sektor/statni-rozpocet/plneni-statniho-rozpoctu/2020/statni-zaverecny-ucet-za-rok-2020-41689",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Ministerstvo financí ČR"
+            }
+        ],
+        "id": "ministerstvofinancícr2021",
+        "issued": {
+            "date-parts": [
+                [
+                    2021
+                ]
+            ]
+        },
+        "key": "GH3RZBV6",
+        "language": "cs",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "Státní závěrečný účet ČR za rok 2020",
+        "type": "report"
+    },
+    {
+        "URL": "https://www.mvcr.cz/sluzba/soubor/vyrocni-zprava-o-statni-sluzbe-za-rok-2019.aspx",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "MInisterstvo vnitra ČR"
+            }
+        ],
+        "id": "ministerstvovnitracr2020",
+        "issued": {
+            "date-parts": [
+                [
+                    2020
+                ]
+            ]
+        },
+        "key": "XV83HBZM",
+        "language": "cs",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "Výroční zpráva o státní službě - Státní služba",
+        "type": "report"
+    },
+    {
+        "URL": "https://www.czso.cz/csu/czso/statisticka-rocenka-ceske-republiky-2020",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Český statistický úřad"
+            }
+        ],
+        "id": "ceskýstatistickýúrad2021",
+        "issued": {
+            "date-parts": [
+                [
+                    2021
+                ]
+            ]
+        },
+        "key": "9NHSNVSP",
+        "language": "cs-CZ",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "Statistická ročenka České republiky - 2020",
+        "type": "report"
+    },
+    {
+        "URL": "https://idea.cerge-ei.cz/files/IDEA_studie_4_2014.pdf",
+        "author": [
+            {
+                "family": "Bouchal",
+                "given": "Petr"
+            },
+            {
+                "family": "Janský",
+                "given": "Petr"
+            }
+        ],
+        "id": "bouchal2014",
+        "issued": {
+            "date-parts": [
+                [
+                    2014
+                ]
+            ]
+        },
+        "key": "6WY5IAY3",
+        "libraryid": "1",
+        "page": "2014",
+        "providerkey": "Zotero",
+        "rights": "All rights reserved",
+        "source": "Google Scholar",
+        "title": "Státní úředníci: Kolik jich vlastně je, kde a za jaké platy pracují",
+        "title-short": "Státní úředníci",
+        "type": "report"
+    },
+    {
+        "URL": "https://CRAN.R-project.org/package=czso",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Bouchal",
+                "given": "Petr"
+            }
+        ],
+        "id": "bouchal2020",
+        "issued": {
+            "date-parts": [
+                [
+                    2020,
+                    4,
+                    7
+                ]
+            ]
+        },
+        "key": "4FVJZA6G",
+        "libraryid": "4",
+        "providerkey": "Zotero",
+        "rights": "MIT + file LICENSE",
+        "source": "R-Packages",
+        "title": "czso: Use Open Data from the Czech Statistical Office in R",
+        "title-short": "czso",
+        "type": "book",
+        "versionnumber": "0.2.3"
+    }
+]
