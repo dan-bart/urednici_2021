@@ -214,10 +214,10 @@ summary <- rbind(summary, old_dt)
 
 ## extend other useful columns
 # special signs
-kategorie_2014 <- c("UO", "SS", "OSS", "Ministerstva", "Ostatni ustredni", "Sbory", "Neustredni st. sprava", "Ostatní vc. armady", "Prispevkove organizace", "Statni sprava")
+kategorie_2014 <- c("UO", "Statni sprava", "OSS", "Ministerstva", "Ostatni ustredni", "Sbory", "Neustredni st. sprava", "Ostatní vc. armady", "Prispevkove organizace")
 kategorie_2014_cz <- c(
   "\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "Ministerstva", "Ostatn\u00ED \u00FAst\u0159edn\u00ED", "Sbory",
-  "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va", "Ostatn\u00ED v\u010D. arm\u00E1dy", "P\u0159\u00EDsp\u011Bvkov\u00E9 organizace", "St\u00E1tni spr\u00E1va"
+  "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va", "Ostatn\u00ED v\u010D. arm\u00E1dy", "P\u0159\u00EDsp\u011Bvkov\u00E9 organizace"
 )
 
 czech_signs_dict <- data.frame(kategorie_2014, kategorie_2014_cz)
@@ -312,3 +312,6 @@ saveRDS(main_df_update, file = "./data-interim/sections.rds")
 saveRDS(jednotl_df, file = "./data-interim/jednotlivci.rds")
 saveRDS(polozky, file = "./data-interim/organizace.rds")
 saveRDS(summary, file = "./data-interim/summary.rds")
+
+
+main_df_update %>% filter(typ_rozpoctu=="SKUT",kap_num ==306,name=="SS") %>% select(name,kategorie_2014,kategorie_2014_cz) %>% unique()
