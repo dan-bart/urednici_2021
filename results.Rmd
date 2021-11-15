@@ -379,9 +379,6 @@ A3<-bar_dt %>%
 Státní úředníci jsou důležitou podskupinou státních zaměstnanců a proto ukazujeme vývoj jejich počtu a platů v čase mezi lety 2003 a 2020.
 
 Graf 4 ukazuje počet státních úředníků. Mezi lety 2003 a 2010 mírný nárůst o necelé dva tisíce z 59 na 61 tisíc. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády (detailněji viz studie z roku 2014). Mezi lety 2010 a 2015 došlo k celkovému nárůst o pět tisíc státních úředníků a do roku 2020 jejich počet kolísal kolem 64 tisíc.^[Pro konzistentnost v průběhu let graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz popis dat. Bez nich máme v roce 2020 64 tisíc státních úředníků, s nimi by to bylo 78 tisíc, viz graf B4 v příloze.]
-Graf 5 ukazuje reálné průměrné hrubé měsíční platy státních úředníků (v tisících; ceny roku 2020), které v roce 2020 byly 52 tisíc Kč na ministerstvech, 47 tisíc Kč na ostatních ústředních úřadech, 45 tisíc ve státní správě a 38 tisíc v neústřední státní správě. Podobné rozdíly se udržovaly v průběhu celého období, během něhož pozorujeme podobný vývoj ve všech typech organizací. Reálné průměrné hrubé měsíční platy rostly z průměrů 28 až 39 tisíc Kč v roce 2003 do roku 2008 či 2009 a pak klesaly až do roku 2013, odkdy rostou. Tyto o inflaci upravené platy ale nezachycují všechny změny v čase, kdy došlo k výrazným nárůstům mezd v celém národním hospodářství.
-
-Graf 6 ukazuje průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství a pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze (vzhledem k jejich předpokládané většinové lokaci v hlavním městě). Dle tohoto ukazatele průměrné platy klesly mezi roky 2003 a 2020 ve všech typech organizací. K výraznému poklesu došlo kolem let 2009-2012, ale znatelný pokles zaznamenal tento ukazatel i mezi roky 2018 a 2020. Ačkoliv reálné průměrné hrubé měsíční platy státních úředníků v těchto nedávných letech rostly (Graf 5), zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.^[Graf A4 ukazuje reálné výdaje na platy státních úředníků mezi lety 2003 a 2020 v miliardách Kč a Graf A5 ukazuje to stejné v cenách roku 2020 a tedy očištěné o inflaci. ukazuje kumulovanou změnu reálných výdajů na platy státních úředníků 2003-2020. Nárůst výdajů na platy státních úředníků z části kopírují trend počtu státních úředníků a částečně také odráží ekonomický vývoj.]
 
 ```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 #kapitoly s velkým nárůstem zaměstnanců v období 2011-2012
@@ -429,6 +426,7 @@ dt %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
 ```
 
+Graf 5 ukazuje reálné **průměrné hrubé měsíční platy** státních úředníků (v tisících; ceny roku 2020), které v roce 2020 byly 52 tisíc Kč na ministerstvech, 47 tisíc Kč na ostatních ústředních úřadech, 45 tisíc ve státní správě a 38 tisíc v neústřední státní správě. Podobné rozdíly se udržovaly v průběhu celého období, během něhož pozorujeme podobný vývoj ve všech typech organizací. Reálné průměrné hrubé měsíční platy rostly z průměrů 28 až 39 tisíc Kč v roce 2003 do roku 2008 či 2009 a pak klesaly až do roku 2013, odkdy rostou. 
 
 ```{r cost_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 vyvoj_bar <- dt %>%
@@ -502,7 +500,6 @@ A5<-vyvoj_bar %>%
   ) %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d"), displaylogo = FALSE)
 ```
-
 
 ```{r cost_cumsum_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 aux2 <- dt %>%
@@ -631,6 +628,8 @@ A7<-dt %>%
 
 
 ```
+
+Tyto o inflaci upravené platy ale nezachycují všechny změny v čase, kdy došlo k výrazným nárůstům mezd v celém národním hospodářství. Graf 6 proto ukazuje **průměrný plat ve státní správě ve vztahu k průměrné mzdě** v národním hospodářství a pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze (vzhledem k jejich předpokládané většinové lokaci v hlavním městě). Dle tohoto ukazatele průměrné platy klesly mezi roky 2003 a 2020 ve všech typech organizací. K výraznému poklesu došlo kolem let 2009-2012, ale znatelný pokles zaznamenal tento ukazatel i mezi roky 2018 a 2020. Ačkoliv reálné průměrné hrubé měsíční platy státních úředníků v těchto nedávných letech rostly (Graf 5), zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.^[Graf A4 ukazuje reálné výdaje na platy státních úředníků mezi lety 2003 a 2020 v miliardách Kč a Graf A5 ukazuje to stejné v cenách roku 2020 a tedy očištěné o inflaci. ukazuje kumulovanou změnu reálných výdajů na platy státních úředníků 2003-2020. Nárůst výdajů na platy státních úředníků z části kopírují trend počtu státních úředníků a částečně také odráží ekonomický vývoj.]
 
 ```{r wage_to_general, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 dt %>%
