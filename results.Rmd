@@ -61,13 +61,17 @@ kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. sp
 kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa", "Ostatní vč. armády", "Sbory", "Příspěvkové organizace")
 color_map <- c("Ministerstva"=col2hex("gold1"), 
                "Neústřední st. správa"=col2hex("steelblue1"),
-               "Ostatní ústřední"=col2hex("indianred"),
+               "Ostatní ústřední"=col2hex("maroon"),
                "Ostatní vč. armády"=col2hex("olivedrab4"), 
-               "Příspěvkové organizace"=col2hex("plum1"),
+               "Příspěvkové organizace"=col2hex("thistle3"),
                "Sbory"=col2hex("royalblue4"), 
-               "Ústřední orgány" = col2hex("maroon"), 
+               "Ústřední orgány" = col2hex("indianred"), 
                "Státní správa" = col2hex("palegreen2"), 
-               "Organizační složky státu" = col2hex("lightblue"))
+               "Organizační složky státu" = col2hex("lightcyan3"))
+
+kaps<-unique(dt$kap_name)
+color_map_kap<-ifelse(substr(kaps,1,1) == "M","gold1","royalblue4")
+names(color_map_kap)<-kaps
 
 ```
 
@@ -290,7 +294,22 @@ Průměrné platy státních zaměstnanců se liší dle typu organizací i nap�
 
 
 ```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-bar_dt%>%filter(prumerny_plat>25000) %>%
+kat_means<-bar_dt %>% group_by(kategorie_2014_cz)%>%
+    summarise(prumerny_plat_mean = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)/12)/1e3)
+
+vline <- function(x = 0, color = "black") {
+  list(
+    type = "line", 
+    y0 = 0, 
+    y1 = 1, 
+    yref = "paper",
+    x0 = x, 
+    x1 = x, 
+    line = list(color = color)
+  )
+}
+
+bar_dt%>%filter(prumerny_plat>25000) %>% left_join(kat_means,by="kategorie_2014_cz")%>%
   mutate(prumerny_plat = prumerny_plat/1e3) %>% 
 plot_ly(
   x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz, colors = color_map,
@@ -298,7 +317,10 @@ plot_ly(
   hovertemplate = ~ ifelse(prostredky_na_platy > 0, paste("<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", cz_kap_name, "<br>", "Pr\u016Fm\u011Brn\u00FD plat:", format(prumerny_plat, big.mark = " "), "K\u010D"), ""),
   hoverinfo = "text"
 ) %>%
+  add_trace(type="scatter",mode="markers",  hovertemplate = ~ ifelse(prostredky_na_platy > 0, paste("<extra></extra>", "Pr\u016Fm\u011Br za kategorii:", "<br>", format(round(prumerny_plat_mean*1e3,0), big.mark = " "), "K\u010D"), ""),
+  hoverinfo = "text", marker=list(size=8,color="black"),x=~prumerny_plat_mean,y=~kategorie_2014_cz) %>%
   layout(
+    shapes = list(vline(40)),
     hovermode = "closest",
     title = list(text = "Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", y = 0.98),
     xaxis = list(title = ""),
@@ -787,7 +809,7 @@ A9<-dt %>%
   group_by(kap_name) %>%
   arrange(rok) %>%
   group_map(~ plot_ly(
-    data = ., x = ~rok, y = ~ diff * 100, type = "bar", name = ~kap_name,
+    data = ., x = ~rok, y = ~ diff * 100, type = "bar", color = ~kap_name, colors = color_map_kap,
     hovertemplate = ~ paste(
       "<extra></extra>",
       "Rok:", rok, "<br>",
@@ -813,20 +835,24 @@ A9<-dt %>%
 ```
 
 ```{r platy_skut_rozp_kap, echo=FALSE, out.width="100%",warning = FALSE,warning = FALSE,message = FALSE}
+kap_order<-ifelse(substr(kaps,1,1) == "M",1,2)
+names(kap_order)<-kaps
+kap_order<-sort(kap_order)
+
 A10<-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   filter(!kap_num %in% c(kaps_to_exclude, 312)) %>%
   select(rok, kategorie_2014_cz, typ_rozpoctu, kap_name, prostredky_na_platy,pocet_zamestnancu, cz_kap_name) %>%
   group_by(rok, cz_kap_name,kap_name, typ_rozpoctu) %>%
-  summarise(prumerny_plat = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)) / 12) %>%
+  summarise(prumerny_plat = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)/12)) %>%
   spread(key = typ_rozpoctu, value = prumerny_plat) %>%
   group_by(rok, kap_name, cz_kap_name) %>%
   mutate(diff = (SKUT - UPRAV) / UPRAV) %>%
   group_by(kap_name) %>%
   arrange(rok) %>%
   group_map(~ plot_ly(
-    data = ., x = ~rok, y = ~ diff * 100, type = "bar", name = ~kap_name,
+    data = ., x = ~rok, y = ~ diff * 100, type = "bar", color = ~kap_name, colors = color_map_kap,
     hovertemplate = ~ paste(
       "<extra></extra>",
       "Rok:", rok, "<br>",
@@ -1060,6 +1086,7 @@ A5
 A6
 A7
 A8
+A9
 A10
 A11
 A12
