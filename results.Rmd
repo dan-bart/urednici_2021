@@ -200,7 +200,7 @@ Proto v [druhé části](#ured) této studie analyzujeme vývoj jejich počtů a
 
 **Kde a za jaké platy pracují** státní zaměstnanci, a státní úředníci především, jsou hlavními otázkami pro tuto studii. Zodpovězení těchto otázek nám umožní chápat vývoj výše platů v kontextu vývoje celé ekonomiky, lépe pochopit potenciál diskutovaných konsolidačních opatření týkajících se státních zaměstnanců, pozorovat zda došlo zavedením Zákona o státní službě k výrazným změnám v počtech či platech státních úředníků nebo zda se změnila efektivita rozpočtového procesu vzhledem k tzv. neobsazeným místům.
 
-Pro zodpovězení otázek v této studii využíváme analyzujeme data ze Státních závěrečných účtů 2003-2020, která nám ve zpracovatelné formě poskytlo Ministerstvo financí. Jedná se o stejný datový zdroj  jako ve studii IDEA vydané v červnu 2014 ([@bouchal2014]). Data z této dřívější [studie](https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji) pro roky 2003 až 2012 rozšiřujeme o data pro roky 2013 až 2020. Metodologické a datové detaily popisujeme v [příslušné sekci](#ap1-zdroje) v příloze.
+Pro zodpovězení otázek v této studii analyzujeme data ze Státních závěrečných účtů 2003-2020, která nám ve zpracovatelné formě poskytlo Ministerstvo financí. Jedná se o stejný datový zdroj  jako ve studii IDEA vydané v červnu 2014 [@bouchal2014]. Data z této dřívější [studie](https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji) pro roky 2003 až 2012 rozšiřujeme o data pro roky 2013 až 2020. Metodologické a datové detaily popisujeme v [příslušné sekci](#ap1-zdroje) v příloze.
 
 ## Státní zaměstnanci {#zam}
 
