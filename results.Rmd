@@ -345,6 +345,11 @@ vline <- function(x = 0, color = "black") {
   )
 }
 
+dt_mean_salary_all <- dt %>% 
+  filter(typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava", rok == 2020) %>% 
+  summarise(prumerny_plat = round(sum(prostredky_na_platy)/sum(pocet_zamestnancu)/12/1e3)) %>% 
+  pull(prumerny_plat)
+
 bar_dt %>%
   filter(prumerny_plat>25000) %>% left_join(kat_means,by="kategorie_2014_cz")%>%
   mutate(prumerny_plat = prumerny_plat/1e3) %>% 
@@ -367,7 +372,7 @@ bar_dt %>%
             marker=list(size=8,color="black"),
             x = ~prumerny_plat_mean, y=~kategorie_2014_cz) %>%
   layout(
-    shapes = list(vline(40)),
+    shapes = list(vline(dt_mean_salary_all)),
     hovermode = "closest",
     title = list(text = "Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (v tis\u00EDc\u00EDch)", y = 0.98),
     xaxis = list(title = ""),
