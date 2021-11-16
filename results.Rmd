@@ -75,9 +75,9 @@ color_map <- c("Ministerstva"=col2hex("gold1"),
                "Státní správa" = col2hex("palegreen2"), 
                "Organizační složky státu" = col2hex("lightcyan3"))
 
-kaps<-unique(dt$kap_name)
-color_map_kap<-ifelse(substr(kaps,1,1) == "M","gold1","royalblue4")
-names(color_map_kap)<-kaps
+kaps <- unique(dt$kap_name)
+color_map_kap <- ifelse(substr(kaps,1,1) == "M","gold1","royalblue4")
+names(color_map_kap) <- kaps
 
 ```
 
@@ -217,7 +217,7 @@ Takto vymezeným státním úředníkům se dále věnujeme pomocí analýzy ča
 
 ```{r tree_plot, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
-A1<-tree_data %>%
+A1 <- tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
@@ -236,7 +236,7 @@ A1<-tree_data %>%
   layout( annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", 
                              x = 1, y = -0.05, showarrow = FALSE))
 
-tree_plot_count<-tree_data %>%
+tree_plot_count <- tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
@@ -330,7 +330,7 @@ Průměrné platy státních zaměstnanců se liší dle typu organizací i nap�
 
 
 ```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-kat_means<-bar_dt %>% group_by(kategorie_2014_cz)%>%
+kat_means <- bar_dt %>% group_by(kategorie_2014_cz)%>%
   summarise(prumerny_plat_mean = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)/12)/1e3)
 
 vline <- function(x = 0, color = "black") {
@@ -345,7 +345,8 @@ vline <- function(x = 0, color = "black") {
   )
 }
 
-bar_dt%>%filter(prumerny_plat>25000) %>% left_join(kat_means,by="kategorie_2014_cz")%>%
+bar_dt %>%
+  filter(prumerny_plat>25000) %>% left_join(kat_means,by="kategorie_2014_cz")%>%
   mutate(prumerny_plat = prumerny_plat/1e3) %>% 
   plot_ly(
     x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz, colors = color_map,
@@ -364,7 +365,7 @@ bar_dt%>%filter(prumerny_plat>25000) %>% left_join(kat_means,by="kategorie_2014_
                                      ""),
             hoverinfo = "text", 
             marker=list(size=8,color="black"),
-            x = ~prumerny_plat_mean,y=~kategorie_2014_cz) %>%
+            x = ~prumerny_plat_mean, y=~kategorie_2014_cz) %>%
   layout(
     shapes = list(vline(40)),
     hovermode = "closest",
@@ -380,10 +381,10 @@ bar_dt%>%filter(prumerny_plat>25000) %>% left_join(kat_means,by="kategorie_2014_
 
 ```{r mean_costs_SS, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
-aux<-bar_dt %>% 
+aux <- bar_dt %>% 
   filter(name %in% c("UO","OSS_SS")) %>% 
   ungroup()
-B3<-aux %>%
+B3 <- aux %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
            fct_relevel("Ministerstva", "Ostatní ústřední")) %>%
   group_by(kategorie_2014_cz) %>%
@@ -477,7 +478,7 @@ Graf 4 ukazuje počet státních úředníků. Mezi lety 2003 a 2010 mírný ná
 
 ```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 #kapitoly s velkým nárůstem zaměstnanců v období 2011-2012
-zk<-dt %>% filter(rok %in% c(2011,2012)) %>% 
+zk <- dt %>% filter(rok %in% c(2011,2012)) %>% 
   filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva")) %>%
   select(rok,full_kap_name,kap_name,pocet_zamestnancu) %>%
   pivot_wider(names_from = c("rok"),names_prefix = "rok_",
@@ -542,7 +543,7 @@ vyvoj_bar <- dt %>%
   group_by(rok) %>%
   mutate(prostredky_na_platy_nom_agg = sum(prostredky_na_platy_nom),
          prostredky_na_platy_real_agg = sum(prostredky_na_platy_real))
-A4<-vyvoj_bar %>%
+A4 <- vyvoj_bar %>%
   plot_ly(
     x = ~rok, y = ~ prostredky_na_platy_nom / 1000000000, color = ~kategorie_2014_cz, colors = color_map,
     hovertemplate = ~ paste(
@@ -573,7 +574,7 @@ A4<-vyvoj_bar %>%
   config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", 
                                     "select2d", "autoScale2d"), displaylogo = FALSE)
 
-A5<-vyvoj_bar %>%
+A5 <- vyvoj_bar %>%
   plot_ly(
     x = ~rok, y = ~ prostredky_na_platy_real / 1000000000, 
     color = ~kategorie_2014_cz, colors = color_map,
@@ -627,7 +628,7 @@ aux2 <- dt %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
            fct_relevel("Ministerstva", "Ostatní ústřední",
                        "Neústřední st. správa","Státní správa")) 
-A6<-aux2 %>%
+A6 <- aux2 %>%
   plot_ly(
     x = ~rok, y = ~ output * 100, type = "scatter", color = ~kategorie_2014_cz, colors = color_map,
     linetypes = lty,mode = "line",
@@ -701,7 +702,7 @@ dt %>%
 ```
 
 ```{r mean_wage_pct_change_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-A7<-dt %>%
+A7 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
   filter(!kap_num %in% c(314, 306)) %>%
   # not included in previous
@@ -826,7 +827,7 @@ line <- list(
 )
 
 infl <- dt %>% filter(rok == 2004) %>% select(base_2020) %>% first() %>% pull()
-A8<-dt %>%
+A8 <- dt %>%
   filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava") %>%
   filter(rok %in% c(2004, 2020)) %>%
   filter(!kap_num %in% c(314, 306)) %>%
@@ -894,7 +895,7 @@ kaps_to_exclude <- dt %>%
   pull(kap_num)
 
 
-A9<-dt %>%
+A9 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
@@ -941,11 +942,11 @@ A9<-dt %>%
 ```
 
 ```{r platy_skut_rozp_kap, echo=FALSE, out.width="100%",warning = FALSE,warning = FALSE,message = FALSE}
-kap_order<-ifelse(substr(kaps,1,1) == "M",1,2)
-names(kap_order)<-kaps
-kap_order<-sort(kap_order)
+kap_order <- ifelse(substr(kaps,1,1) == "M",1,2)
+names(kap_order) <- kaps
+kap_order <- sort(kap_order)
 
-A10<-dt %>%
+A10 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   filter(!kap_num %in% c(kaps_to_exclude, 312)) %>%
@@ -992,7 +993,7 @@ A10<-dt %>%
 ```
 
 ```{r prac_mista_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-A11<-dt %>%
+A11 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
@@ -1040,7 +1041,7 @@ A11<-dt %>%
 ```
 
 ```{r platy_skut_rozp, echo=FALSE, out.width="100%",warning = FALSE,warning = FALSE,message = FALSE}
-A12<-dt %>%
+A12 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
@@ -1093,8 +1094,9 @@ A12<-dt %>%
 ```{r Scatter plat narust, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
 infl <- dt %>% filter(rok == 2003) %>% select(base_2020) %>% first() %>% pull()
-A13<-dt %>%
-  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
+A13 <- dt %>%
+  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
+                               "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu == "SKUT") %>%
   filter(rok %in% c(2003,2020)) %>%
   select(rok, kategorie_2014_cz, cz_kap_name,kap_name, prumerny_plat, pocet_zamestnancu) %>%
@@ -1108,7 +1110,9 @@ A13<-dt %>%
                        "Neústřední st. správa","Státní správa")) %>% 
   group_by(kategorie_2014_cz) %>% 
   group_map(~ plot_ly(
-    data = ., x = ~prumerny_plat_2003/1000, y = ~ plat_change*100, type = "scatter" , mode = "markers", color = ~kategorie_2014_cz, colors = color_map,
+    data = ., x = ~prumerny_plat_2003/1000, y = ~ plat_change*100, 
+    type = "scatter" , mode = "markers", 
+    color = ~kategorie_2014_cz, colors = color_map,
     hovertemplate = ~ paste(
       "<extra></extra>",
       "Kapitola: ", cz_kap_name, "<br>",
