@@ -197,7 +197,7 @@ Proto v [druhé části](#ured) této studie analyzujeme vývoj jejich počtů a
 
 **Kde a za jaké platy pracují** státní zaměstnanci, a státní úředníci především, jsou hlavními otázkami pro tuto studii. Zodpovězení těchto otázek nám umožní chápat vývoj výše platů v kontextu vývoje celé ekonomiky, lépe pochopit potenciál diskutovaných konsolidačních opatření týkajících se státních zaměstnanců, pozorovat zda došlo zavedením Zákona o státní službě k výrazným změnám v počtech či platech státních úředníků nebo zda se změnila efektivita rozpočtového procesu vzhledem k tzv. neobsazeným místům.
 
-Pro zodpovězení otázek v této studii využíváme odpovídající metodologický přístup (analýza dat) a nejvhodnější dostupná data. Konkrétně se jedná o stejný datový zdroj (detailní **data od Ministerstva financí ze Státního závěrečného účtu**) jako ve studii IDEA vydané v červnu 2014. Data z této dřívější [studie](https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji) pro roky 2003 až 2012 rozšiřujeme o data pro roky 2013 až 2020, která jsme obdrželi od Ministerstva financí 10. 3. 2021. Metodologické a datové detaily popisujeme v [separátní sekci](#ap1-zdroje) v příloze.
+Pro zodpovězení otázek v této studii využíváme analyzujeme data ze Státních závěrečných účtů 2003-2020, která nám ve zpracovatelné formě poskytlo Ministerstvo financí. Jedná se o stejný datový zdroj  jako ve studii IDEA vydané v červnu 2014 ([@bouchal2014]). Data z této dřívější [studie](https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji) pro roky 2003 až 2012 rozšiřujeme o data pro roky 2013 až 2020. Metodologické a datové detaily popisujeme v [příslušné sekci](#ap1-zdroje) v příloze.
 
 ## Státní zaměstnanci {#zam}
 
@@ -1151,19 +1151,25 @@ Statistické ročenky České republiky - za jednotlivé roky. (Zde například 
 
 ### Zdroje dat a základní sledované koncepty {#ap1-zdroje}
 
-V datech jsou počty i platy přepočtené na plné úvazky a v této studii pracujeme především se **skutečnými výdaji** a tedy i s reálně obsazenými zaměstnaneckými místy. Výjimkou je analýza tzv. neobsazených míst, pro jejíž účely porovnáváme schválený rozpočet se skutečností. Neobsazená místa ukazujeme v grafech A9 a A11 a podobným způsobem porovnáváme rozdíly v průměrných platech mezi schváleným rozpočtem a skutečností v grafech A10 a A12.
+#### Hlavní zdroj dat
 
-Státní zaměstnance pro účely této studie definujeme jako ty, placené ze státního rozpočtu a můžeme je dále členit dle regulace zaměstnanosti nebo dle rozpočtových kapitol. Tato členění shrnuje box níže. 
+Hlavním zdrojem této studie jsou data ze **Státních závěrečných účtů** 2003-2020, která jsme ve zpracovatelné formě  obdrželi od Ministerstva financí 10. 3. 2021. Jedná se o data, která odpovídají státnímu výkaznictví zaměstnanců a výdajů na platy hrazených ze státního rozpočtů a tím i rozpočtové skladbě obecně (viz níže).
+
+V datech jsou **počty i platy přepočtené na plné úvazky**. 
+
+V této studii pracujeme především se **skutečnými výdaji** a tedy i s reálně obsazenými zaměstnaneckými místy. Výjimkou je analýza tzv. neobsazených míst, pro jejíž účely porovnáváme schválený rozpočet se skutečností. Neobsazená místa ukazujeme v grafech A9 a A11 a podobným způsobem porovnáváme rozdíly v průměrných platech mezi schváleným rozpočtem a skutečností v grafech A10 a A12.
+
+Státní zaměstnance pro účely této studie definujeme jako ty, placené ze státního rozpočtu. Můžeme je analyzovat členit dle regulace zaměstnanosti nebo dle rozpočtových kapitol. Tato členění shrnuje box níže. 
 
 :::::{.bs-callout .bs-callout-blue}
 
-### Regulace zaměstnanosti
+#### Regulace zaměstnanosti
 
 Státní zaměstnanci jsou podle tzv. regulace zaměstnanosti rozděleni do šesti skupin. Ministerstva (1. skupina) a Ostatní ústřední úřady (2.) spolu dávají Ústřední orgány státní správy. (Kategorii Ústředních orgánů jsme na ministerstva a jiné rozdělili, přestože toto dělení ve vstupních datech MF není.) Když k nim přidáme Neústřední státní správu (3.) a Správu ve složkách obrany, bezpečnostní, celní a právní ochrany (4.), mluvíme dohromady o Státní správě. Když k nim dále přidáme Ostatní organizační složky státu (5.), včetně Armády, máme Organizační složky státu nebo také Rozpočtové organizace. Konečně, přidáním Příspěvkových organizací (6.), získáváme rozpočtové organizace a příspěvkové organizace, které souhrnně označujeme jako státní zaměstnance. 
 
 Zaměstnanci ve školství jsou sice vesměs zaměstnanci škol zřizovaných samosprávami, v rozpočtové dokumentaci jsou ale vedeni jako zaměstnanci příspěvkových organizací v kapitole Ministerstva školství, protože peníze na jejich platy obce dostávají ze státního rozpočtu ve výši stanovené legislativou na centrální úrovni.
 
-### Rozpočtové kapitoly
+#### Rozpočtové kapitoly
 
 Počty zaměstnanců je možné uvádět dle rozpočtových kapitol, do nichž se člení výdaje státního rozpočtu a tedy výdaje které spadají do působnosti jednoho z ústředních orgánů státní správy. Z jedné rozpočtové kapitoly mohou být placeny zaměstnanci lišící se dle regulace zaměstnanosti. Například Ministerstvo vnitra má velké množství zaměstnanců ve sborech a ústředních orgánech státní správy, ale také nezanedbatelné množství v organizačních složkách státu a ostatních organizačních složkách státu. Většina kapitol má zaměstnance jen v jedné kategorii - například Český statistický úřad sestává pouze z ústředních orgánů státní správy.
 
