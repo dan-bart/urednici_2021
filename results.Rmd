@@ -183,11 +183,11 @@ text-align: left}
 
 ## Shrnutí
 
-* Téměř polovina z milionu zaměstnanců veřejného sektoru je placena ze státního rozpočtu: 464 tisíc státních zaměstnanců dle údajů pro rok 2020. 
-* Větší část těchto státních zaměstnanců spadá pod příspěvkové organizace (265 tisíc), zahrnující především školy, a menší část ostatních státních zaměstnanců (198 tisíc) spadá pod řadu různorodých organizací, od armády a policii až po ministerstva a úřady práce. ([více + graf](#zam))
-* Jen malou část státních zaměstnanců lze označit za státní úředníky (zhruba 78 tisíc). ([více + graf](#ured))
-* Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůstu o pět tisíc státních úředníků a do roku 2020 jejich počet nedoznal významnější změny. ([více + graf](#ured))
-* Ačkoliv reálné průměrné platy státních úředníků od roku 2013 soustavně rostly, od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice. ([více + graf](#ured))
+* Téměř polovina z milionu zaměstnanců veřejného sektoru je placena ze státního rozpočtu: 464 tisíc státních zaměstnanců dle údajů pro rok 2020.
+* Větší část těchto státních zaměstnanců spadá pod příspěvkové organizace (265 tisíc), zahrnující především školy, a menší část ostatních státních zaměstnanců (198 tisíc) spadá pod řadu různorodých organizací, od armády a policii až po ministerstva a úřady práce. → [více](#zam) + [graf](#zam-tree-pocet)
+* Jen malou část státních zaměstnanců lze označit za státní úředníky (zhruba 78 tisíc). → [více](#ured)
+* Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůstu o pět tisíc státních úředníků a do roku 2020 jejich počet nedoznal významnější změny. → [více](#ured) + [graf](#ured-pocet)
+* Ačkoliv reálné průměrné platy státních úředníků od roku 2013 soustavně rostly → [graf](#ured-plat), od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice. → [více](#ured) + [graf](#ured-plat-rel)
 
 ::::
 
@@ -214,6 +214,8 @@ Takto vymezeným státním úředníkům se dále věnujeme pomocí analýzy ča
 **Sbory** (82 tisíc) zahrnují například policisty a hasiče, ale i vězeňské dozorce. V ostatní včetně armády (39 tisíc) je právě armáda pod kapitolou ministerstva obrany zodpovědná za většinu zaměstnanců (32 tisíc). 
 
 **Příspěvkové organizace** mají 265 tisíc zaměstnanců a naprostá většina z nich (254 tisíc) spadá pod kapitolu Ministerstva školství a tělovýchovy, tedy veřejných základních a středních škol. Tato skupina tedy tvoří většinu státních zaměstnanců (byť prakticky jde o zaměstnance škol, které zřizují samosprávy, viz výše). Důležitost příspěvkových organizací včetně učitelů a dalších zaměstnanců škol lze vidět dobře i v členění zaměstnanců dle rozpočtových kapitol (graf 2). 
+
+<a name = "zam-tree-pocet"></a>
 
 ```{r tree_plot, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 
@@ -259,6 +261,8 @@ tree_plot_count
 ```
 
 ### Počet zaměstnanců dle rozpočtových kapitol {#zam-kap}
+
+<a name = "zam-kap-graf"></a>
 
 ```{r counts, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 bar_dt %>% group_by(kategorie_2014_cz)%>%
@@ -328,6 +332,7 @@ Průměrné platy státních zaměstnanců po jednotlivých rozpočtových kapit
 
 Průměrné platy státních zaměstnanců se liší dle typu organizací i napříč jednotlivými organizacemi. Na ministerstvech jsou průměrné platy od 40 tisíc Kč (měsíčně hrubého) na Ministerstvu pro životní prostředí až po 56 tisíc Kč na Ministerstvu obrany, ale všude jsou vyšší než na některých úřadech ústřední státní správy jako je Český statistický úřad (39 tisíc Kč) nebo neústřední státní správy jako je Český úřad zeměměřický a katastrální (34 tisíc Kč). (Graf A3 v příloze ukazuje tyto průměrné platy ve vztahu k průměrné mzdě v národním hospodářství - mnohé z těchto platů jsou pod tímto průměrem.) Tyto rozdílné platy pravděpodobně odrážejí především rozdíly například v charakteru práce, lokalitě, požadovaném i průměrném vzdělání, průměrné délce služby nebo podílu vedoucích pracovníků. O těchto relevantních charakteristikách nemáme v dostupných datech žádné informace a proto nejsme schopni tyto rozdíly nijak osvětlit. Místo toho se v další části věnujeme skupině státních zaměstnanců, která je v některých těchto charakteristikách relativně podobná: státním úředníkům.
 
+<a name = "zam-plat-graf"></a>
 
 ```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 kat_means <- bar_dt %>% group_by(kategorie_2014_cz)%>%
@@ -480,6 +485,8 @@ A3 <- bar_dt %>%
 Státní úředníci jsou důležitou podskupinou státních zaměstnanců a proto ukazujeme vývoj jejich počtu a platů v čase mezi lety 2003 a 2020.
 
 Graf 4 ukazuje počet státních úředníků. Mezi lety 2003 a 2010 mírný nárůst o necelé dva tisíce z 59 na 61 tisíc. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády (detailněji viz studie z roku 2014). Mezi lety 2010 a 2015 došlo k celkovému nárůst o pět tisíc státních úředníků a do roku 2020 jejich počet kolísal kolem 64 tisíc.^[Pro konzistentnost v průběhu let graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz popis dat. Bez nich máme v roce 2020 64 tisíc státních úředníků, s nimi by to bylo 78 tisíc, viz graf B4 v příloze.]
+
+<a name = "ured-pocet"></a>
 
 ```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 #kapitoly s velkým nárůstem zaměstnanců v období 2011-2012
@@ -664,6 +671,8 @@ A6 <- aux2 %>%
                                     "select2d", "autoScale2d"), displaylogo = FALSE)
 ```
 
+<a name = "ured-plat"></a>
+
 ```{r mean_wage_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
@@ -761,6 +770,8 @@ A7 <- dt %>%
 ```
 
 Tyto o inflaci upravené platy ale nezachycují všechny změny v čase, kdy došlo k výrazným nárůstům mezd v celém národním hospodářství. Graf 6 proto ukazuje **průměrný plat ve státní správě ve vztahu k průměrné mzdě** v národním hospodářství a pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze (vzhledem k jejich předpokládané většinové lokaci v hlavním městě). Dle tohoto ukazatele průměrné platy klesly mezi roky 2003 a 2020 ve všech typech organizací. K výraznému poklesu došlo kolem let 2009-2012, ale znatelný pokles zaznamenal tento ukazatel i mezi roky 2018 a 2020. Ačkoliv reálné průměrné hrubé měsíční platy státních úředníků v těchto nedávných letech rostly (Graf 5), zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.^[Graf A4 ukazuje reálné výdaje na platy státních úředníků mezi lety 2003 a 2020 v miliardách Kč a Graf A5 ukazuje to stejné v cenách roku 2020 a tedy očištěné o inflaci. ukazuje kumulovanou změnu reálných výdajů na platy státních úředníků 2003-2020. Nárůst výdajů na platy státních úředníků z části kopírují trend počtu státních úředníků a částečně také odráží ekonomický vývoj.]
+
+<a name = "ured-plat-rel"></a>
 
 ```{r wage_to_general, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 dt %>%
