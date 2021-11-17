@@ -61,7 +61,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, include=FALSE}
-knitr::write_bib(c("base", "ggplot2", "dplyr", "readr", "gplots", "stringr", "plotly", 
+knitr::write_bib(c("base", "ggplot2", "dplyr", "readr", "readxl", "gplots", "stringr", "plotly", 
                    "czso", "janitor", "data.table", "forcats", "tidyr", "statnipokladna"),
                  file = 'packages.bib')
 ```
