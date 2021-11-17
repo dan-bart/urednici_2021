@@ -4,7 +4,8 @@ author: "Daniel Bartu\u0161ek, Petr Bouchal, Petr Jansk\u00FD"
 subtitle: Pracovní verze studie IDEA
 date: listopad 2021 (pracovní verze)
 output:
-  html_document:
+  bookdown::html_document2:
+    number_sections: no
     css: docs/custom.css
     self_contained: no
     toc: yes
