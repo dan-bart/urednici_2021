@@ -14,7 +14,12 @@ output:
     theme:
       version: 5
   pdf_document: default
-  
+  bookdown::word_document2: 
+    number_sections: no
+    pandoc_args: !expr rmarkdown::pandoc_lua_filter_args(rmarkdown::pkg_file_lua('pandoc-quotes.lua', 'ptrr'))
+    reference_docx: idea-template.docx
+
+always_allow_html: yes
 knit: (function(input_file, encoding) {
   out_dir <- 'docs';
   rmarkdown::render(input_file,
