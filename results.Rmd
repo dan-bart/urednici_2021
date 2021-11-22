@@ -1252,7 +1252,7 @@ S pojmem “státní zaměstnanec” pracuje i zákon o státní službě, kter�
 
 Graf A0. Počet zaměstnanců veřejného sektoru celkem (v tisících přepočtených osob)^[Informace pro roky 1996-1998 a období před rokem 1995 nejsou dostupné online. Zdroj: Autoři na základě údajů Českého statistického úřadu ze Statistické ročenky ČR, část 10A-3 (Trh práce) pro jednotlivé roky. Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje kromě samospráv i veřejné finanční a nefinanční firmy.]
 
-```{r graf-a0.  echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r graf-a0, echo=FALSE, out.width="100%", warning = FALSE, message = FALSE}
 pubsec <- read_csv(here::here("data-input", "ver-sektor-csu-rocenka.csv"))
 
 graf_A0 <- plot_ly(pubsec, type = "scatter", mode = "lines+markers",
