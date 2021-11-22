@@ -1,4 +1,4 @@
-"---
+---
 title: "St\u00E1tn\u00ED zam\u011Bstnanci a \u00FA\u0159edn\u00EDci: kde pracuj\u00ED a za kolik?"
 author: "Daniel Bartu\u0161ek, Petr Bouchal, Petr Jansk\u00FD"
 subtitle: Pracovní verze studie IDEA
@@ -1250,7 +1250,7 @@ S pojmem “státní zaměstnanec” pracuje i zákon o státní službě, kter�
 
 ## Příloha 2: Doplňkové výsledky
 
-Graf A0. Počet zaměstnanců veřejného sektoru celkem (v tisících přepočtených osob) - TO BE ADDED^[Poznámky: Informace pro roky 1996-1998 a období před rokem 1995 nejsou dostupné online. Zdroj: Autoři na základě údajů Českého statistického úřadu ze Statistické ročenky pro jednotlivé roky. Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje například obce a kraje nebo i veřejné finanční i nefinanční firmy.]
+Graf A0. Počet zaměstnanců veřejného sektoru celkem (v tisících přepočtených osob)^[Informace pro roky 1996-1998 a období před rokem 1995 nejsou dostupné online. Zdroj: Autoři na základě údajů Českého statistického úřadu ze Statistické ročenky ČR, část 10A-3 (Trh práce) pro jednotlivé roky. Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje kromě samospráv i veřejné finanční a nefinanční firmy.]
 
 ```{r graf-a0}
 pubsec <- read_csv(here::here("data-input", "ver-sektor-csu-rocenka.csv"))
@@ -1332,7 +1332,7 @@ graf_B4<-dt %>%
 graf_B4
 ```
 
-```{r graphs eval=FALSE, include = FALSE}
+```{r graphs, eval=FALSE, include = FALSE}
 graf_list<-list(
 graf_1,
 graf_2,
