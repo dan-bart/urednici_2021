@@ -1282,7 +1282,7 @@ A12
 A13
 ```
 
-### Časové grafy obsahující kapitoly MZV a MV
+### Časové řady zahrnující kapitoly MZV a MV
 
 ```{r full graphs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
 dt %>%
