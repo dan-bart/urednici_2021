@@ -18,7 +18,7 @@ output:
   bookdown::word_document2: 
     number_sections: no
     pandoc_args: !expr ptrr::pandoc_quotes()
-    reference_docx: idea-template.docx
+    reference_docx: report-files/idea-template.docx
 
 always_allow_html: yes
 knit: (function(input_file, encoding) {
@@ -26,7 +26,7 @@ knit: (function(input_file, encoding) {
   rmarkdown::render(input_file,
  encoding=encoding,
  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
-bibliography: [references.json, packages.bib]
+bibliography: [report-files/references.json, report-files/packages.bib]
 csl: chicago-author-date.csl
 link-citations: yes
 nocite: '@*'
@@ -63,7 +63,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, include=FALSE}
 knitr::write_bib(c("base", "ggplot2", "dplyr", "readr", "readxl", "gplots", "stringr", "plotly", 
                    "czso", "janitor", "data.table", "forcats", "tidyr", "statnipokladna"),
-                 file = 'packages.bib')
+                 file = 'report-files/packages.bib')
 ```
 
 <script src="https://hypothes.is/embed.js" async></script>
