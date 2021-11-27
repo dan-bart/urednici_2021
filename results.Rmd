@@ -11,13 +11,13 @@ output:
     toc: yes
     toc_float: yes
     toc_depth: 3
-    pandoc_args: !expr rmarkdown::pandoc_lua_filter_args(rmarkdown::pkg_file_lua('pandoc-quotes.lua', 'ptrr'))
+    pandoc_args: !expr ptrr::pandoc_quotes()
     theme:
       version: 5
   pdf_document: default
   bookdown::word_document2: 
     number_sections: no
-    pandoc_args: !expr rmarkdown::pandoc_lua_filter_args(rmarkdown::pkg_file_lua('pandoc-quotes.lua', 'ptrr'))
+    pandoc_args: !expr ptrr::pandoc_quotes()
     reference_docx: idea-template.docx
 
 always_allow_html: yes
