@@ -1213,7 +1213,7 @@ graf_A13 <- dt %>%
 
 ### Detaily
 
-Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2020: <https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om>)
+Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2021: <https://www.czso.cz/csu/czso/10-trh-prace-sdpe56comt>)
 
 ## Příloha 1: Data a metodologie {#ap1}
 
@@ -1272,11 +1272,11 @@ Dodatečná data používáme **Českého statistického úřadu** o mzdách v e
 - při porovnávání platů používáme průměrnou pražskou mzdu pro ústřední orgány a průměrnou celorepublikovou mzdu pro ostatní, vše z datové sady ČSÚ [Průměrná hrubá měsíční mzda a medián mezd v krajích](https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich) (kód 11080) pro roky 2011-2020, dřívejší roky z dalších srovnatelných tabulek z produkce ČSÚ. Pro srovnatelnost s rozpočtovými daty používáme průměr (nikoli medián) mezd. 
 - pro údaje o cenových hladinách a inflaci (například pro výpočet reálného průměrného hrubé měsíčního platu) používáme [datovou sadu ČSÚ s indexy spotřebitelských cen](https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen) (kód 010022, roky 2003-2020).
 
-Nejlepší data o státních zaměstnancích od Ministerstva financí využíváme v této studii, ale pro celou množinu **zaměstnanců veřejného sektoru** poskytují jediné systematické údaje **Statistické ročenky** Českého statistického úřadu pro jednotlivé roky. 
-Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje, kromě státních zaměstnanců, například obce a kraje nebo i veřejné finanční i nefinanční firmy. Poslední dostupný údaj je z [ročenky za rok 2020](https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om) s předběžnými informacemi pro rok 2018 (konkrétně tabulka 10-3 k trhu práce). 
-Podle tohoto zdroje veřejný sektor celkem v roce 2018 zaměstnával 993,3 tisíc zaměstnanců (přepočtených na plné úvazky). 
-Pro další roky (1995, 1999-2018; ostatní roky nejsou podle všeho dostupné online) shrnujeme tyto informace v grafu A0 v příloze. Mezi lety 1995 (1646 tisíc) a 2012 (921,4 tisíc) došlo k výraznému poklesu počtu zaměstnanců veřejného sektoru a mezi roky 2012 a 2018 došlo k postupnému, mírnému nárůstu. 
-Jediné další informace ve Statistické ročence jsou, že, například pro rok 2018, z celkového počtu 993,3 tisíc zaměstnanců veřejného sektoru jich 319,6 tisíc pracovalo ve veřejných nefinančních podnicích, 1,6 tisíc ve veřejných finančních institucích a 672,1 tisíc ve vládních institucích (z toho 290.5 tisíc ústřední, 375.7 neústřední a 6.0 fondy sociálního zabezpečení) a jejich průměrné hrubé měsíční mzdy ve stejném členění. 
+Nejlepší agregátní data o státních zaměstnancích od Ministerstva financí využíváme v této studii, ale pro celou množinu **zaměstnanců veřejného sektoru** poskytují jediné systematické údaje **Statistické ročenky** Českého statistického úřadu pro jednotlivé roky. 
+Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje, kromě státních zaměstnanců, například obce a kraje nebo i veřejné finanční i nefinanční firmy. Poslední dostupný údaj je z [ročenky za rok 2020](https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om) s předběžnými informacemi pro rok 2019 (konkrétně tabulka 10-A3 k trhu práce). 
+Podle tohoto zdroje veřejný sektor celkem v roce 2019 zaměstnával 1012,5 tisíc zaměstnanců (přepočtených na plné úvazky). 
+Pro další roky (1995, 1999-2019; ostatní roky nejsou podle všeho dostupné online) shrnujeme tyto informace v grafu A0 v příloze. Mezi lety 1995 (1646 tisíc) a 2012 (921,4 tisíc) došlo k výraznému poklesu počtu zaměstnanců veřejného sektoru a mezi roky 2012 a 2019 došlo k postupnému, mírnému nárůstu. 
+Jediné další informace ve Statistické ročence jsou, že, například pro rok 2019, z celkového počtu 1012,5 tisíc zaměstnanců veřejného sektoru jich 327,8 tisíc pracovalo ve veřejných nefinančních podnicích, 1,6 tisíc ve veřejných finančních institucích a 682,2 tisíc ve vládních institucích (z toho 297.8 tisíc ústřední, 382.3 neústřední a 6,1 fondy sociálního zabezpečení) a jejich průměrné hrubé měsíční mzdy ve stejném členění. 
 Toto jsou relativně málo detailní informace, které neumožňují analýzu na úrovni jednotlivých organizací veřejného sektoru. Zaměřujeme se tedy v této studii na analýzu dat od Ministerstva financí, z kterých toho víme více o tom, kolik a kde a za jaké průměrné platy státních zaměstnanců pracuje. 
 
 ### Metoda a technika analýzy dat
