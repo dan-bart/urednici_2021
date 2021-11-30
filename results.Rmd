@@ -1325,7 +1325,10 @@ graf_A0 <- plot_ly(pubsec, type = "scatter", mode = "lines+markers",
            xaxis = list(title = NA),
            legend = list(x = 100, y = 0.5), showlegend = F,
            title = list(text = "Graf A0. Počet zaměstnanců veřejného sektoru (tis. přepočtených osob)",
-                        y = 0.98))
+                        y = 0.98)) %>%
+  config(modeBarButtonsToRemove = c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d",
+                                    "select2d", "autoScale2d"), 
+         displaylogo = FALSE)
 graf_A0
 ```
 
