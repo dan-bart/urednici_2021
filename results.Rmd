@@ -27,7 +27,7 @@ knit: (function(input_file, encoding) {
  encoding=encoding,
  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 bibliography: [report-files/references.json, report-files/packages.bib]
-csl: chicago-author-date.csl
+csl: report-files/chicago-author-date.csl
 link-citations: yes
 nocite: '@*'
 lang: cs
