@@ -521,7 +521,7 @@ graf_A3 <- bar_dt %>%
                    x = 50, y = 0.95), legend = list(x = 50, y = 0.5), 
       showlegend = F
     ), keep = TRUE) %>%
-  subplot(nrows = 2, shareY = F)
+  subplot(nrows = 2, shareY = F,margin = 0.05)
 ```
 
 ## Státní úředníci {#ured}
