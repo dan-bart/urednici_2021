@@ -1435,7 +1435,7 @@ graf_B4<-dt %>%
 graf_B4
 ```
 
-```{r graphs, eval=FALSE, include = FALSE}
+```{r graphs, eval=T, include = FALSE}
 graf_list<-list(
 graf_1,
 graf_2,
