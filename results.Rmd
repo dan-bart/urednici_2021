@@ -1481,7 +1481,7 @@ names(graf_list)<-c(
 "graf_A13",
 "graf_B4")
 for (i in 1:length(graf_list)){
-  htmlwidgets::saveWidget(as_widget(graf_list[[i]]), paste("graphs/", names(graf_list)[i],".html"),
+  htmlwidgets::saveWidget(as_widget(graf_list[[i]]), paste0("graphs/", names(graf_list)[i],".html"),
                           libdir = "js")
 }
 ```
