@@ -35,7 +35,7 @@ lang: cs
 
 ```{r setup, include=FALSE}
 library(dplyr)
-library(plotly)
+library(plotly )
 library(ggplot2)
 library(data.table)
 library(stringr)
