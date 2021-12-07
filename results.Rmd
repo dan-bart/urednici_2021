@@ -83,19 +83,19 @@ kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. sp
 #                "Státní správa" = col2hex("palegreen2"), 
 #                "Organizační složky státu" = col2hex("lightcyan3"))
 
-color_map <- c("Ministerstva"=col2hex("darkgrey"), 
-               "Neústřední st. správa"=col2hex("cornflowerblue"),
-               "Ostatní ústřední"=col2hex("firebrick"),
-               "Ostatní vč. armády"=col2hex("darkseagreen"), 
-               "Příspěvkové organizace"=col2hex("lightpink"),
-               "Sbory"=col2hex("royalblue4"), 
-               "Ústřední orgány" = col2hex("indianred"), 
-               "Státní správa" = col2hex("lightskyblue"), 
+color_map <- c("Ministerstva" =             col2hex("darkgrey"), 
+               "Neústřední st. správa" =    col2hex("cornflowerblue"),
+               "Ostatní ústřední" =         col2hex("firebrick"),
+               "Ostatní vč. armády" =       col2hex("darkseagreen"), 
+               "Příspěvkové organizace" =   col2hex("lightpink"),
+               "Sbory" =                    col2hex("royalblue4"), 
+               "Ústřední orgány" =          col2hex("indianred"), 
+               "Státní správa" =            col2hex("lightskyblue"), 
                "Organizační složky státu" = col2hex("lightcyan"),
                  "Státní úředníci celkem" = col2hex("yellow"))
 
 kaps <- unique(dt$kap_name)
-color_map_kap <- ifelse(substr(kaps,1,1) == "M","gold1","royalblue4")
+color_map_kap <- ifelse(substr(kaps,1,1) == "M", "gold1", "royalblue4")
 names(color_map_kap) <- kaps
 
 ```
@@ -164,10 +164,10 @@ tree_data <- tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$pa
 
 ```{r priprava, echo=FALSE,warning = FALSE,message = FALSE}
 dt <- dt %>%
-  mutate(kategorie_2014_cz = ifelse(kategorie_2014_cz=="Státní správa","Státní úředníci celkem",kategorie_2014_cz)) %>%
+  mutate(kategorie_2014_cz = ifelse(kategorie_2014_cz == "Státní správa",
+                                    "Státní úředníci celkem",kategorie_2014_cz)) %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
                        fct_relevel(kat_order_all) %>% fct_rev())
-
 
 abs_metrics <- dt %>%
   filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
