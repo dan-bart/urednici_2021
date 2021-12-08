@@ -233,7 +233,7 @@ Proto v [druhé části](#ured) této studie analyzujeme vývoj jejich počtů a
 **Kde a za jaké platy pracují** státní zaměstnanci, a státní úředníci především, jsou hlavními otázkami pro tuto studii. 
 Zodpovězení těchto otázek nám umožní chápat vývoj výše platů v kontextu vývoje celé ekonomiky, lépe pochopit potenciál diskutovaných konsolidačních opatření týkajících se státních zaměstnanců, pozorovat zda došlo zavedením Zákona o státní službě k výrazným změnám v počtech či platech státních úředníků nebo zda se změnila efektivita rozpočtového procesu vzhledem k tzv. neobsazeným místům.
 
-Pro zodpovězení otázek v této studii analyzujeme data ze Státních závěrečných účtů 2003-2020, která nám ve zpracovatelné formě poskytlo Ministerstvo financí. Jedná se o stejný datový zdroj  jako ve studii IDEA vydané v červnu 2014 [@bouchal2014]. 
+Pro zodpovězení otázek v této studii analyzujeme data ze Státních závěrečných účtů 2003–2020, která nám ve zpracovatelné formě poskytlo Ministerstvo financí. Jedná se o stejný datový zdroj  jako ve studii IDEA vydané v červnu 2014 [@bouchal2014]. 
 Data z této dřívější [studie](https://idea.cerge-ei.cz/studies/2014-06-statni-urednici-kolik-jich-vlastne-je-kde-a-za-jake-platy-pracuji) pro roky 2003 až 2012 rozšiřujeme o data pro roky 2013 až 2020. 
 Metodologické a datové detaily popisujeme v [příslušné sekci](#ap1-zdroje) v příloze.
 
@@ -250,7 +250,7 @@ V příloze vysvětlujeme základní logiku těchto dvou členění, které při
 **Státní úředníci** nejlépe odpovídají součtu prvních tří skupin dle regulace zaměstnanosti (graf 1): ministerstva, úřady ústřední i neústřední státní správy (78 tisíc). Na ministerstvech pracuje 23 tisíc lidí, na ostatních ústředních úřadech (například Úřad vlády, Český úřad zeměměřický a katastrální nebo Český statistický úřad) pak pracuje dalších 4 tisíc lidí. 
 Největší část státních úředníků, 51 tisíc, pracuje na úřadech neústřední státní správy, mezi které patří Generální finanční ředitelství, Úřad práce nebo Česká správa sociálního zabezpečení. 
 Z členění dle rozpočtových kapitol (graf 2) vidíme, že zdaleka největší díl zaměstnanosti ve státní správě představují tři velká ministerstva (financí, vnitra, práce a sociálních věcí) a jimi řízené organizace (například Úřad práce, Česká správa sociálního zabezpečení nebo Generální finanční ředitelství), které společně zaměstnávají zhruba 80% státních úředníků (zhruba 63 tisíc).^[Grafy A1 a A2 v příloze ukazují celkové součty platů státních zaměstnanců, které jsou podobně rozděleny jako jejich počty v grafech 1 a 2 (i protože rozdíly v počtech zaměstnanců hrají výraznější roli než rozdíly v průměrných platech).]
-Takto vymezeným státním úředníkům se dále věnujeme pomocí analýzy časové řady 2003-2020 v druhé části studie.
+Takto vymezeným státním úředníkům se dále věnujeme pomocí analýzy časové řady 2003–2020 v druhé části studie.
 
 **Sbory** (82 tisíc) zahrnují například policisty a hasiče, ale i vězeňské dozorce. 
 V ostatní včetně armády (39 tisíc) je právě armáda pod kapitolou ministerstva obrany zodpovědná za většinu zaměstnanců (32 tisíc). 
@@ -878,7 +878,7 @@ Tyto o inflaci upravené platy ale nezachycují všechny změny v čase, kdy do�
 Graf 6 proto ukazuje **průměrný plat ve státní správě ve vztahu k průměrné mzdě** v národním hospodářství a pro ministerstva a ústřední orgány srovnání s průměrným platem v Praze (vzhledem k jejich předpokládané většinové lokaci v hlavním městě). 
 Dle tohoto ukazatele průměrné platy klesly mezi roky 2003 a 2020 ve všech typech organizací. 
 K výraznému poklesu došlo kolem let 2009-2012, ale znatelný pokles zaznamenal tento ukazatel i mezi roky 2018 a 2020. 
-Ačkoliv reálné průměrné hrubé měsíční platy státních úředníků v těchto nedávných letech rostly (Graf 5), zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.^[Graf A4 ukazuje reálné výdaje na platy státních úředníků mezi lety 2003 a 2020 v miliardách Kč a Graf A5 ukazuje to stejné v cenách roku 2020 a tedy očištěné o inflaci. ukazuje kumulovanou změnu reálných výdajů na platy státních úředníků 2003-2020. 
+Ačkoliv reálné průměrné hrubé měsíční platy státních úředníků v těchto nedávných letech rostly (Graf 5), zaostával tento růst znatelně za nárůstem mezd v celé ekonomice.^[Graf A4 ukazuje reálné výdaje na platy státních úředníků mezi lety 2003 a 2020 v miliardách Kč a Graf A5 ukazuje to stejné v cenách roku 2020 a tedy očištěné o inflaci. ukazuje kumulovanou změnu reálných výdajů na platy státních úředníků 2003–2020. 
 Nárůst výdajů na platy státních úředníků z části kopírují trend počtu státních úředníků a částečně také odráží ekonomický vývoj.]
 
 <a name = "ured-plat-rel"></a>
@@ -1309,7 +1309,7 @@ Statistické ročenky České republiky - za jednotlivé roky. (Zde například 
 
 #### Hlavní zdroj dat
 
-Hlavním zdrojem této studie jsou data ze **Státních závěrečných účtů** 2003-2020, která jsme ve zpracovatelné formě obdrželi od Ministerstva financí 10. 3. 2021. 
+Hlavním zdrojem této studie jsou data ze **Státních závěrečných účtů** 2003–2020, která jsme ve zpracovatelné formě obdrželi od Ministerstva financí 10. 3. 2021. 
 Jedná se o data, která odpovídají státnímu výkaznictví zaměstnanců a výdajů na platy hrazených ze státního rozpočtů a tím i rozpočtové skladbě obecně (viz níže).
 
 V datech jsou **počty i platy přepočtené na plné úvazky**. 
@@ -1358,7 +1358,7 @@ Podobné změny nejsou konzistentně a dohledatelně dokumentovány.
 Dodatečná data používáme **Českého statistického úřadu** o mzdách v ekonomice a inflaci: 
 
 - při porovnávání platů používáme průměrnou pražskou mzdu pro ústřední orgány a průměrnou celorepublikovou mzdu pro ostatní, vše z datové sady ČSÚ [Průměrná hrubá měsíční mzda a medián mezd v krajích](https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich) (kód 11080) pro roky 2011-2020, dřívejší roky z dalších srovnatelných tabulek z produkce ČSÚ. Pro srovnatelnost s rozpočtovými daty používáme průměr (nikoli medián) mezd. 
-- pro údaje o cenových hladinách a inflaci (například pro výpočet reálného průměrného hrubé měsíčního platu) používáme [datovou sadu ČSÚ s indexy spotřebitelských cen](https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen) (kód 010022, roky 2003-2020).
+- pro údaje o cenových hladinách a inflaci (například pro výpočet reálného průměrného hrubé měsíčního platu) používáme [datovou sadu ČSÚ s indexy spotřebitelských cen](https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen) (kód 010022, roky 2003–2020).
 
 Nejlepší agregátní data o státních zaměstnancích od Ministerstva financí využíváme v této studii, ale pro celou množinu **zaměstnanců veřejného sektoru** poskytují jediné systematické údaje **Statistické ročenky** Českého statistického úřadu pro jednotlivé roky. 
 Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje, kromě státních zaměstnanců, například obce a kraje nebo i veřejné finanční i nefinanční firmy. Poslední dostupný údaj je z [ročenky za rok 2020](https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om) s předběžnými informacemi pro rok 2019 (konkrétně tabulka 10-A3 k trhu práce). 
