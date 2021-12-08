@@ -54,10 +54,12 @@ library(stringr)
 library(janitor)
 library(czso)
 
-options("scipen"=100, "digits"=8)
+options(scipen = 100, digits = 8)
+knitr::opts_chunk$set(echo=FALSE, out.width="100%", 
+                      warning = FALSE, message = FALSE)
+
 dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -102,7 +104,7 @@ names(color_map_kap) <- kaps
 
 
 
-```{r tree_prep, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r tree_prep}
 
 aux <- dt %>%
   filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", 
@@ -162,7 +164,7 @@ tree_data <- tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$pa
 
 ```
 
-```{r priprava, echo=FALSE,warning = FALSE,message = FALSE}
+```{r priprava}
 dt <- dt %>%
   mutate(kategorie_2014_cz = ifelse(kategorie_2014_cz == "Státní správa",
                                     "Státní úředníci celkem",kategorie_2014_cz)) %>%
@@ -259,7 +261,7 @@ Důležitost příspěvkových organizací včetně učitelů a dalších zaměs
 
 <a name = "zam-tree-pocet"></a>
 
-```{r tree_plot, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r plotly-utils}
 
 graf_A1 <- tree_data %>%
   plot_ly(
@@ -306,8 +308,8 @@ graf_1
 
 <a name = "zam-kap-graf"></a>
 
-```{r counts, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-graf_2<-bar_dt %>% group_by(kategorie_2014_cz)%>%
+```{r counts}
+graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
   plot_ly(
     x = ~kap_name, y = ~ pocet_zamestnancu/1000, type="bar", 
     color = ~kategorie_2014_cz, colors = color_map,
@@ -343,7 +345,7 @@ graf_2<-bar_dt %>% group_by(kategorie_2014_cz)%>%
 graf_2
 ```
 
-```{r costs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE, include = F}
+```{r costs, include = F}
 graf_A2 <- plot_ly(bar_dt,
               x = ~kap_name, y = ~ prostredky_na_platy / 1000000000, 
               color = ~kategorie_2014_cz, colors = color_map,
@@ -381,7 +383,7 @@ Místo toho se v další části věnujeme skupině státních zaměstnanců, kt
 
 <a name = "zam-plat-graf"></a>
 
-```{r mean_costs_ALL, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_costs_ALL}
 kat_means <- bar_dt %>% filter(kategorie_2014_cz != "Státní úředníci celkem") %>% group_by(kategorie_2014_cz)%>%
   summarise(prumerny_plat_mean = (sum(prostredky_na_platy) / sum(pocet_zamestnancu)/12)/1e3)
 
@@ -406,7 +408,7 @@ dt_mean_salary_all <- dt %>%
   summarise(prumerny_plat = round(sum(prostredky_na_platy)/sum(pocet_zamestnancu)/12/1e3)) %>% 
   pull(prumerny_plat)
 
-graf_3<-bar_dt %>% 
+graf_3 <- bar_dt %>% 
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
                        fct_relevel(kat_order_graf3) %>% fct_rev())%>%
   filter(kategorie_2014_cz != "Státní úředníci celkem") %>%
@@ -445,7 +447,7 @@ graf_3<-bar_dt %>%
 graf_3
 ```
 
-```{r mean_costs_SS, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_costs_SS}
 
 aux <- bar_dt %>% 
   filter(name %in% c("UO","OSS_SS")) %>% 
@@ -490,7 +492,7 @@ graf_B3 <- aux %>%
   subplot(nrows = 3, shareY = TRUE)
 ```
 
-```{r mean_costs_v2, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_costs_v2}
 graf_A3 <- bar_dt %>%
   group_by(kategorie_2014_cz) %>%
   filter(kategorie_2014 != "Prispevkove organizace") %>%
@@ -548,7 +550,7 @@ Mezi lety 2010 a 2015 došlo k celkovému nárůst o pět tisíc státních úř
 
 <a name = "ured-pocet"></a>
 
-```{r count_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r count_2014}
 #kapitoly s velkým nárůstem zaměstnanců v období 2011-2012
 zk <- dt %>% filter(rok %in% c(2011,2012)) %>% 
   filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva")) %>%
@@ -559,7 +561,7 @@ zk <- dt %>% filter(rok %in% c(2011,2012)) %>%
   arrange(desc(perc_change))
 
 
-graf_4<-dt %>%
+graf_4 <- dt %>%
   filter(typ_rozpoctu == "SKUT",
          kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni")) %>%
@@ -607,7 +609,7 @@ Graf 5 ukazuje reálné **průměrné hrubé měsíční platy** státních úř
 Podobné rozdíly se udržovaly v průběhu celého období, během něhož pozorujeme podobný vývoj ve všech typech organizací. 
 Reálné průměrné hrubé měsíční platy rostly z průměrů 28 až 39 tisíc Kč v roce 2003 do roku 2008 či 2009 a pak klesaly až do roku 2013, odkdy rostou. 
 
-```{r cost_2014, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r cost_2014}
 vyvoj_bar <- dt %>%
   filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni")) %>%
   filter(!kap_num %in% c(314, 306)) %>%
@@ -619,9 +621,10 @@ vyvoj_bar <- dt %>%
   group_by(rok) %>%
   mutate(prostredky_na_platy_nom_agg = sum(prostredky_na_platy_nom),
          prostredky_na_platy_real_agg = sum(prostredky_na_platy_real))
+
 graf_A4 <- vyvoj_bar %>%
   plot_ly(
-    x = ~rok, y = ~ prostredky_na_platy_nom / 1000000000, color = ~kategorie_2014_cz, colors = color_map,
+    x = ~rok, y = ~ prostredky_na_platy_nom / 1e9, color = ~kategorie_2014_cz, colors = color_map,
     hovertemplate = ~ paste(
       "<extra></extra>", "Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
       "Rozpo\u010Det:", format(prostredky_na_platy_nom, big.mark = " "), "K\u010D",
@@ -653,7 +656,7 @@ graf_A4 <- vyvoj_bar %>%
 
 graf_A5 <- vyvoj_bar %>%
   plot_ly(
-    x = ~rok, y = ~ prostredky_na_platy_real / 1000000000, 
+    x = ~rok, y = ~ prostredky_na_platy_real / 1e9, 
     color = ~kategorie_2014_cz, colors = color_map,
     hovertemplate = ~ paste(
       "<extra></extra>", "Rok:", rok, "<br>", "Kategorie:", 
@@ -741,7 +744,7 @@ graf_A6 <- aux2 %>%
 
 <a name = "ured-plat"></a>
 
-```{r mean_wage_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_wage_2020}
 graf_5 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
   #filter(!kap_num %in% c(314,306)) %>% #not included in previous
@@ -799,7 +802,7 @@ graf_5
 
 ```
 
-```{r mean_wage_pct_change_2020, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r mean_wage_pct_change_2020}
 graf_A7 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
   filter(!kap_num %in% c(314, 306)) %>%
@@ -866,8 +869,8 @@ Nárůst výdajů na platy státních úředníků z části kopírují trend po
 
 <a name = "ured-plat-rel"></a>
 
-```{r wage_to_general, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-graf_6<-dt %>%
+```{r wage_to_general}
+graf_6 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni", "Statni sprava"), 
          typ_rozpoctu == "SKUT") %>%
@@ -925,7 +928,7 @@ graf_6<-dt %>%
 graf_6
 ```
 
-```{r 2020_effect, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r 2020_effect}
 
 line <- list(
   type = "line",
@@ -992,7 +995,7 @@ graf_A8 <- dt %>%
 
 ```
 
-```{r prac_mista_skut_rozp_kap, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r prac_mista_skut_rozp_kap}
 kaps_to_exclude <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
@@ -1374,7 +1377,7 @@ Graf A0. Počet zaměstnanců veřejného sektoru celkem (v tisících přepočt
 Zdroj: Autoři na základě údajů Českého statistického úřadu ze Statistické ročenky ČR, část 10A-3 (Trh práce) pro jednotlivé roky. 
 Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje kromě samospráv i veřejné finanční a nefinanční firmy.]
 
-```{r graf-a0, echo=FALSE, out.width="100%", warning = FALSE, message = FALSE}
+```{r graf-a0}
 pubsec <- read_csv(here::here("data-input", "ver-sektor-csu-rocenka.csv"))
 
 graf_A0 <- plot_ly(pubsec, type = "scatter", mode = "lines+markers", line = list(width = 4),
@@ -1399,7 +1402,7 @@ graf_A0
 
 
 
-```{r appendix, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r appendix}
 graf_A1
 graf_A2
 graf_A3
@@ -1417,8 +1420,8 @@ graf_A13
 
 ### Časové řady zahrnující kapitoly MZV a MV
 
-```{r full graphs, echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
-graf_B4<-dt %>%
+```{r full graphs}
+graf_B4 <- dt %>%
   filter(typ_rozpoctu == "SKUT", 
          kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni")) %>%
@@ -1461,7 +1464,7 @@ graf_B4<-dt %>%
 graf_B4
 ```
 
-```{r graphs, eval=F, include = FALSE}
+```{r graphs, eval = FALSE, include = FALSE}
 graf_list<-list(
 graf_1,
 graf_2,
