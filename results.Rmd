@@ -815,7 +815,7 @@ graf_5 <- dt %>%
     plot_bgcolor='whitesmoke',
     title = 
       list(font=list(color = cap_col),
-           text = "<b>Graf 5: Průměrné platy státních úředníků 2003–2020 (tisíce Kč)</b>", 
+           text = "<b>Graf 5. Průměrné platy státních úředníků 2003–2020 (tisíce Kč)</b>", 
            y =0.98),
     xaxis = list(title = ""),
     yaxis = list(title = "Reálné průměrné mzdy (tis. Kč, ceny roku 2020)",
@@ -938,7 +938,7 @@ graf_6 <- dt %>%
   ) %>%
   layout(plot_bgcolor='whitesmoke',
     title = list(font=list(color = cap_col),
-                 text = str_wrap("<b>Graf 6. Průměrný plat ve státní správě ve vztahu k průměrné mzdě v národním hospodářství</b>",60), 
+                 text = str_wrap("<b>Graf 6. Průměrný plat státních úředníků ve vztahu k průměrné mzdě v národním hospodářství</b>",60), 
                  y = 0.95),
     annotations = list(text = str_wrap("Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství. Popisky “Největší a nejmenší nárust” zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárůst by byl 15%.",40),
                        align='left',
