@@ -94,7 +94,7 @@ color_map <- c("Ministerstva" =             col2hex("darkgrey"),
                "Ústřední orgány" =          col2hex("indianred"), 
                "Státní správa" =            col2hex("lightskyblue"), 
                "Organizační složky státu" = col2hex("lightcyan"),
-                 "Státní úředníci celkem" = col2hex("yellow"))
+               "Státní úředníci celkem" =   col2hex("yellow"))
 
 kaps <- unique(dt$kap_name)
 color_map_kap <- ifelse(substr(kaps,1,1) == "M", "gold1", "royalblue4")
@@ -285,7 +285,7 @@ graf_A1 <- tree_data %>%
                             " Pod\u00EDl na celku:", round(cost_perc*100,1), "%"),
     domain = list(column = 0)
   ) %>%
-  layout(title = list(font=list(color = cap_col),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti</b>", 
+  layout(title = list(font=list(color = cap_col),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti, rok 2020</b>", 
                       y = 0.98)) %>%
   layout( annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", 
                              x = 1, y = -0.05, showarrow = FALSE))
@@ -307,7 +307,7 @@ graf_1 <- tree_data %>%
     domain = list(column = 0)
   ) %>%
   layout(title = list(font=list(color = cap_col),
-                      text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti</b>", 
+                      text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti, rok 2020</b>", 
                       y = 0.98)) %>%
   layout(annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", x = 1, 
                              y = -0.05, showarrow = FALSE,
@@ -347,7 +347,8 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
                        bordercolor = 'rgba(0,0,0,0)',
                        borderwidth=1,
                        showarrow = FALSE),
-    title = list(font=list(color = cap_col),text = "<b>Graf 2. Po\u010Det st\u00E1tn\u00EDch zam\u011Bstnanc\u016F dle rozpo\u010Dtov\u00FDch kapitol (tis\u00EDce)</b>", y = 0.97),
+    title = list(font=list(color = cap_col),
+                 text = "<b>Graf 2. Po\u010Det st\u00E1tn\u00EDch zam\u011Bstnanc\u016F dle rozpo\u010Dtov\u00FDch kapitol (rok 2020, tis\u00EDce)</b>", y = 0.97),
     xaxis = list(title = "Kapitoly",tickmode = "array",categoryorder = "array", 
                  categoryarray = arrange(bar_dt, desc(pocet_zamestnancu_agg))$kap_name),
     yaxis = list(gridcolor = grdclr,title = "Po\u010Det zam\u011Bstnanc\u016F"), barmode = "stack",
@@ -377,7 +378,8 @@ graf_A2 <- plot_ly(bar_dt,
     plot_bgcolor='whitesmoke',
     hovermode = "closest",
     title = list(font=list(color = cap_col),
-                 text = "<b>Graf A2. Výdaje na platy státních zaměstnanců (miliardy K\u010D)</b>", y = 0.98),
+                 text = "<b>Graf A2. Výdaje na platy státních zaměstnanců (rok 
+                 2020, miliardy K\u010D)</b>", y = 0.98),
     xaxis = list(title = "Kapitoly", categoryorder = "array", 
                  categoryarray = arrange(bar_dt, desc(prostredky_na_platy_agg))$kap_name),
     yaxis = list(title = "Platy",gridcolor = grdclr),
@@ -452,7 +454,7 @@ graf_3 <- bar_dt %>%
     plot_bgcolor='whitesmoke',
     shapes = list(vline(dt_mean_salary_all)),
     hovermode = "closest",
-    title = list(font=list(color = cap_col),text = "<b>Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (tis\u00EDce K\u010D)</b>", y = 1.1),
+    title = list(font=list(color = cap_col),text = "<b>Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (rok 2020, tis\u00EDce K\u010D)</b>", y = 1.1),
     xaxis = list(title = "",gridcolor = "white"),
     yaxis = list(title = "",gridcolor = "white"),
     showlegend = F, margin = mrg2
@@ -549,7 +551,8 @@ graf_A3 <- bar_dt %>%
                                                  showticklabels = T, 
                                                  tickangle = 90, 
                                                  "categoryorder" = "total ascending"),
-      title = list(font=list(color = cap_col),text = str_wrap("<b>Graf A3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F ve vztahu k pr\u016Fm\u011Brn\u00E9 mzd\u011B v n\u00E1rodn\u00EDm hospod\u00E1\u0159stv\u00ED</b>",70), 
+      title = list(font=list(color = cap_col),
+                   text = str_wrap("<b>Graf A3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F ve vztahu k pr\u016Fm\u011Brn\u00E9 mzd\u011B v n\u00E1rodn\u00EDm hospod\u00E1\u0159stv\u00ED, rok 2020</b>",70), 
                    x = 50, y = 0.95), legend = list(x = 50, y = 0.5), 
       showlegend = F
     ), keep = TRUE, margin = mrg2) %>%
@@ -629,7 +632,9 @@ Reálné průměrné hrubé měsíční platy rostly z průměrů 28 až 39 tis�
 
 ```{r cost_2014}
 vyvoj_bar <- dt %>%
-  filter(typ_rozpoctu == "SKUT", kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni")) %>%
+  filter(typ_rozpoctu == "SKUT", 
+         kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
+                               "Ostatni ustredni")) %>%
   filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014_cz, rok) %>%
   summarise(
@@ -711,8 +716,9 @@ graf_A5 <- vyvoj_bar %>%
 
 ```{r cost_cumsum_2014}
 aux2 <- dt %>%
-  filter(kategorie_2014_cz %in% c("Státní úředníci celkem","Ministerstva", "Ostatní ústřední",
-                                  "Neústřední st. správa"), typ_rozpoctu == "SKUT") %>%
+  filter(kategorie_2014_cz %in% c("Státní úředníci celkem", "Ministerstva", 
+                                  "Ostatní ústřední", "Neústřední st. správa"), 
+         typ_rozpoctu == "SKUT") %>%
   filter(!kap_num %in% c(314, 306)) %>%
   # not included in previous
   group_by(kategorie_2014_cz, rok) %>%
@@ -728,7 +734,8 @@ aux2 <- dt %>%
   mutate(output_weighted = (prostredky_na_platy / base_2003 - plat_base) / plat_base) %>% 
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
            fct_relevel("Ministerstva", "Ostatní ústřední",
-                       "Neústřední st. správa","Státní úředníci celkem")) 
+                       "Neústřední st. správa", "Státní úředníci celkem")) 
+
 graf_A6 <- aux2 %>%
   plot_ly(
     x = ~rok, y = ~ output * 100, type = "scatter", color = ~kategorie_2014_cz, colors = color_map,
@@ -766,7 +773,9 @@ graf_A6 <- aux2 %>%
 
 ```{r mean_wage_2020}
 graf_5 <- dt %>%
-  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
+  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava",
+                               "Ostatni ustredni", "Statni sprava"), 
+         typ_rozpoctu == "SKUT") %>%
   #filter(!kap_num %in% c(314,306)) %>% #not included in previous
   group_by(rok, kategorie_2014_cz) %>%
   summarise(
@@ -961,6 +970,7 @@ line <- list(
 )
 
 infl <- dt %>% filter(rok == 2004) %>% select(base_2020) %>% first() %>% pull()
+
 graf_A8 <- dt %>%
   filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT", kategorie_2014 != "Statni sprava") %>%
   filter(rok %in% c(2004, 2020)) %>%
@@ -1017,7 +1027,8 @@ graf_A8 <- dt %>%
 
 ```{r prac_mista_skut_rozp_kap}
 kaps_to_exclude <- dt %>%
-  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
+  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
+                               "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   select(rok, kategorie_2014_cz, typ_rozpoctu, kap_num, pocet_zamestnancu, full_kap_name) %>%
   spread(key = typ_rozpoctu, value = pocet_zamestnancu) %>%
@@ -1063,8 +1074,8 @@ graf_A9 <- dt %>%
   ) %>%
     add_annotations(
       text = ~unique(kap_name),
-      x = 0.2,
-      y = 1.05,
+      x = .2,
+      y = .98,
       yref = "paper",
       xref = "paper",
       font = list(family = "verdana", size = 9),
@@ -1073,12 +1084,22 @@ graf_A9 <- dt %>%
       showarrow = FALSE
     ) %>%
     layout(plot_bgcolor='whitesmoke',
-           xaxis = list(title=""),
-           yaxis = list(title = "", range = c(-30, 5), ticksuffix = "%",gridcolor = grdclr), 
-           xaxis = list(tickangle = 90), legend = list(x = 100, y = 0.5)), keep = TRUE) %>%
-  subplot(nrows = 5, shareX = TRUE, shareY = TRUE) %>%
-  layout(title = list(font=list(color = cap_col),text = "<b>Graf A9. Rozdíl mezi schváleným a skutečným počtem zaměstnanců</b>", 
-                      y = 0.98), showlegend = FALSE, margin = mrg2) |> 
+           xaxis = list(title= ""),
+           yaxis = list(title = "", 
+                        range = c(-30, 10), ticksuffix = " %",
+                        gridcolor = grdclr), 
+           xaxis = list(tickangle = 90), legend = list(x = 100, y = 0.5)), 
+  keep = TRUE) %>%
+  subplot(nrows = 5, shareX = TRUE, shareY = TRUE, titleY = FALSE) %>%
+  layout(title = list(font=list(color = cap_col),
+                      text = "<b>Graf A9. Rozdíl mezi schváleným a skutečným počtem zaměstnanců</b>", 
+                      y = 0.98),
+         showlegend = FALSE, 
+         annotations = list(x = 0 , y = 0.5, text = "Záporné = méně skutečných než schválených",
+                            font = list(size = 14),
+                            xshift = -50, textangle = 270, showarrow = F, 
+                            xref='paper', yref='paper'),
+         margin = mrg2) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 ```
 
@@ -1088,7 +1109,8 @@ names(kap_order) <- kaps
 kap_order <- sort(kap_order)
 
 graf_A10 <- dt %>%
-  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava")) %>%
+  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
+                               "Ostatni ustredni", "Statni sprava")) %>%
   filter(typ_rozpoctu != "SCHV") %>%
   filter(!kap_num %in% c(kaps_to_exclude, 312)) %>%
   select(rok, kategorie_2014_cz, typ_rozpoctu, kap_name, prostredky_na_platy,
@@ -1125,13 +1147,17 @@ graf_A10 <- dt %>%
       showarrow = FALSE
     ) %>%
     layout(plot_bgcolor='whitesmoke',
-           xaxis = list(title=""),
-           yaxis = list(title = "", range = c(0, 30), ticksuffix = "%",gridcolor = grdclr), 
-           xaxis = list(tickangle = 90), legend = list(x = 100, y = 0.5)), 
+           xaxis = list(title = "", 
+                        tickangle = 90), legend = list(x = 100, y = 0.5)), 
   keep = TRUE) %>%
-  subplot(nrows = 5, shareX = TRUE, shareY = T) %>%
-  layout(title = list(font=list(color = cap_col),text = "<b>Graf A10. Rozdíl v průměrných platech mezi schváleným rozpočtem a skutečností</b>",
-                      y = 0.98), showlegend = FALSE, margin = mrg2) |> 
+  subplot(nrows = 5, shareX = TRUE, shareY = T, titleY = F) %>%
+  layout(title = list(font=list(color = cap_col),
+                      text = "<b>Graf A10. Rozdíl v průměrných platech mezi schváleným rozpočtem a skutečností</b>",
+                      y = 0.98), showlegend = FALSE, margin = mrg2,
+         annotations = list(x = 0 , y = 0.5, text = "Kladné = skutečný průměrný plat vyšší než schválený",
+                            font = list(size = 14),
+                            xshift = -50, textangle = 270, showarrow = F, 
+                            xref='paper', yref='paper')) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 
 ```
@@ -1179,11 +1205,18 @@ graf_A11 <- dt %>%
     ) %>%
     layout(plot_bgcolor='whitesmoke',
            xaxis = list(title=""),
-           yaxis = list(title = "", range = c(-15, 3), ticksuffix = "%",gridcolor = grdclr), 
+           yaxis = list(title = "Záporné = méně skutečných než schválených", 
+                        range = c(-15, 3), ticksuffix = " %",
+                        gridcolor = grdclr), 
            legend = list(x = 100, y = 0.5), showlegend = F), keep = TRUE) %>%
-  subplot(nrows = 2, shareX = TRUE, shareY = TRUE) %>%
-  layout(title = list(font=list(color = cap_col),text = "<b>Graf A11. Rozdíl mezi schváleným a skutečným počtem zaměstnanců</b>", 
-                      y = 0.98), margin = mrg2) |> 
+  subplot(nrows = 2, shareX = TRUE, shareY = TRUE, titleY = FALSE) %>%
+  layout(title = list(font=list(color = cap_col),
+                      text = "<b>Graf A11. Rozdíl mezi schváleným a skutečným počtem zaměstnanců</b>", 
+                      y = 0.98), margin = mrg2,
+         annotations = list(x = 0 , y = 0.5, text = "Záporné = skutečný počet nižší než schválený",
+                            font = list(size = 14),
+                            xshift = -50, textangle = 270, showarrow = F, 
+                            xref='paper', yref='paper')) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 ```
 
@@ -1238,13 +1271,18 @@ graf_A12 <- dt %>%
   subplot(nrows = 2, shareX = TRUE, shareY = TRUE) %>%
   layout(title = list(font = list(color = cap_col),
                       text = "<b>Graf A12. Rozdíl v průměrných platech mezi schváleným rozpočtem a skutečností </b>", 
-                      y = 0.98), margin = mrg2) |> 
+                      y = 0.98), margin = mrg2,
+         annotations = list(x = 0 , y = 0.5, text = "Kladné = skutečný průměrný plat vyšší než schválený",
+                            font = list(size = 14),
+                            xshift = -50, textangle = 270, showarrow = F, 
+                            xref='paper', yref='paper')) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 ```
 
 ```{r Scatter plat narust}
 
 infl <- dt %>% filter(rok == 2003) %>% select(base_2020) %>% first() %>% pull()
+
 graf_A13 <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
                                "Ostatni ustredni", "Statni sprava")) %>%
@@ -1292,9 +1330,19 @@ graf_A13 <- dt %>%
            legend = list(x = 100, y = 0.5), showlegend = F) %>%
     add_text(text = ~ str_wrap(kap_name, 10), textposition = "bottom left",
              textfont = list(size = 8)),keep = TRUE) %>%
-  subplot(nrows = 2, shareX = T, shareY = T) %>%
+  subplot(nrows = 2, shareX = T, shareY = T, titleY = F, titleX = F) %>%
   layout(title = list(font=list(color = cap_col),text = "<b>Graf A13. Nárůst průměrných platů od roku 2003</b>",
-                      xaxis = list(title = ""), y = 0.98), margin = mrg2) |> 
+                      xaxis = list(title = ""), y = 0.98), margin = mrg2,
+         annotations = list(list(x = 0 , y = 0.5, text = "Nárůst průměrného platu od roku 2003",
+                                 font = list(size = 14),
+                                 xshift = -50, textangle = 270, showarrow = F, 
+                                 xref='paper', yref='paper'),
+                            list(y = 0 , x = 0.5, text = "Průměrný plat v roce 2003 (tisíce Kč)",
+                                 font = list(size = 14),
+                                 yshift = -40,
+                                 textangle = 0, showarrow = F,
+                                 xref='paper', yref='paper'
+                            ))) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 
 ```
@@ -1483,7 +1531,7 @@ graf_B4 <- dt %>%
                        showarrow = FALSE),
     xaxis = list(title = ""),
     yaxis = list(title = "",gridcolor = grdclr),
-    barmode = "stack", legend = list(x = 100, y = 0.5)
+    barmode = "stack", legend = list(x = 100, y = 0.5), margin = mrg2
   ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 
