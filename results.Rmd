@@ -70,7 +70,7 @@ knitr::write_bib(c("base", "ggplot2", "dplyr", "readr", "readxl", "gplots", "str
 
 <script src="https://hypothes.is/embed.js" async></script>
 
-```{r echo=FALSE, out.width="100%",warning = FALSE,message = FALSE}
+```{r}
 kat_order_ss <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa")
 kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa","Státní úředníci celkem", 
                    "Ostatní vč. armády", "Sbory", "Příspěvkové organizace")
