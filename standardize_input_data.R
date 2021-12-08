@@ -220,7 +220,20 @@ kategorie_2014_cz <- c(
   "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va", "Ostatn\u00ED v\u010D. arm\u00E1dy", "P\u0159\u00EDsp\u011Bvkov\u00E9 organizace"
 )
 
-czech_signs_dict <- data.frame(kategorie_2014, kategorie_2014_cz)
+kategorie_2021 <- c("UO", "Statni sprava", "OSS", "Ministerstva", "Ostatni ustredni",
+                    "Sbory", "Neustredni st. sprava", "Ostatní vc. armady",
+                    "Prispevkove organizace", "Statni urednici")
+kategorie_2021_cz <- c(
+  "\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va",
+  "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "Ministerstva", "Ostatn\u00ED \u00FAst\u0159edn\u00ED",
+  "Sbory",
+  "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va", "Ostatn\u00ED v\u010D. arm\u00E1dy",
+  "P\u0159\u00EDsp\u011Bvkov\u00E9 organizace","Státní úředníci"
+)
+
+# czech_signs_dict <- data.frame(kategorie_2014, kategorie_2014_cz)
+czech_signs_dict <- data.frame(kategorie_2014 = kategorie_2021,
+                               kategorie_2014_cz = kategorie_2021_cz)
 
 ### wages
 wages_later <- czso_get_table("110080") %>%
@@ -272,7 +285,7 @@ for (i in (nrow(df_infl) - 1):1) {
   df_infl[i, "base_2020"] <- df_infl[i + 1, "base_2020"] * df_infl[i+1, "inflation"]
 }
 
-main_df_update <- main_df %>%
+main_df_recat <- main_df %>%
   mutate(kategorie_2014 = case_when(
     (prostredky_na_platy > 0 & name == "OSS_SS") ~ "Neustredni st. sprava",
     (prostredky_na_platy > 0 & name == "SS") ~ "Statni sprava",
@@ -281,7 +294,18 @@ main_df_update <- main_df %>%
     (prostredky_na_platy > 0 & name == "SOBCPO") ~ "Sbory",
     (name == "UO" & kap_num %in% MINISTERSTVA) ~ "Ministerstva",
     (name == "UO" & kap_num %in% OSTATNI_UO) ~ "Ostatni ustredni"
-  )) %>%
+  ))
+
+main_df_urednici <- main_df_recat |>
+  filter(name %in% c("UO", "OSS_SS")) |>
+  group_by(rok, typ_rozpoctu, kap_name, kap_num, full_kap_name, cz_kap_name) |>
+  summarise(across(.cols = c(prostredky_na_platy, oppp, prostredky_na_platy_a_oppp,
+                             pocet_zamestnancu), .fns = ~sum(.x, na.rm = T)),
+            prumerny_plat = prostredky_na_platy / pocet_zamestnancu / 12) |>
+  mutate(kategorie_2014 = "Statni urednici")
+
+main_df_update <- bind_rows(main_df_recat,
+                            main_df_urednici) |>
   filter(!is.na(kap_num)) %>%
   filter(prostredky_na_platy_a_oppp > 0) %>%
   group_by(kategorie_2014, typ_rozpoctu, kap_num) %>%
