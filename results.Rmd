@@ -93,9 +93,9 @@ color_map <- c("Ministerstva" =             col2hex("darkgrey"),
                "Příspěvkové organizace" =   col2hex("lightpink"),
                "Sbory" =                    col2hex("royalblue4"), 
                "Ústřední orgány" =          col2hex("indianred"), 
+               "Státní úředníci" =          col2hex("yellow"),
                "Státní správa" =            col2hex("lightskyblue"), 
-               "Organizační složky státu" = col2hex("lightcyan"),
-               "Státní úředníci" =          col2hex("yellow"))
+               "Organizační složky státu" = col2hex("lightcyan"))
 
 kaps <- unique(dt$kap_name)
 color_map_kap <- ifelse(substr(kaps,1,1) == "M", "gold1", "royalblue4")
@@ -116,7 +116,7 @@ aux <- dt %>%
             count = sum(pocet_zamestnancu)) %>%
   rename("labels" = kategorie_2014_cz) %>%
   mutate(parents = c("\u00DAst\u0159edn\u00ED org\u00E1ny", 
-                     "St\u00E1tn\u00ED spr\u00E1va", 
+                     "St\u00E1tn\u00ED \u00FA\u0159edn\u00EDci", 
                      "\u00DAst\u0159edn\u00ED org\u00E1ny", 
                      "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "", 
                      "St\u00E1tn\u00ED spr\u00E1va"))
@@ -125,12 +125,15 @@ aux <- dt %>%
 #SS = UO+Sbory+Neustredni SS
 
 to_append <- data.frame(
-  labels = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED spr\u00E1va", 
+  labels = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED \u00FA\u0159edn\u00EDci", "St\u00E1tn\u00ED spr\u00E1va", 
              "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu"), 
-  parents = c("St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", ""),
+  parents = c("St\u00E1tn\u00ED \u00FA\u0159edn\u00EDci","St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", ""),
   cost = c(
     aux$cost[aux$labels == "Ministerstva"] +
       aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
+    aux$cost[aux$labels == "Ministerstva"] +
+      aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"]+
+      aux$cost[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"],
     aux$cost[aux$labels == "Ministerstva"] +
       aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
       aux$cost[aux$labels == "Sbory"] +
@@ -144,6 +147,9 @@ to_append <- data.frame(
   count = c(
     aux$count[aux$labels == "Ministerstva"] +
       aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
+    aux$count[aux$labels == "Ministerstva"] +
+      aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"]+
+      aux$count[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"],
     aux$count[aux$labels == "Ministerstva"] +
       aux$count[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"] +
       aux$count[aux$labels == "Sbory"] +
@@ -382,7 +388,7 @@ graf_A2 <- plot_ly(bar_dt,
     hovermode = "closest",
     title = list(font=list(color = cap_col),
                  text = "<b>Graf A2. Výdaje na platy státních zaměstnanců (rok 
-                 2020, miliardy K\u010D)</b>", y = 0.98),
+                 2020, miliardy K\u010D)</b>", y = 0.96),
     xaxis = list(title = "Kapitoly", categoryorder = "array", 
                  categoryarray = arrange(bar_dt, desc(prostredky_na_platy_agg))$kap_name),
     yaxis = list(title = "Platy",gridcolor = grdclr),
@@ -465,55 +471,6 @@ graf_3 <- bar_dt %>%
   ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 graf_3
-```
-
-```{r mean_costs_SS}
-
-aux <- bar_dt %>% 
-  filter(name %in% c("UO","OSS_SS")) %>% 
-  ungroup()
-
-graf_B3 <- aux %>%
-  mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
-           fct_relevel("Ministerstva", "Ostatní ústřední")) %>%
-  group_by(kategorie_2014_cz) %>%
-  mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"),
-                                   prumerny_plat / phasal_all-1, prumerny_plat / czsal_all-1))) %>%
-  group_map(~ plot_ly(
-    data = ., x = ~kap_name, y = ~ prumerny_plat / 1000, type = "bar", 
-    color = ~kategorie_2014_cz, colors = color_map,
-    hovertemplate = ~ ifelse(prumerny_plat > 0, paste(
-      "<extra></extra>", " Zdroj:", name, "<br>", "Kapitola:", 
-      cz_kap_name, "<br>", "Pr\u016Fm\u011Brngraf_B3\u00FD plat:",
-      format(prumerny_plat, big.mark = " "), "K\u010D"
-    ), ""), 
-    hoverinfo = "text"
-  ) %>%
-    add_annotations(
-      text = ~unique(kategorie_2014_cz),
-      x = 0.99,
-      y = 0.98,
-      yref = "paper",
-      xref = "paper",
-      font = list(family = "verdana", size = 15),
-      xanchor = "right",
-      yanchor = "top",
-      showarrow = FALSE
-    ) %>%
-    layout(
-      plot_bgcolor='whitesmoke',
-      yaxis = list(title = "", range = c(20, 60), gridcolor = grdclr), 
-      xaxis = list(tickfont = list(size = 10), 
-                   showticklabels = T, 
-                   tickangle = 0, 
-                   "categoryorder" = "total descending"),
-      title = list(font=list(color = cap_col),
-                   text = "<b>Graf B3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (tis\u00EDce K\u010D)</b>", 
-                   x = 50, y = 0.98), legend = list(x = 50, y = 0.5), 
-      showlegend = F, margin = mrg2
-    ), keep = TRUE) %>%
-  subplot(nrows = 3, shareY = TRUE) |> 
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 ```
 
 ```{r mean_costs_v2}
@@ -754,7 +711,7 @@ graf_A6 <- aux2 %>%
   ) %>%
   layout(margin = mrg2,
     plot_bgcolor='whitesmoke',
-    title = list(font=list(color = cap_col),text = str_wrap("<b>Graf A6. Změna reálných výdajů na platy státních úředníků od roku 2020</b>",70), y = 0.98),
+    title = list(font=list(color = cap_col),text = str_wrap("<b>Graf A6. Změna reálných výdajů na platy státních úředníků od roku 2020</b>",70), y = 0.96),
     annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
                        align='left',
                        xref='paper',
@@ -1102,7 +1059,7 @@ graf_A9 <- dt %>%
          showlegend = FALSE, 
          annotations = list(x = 0 , y = 0.5, text = "Záporné = méně skutečných než schválených",
                             font = list(size = 14),
-                            xshift = -50, textangle = 270, showarrow = F, 
+                            xshift = -65, textangle = 270, showarrow = F, 
                             xref='paper', yref='paper'),
          margin = mrg2) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
@@ -1161,7 +1118,7 @@ graf_A10 <- dt %>%
                       y = 0.98), showlegend = FALSE, margin = mrg2,
          annotations = list(x = 0 , y = 0.5, text = "Kladné = skutečný průměrný plat vyšší než schválený",
                             font = list(size = 14),
-                            xshift = -50, textangle = 270, showarrow = F, 
+                            xshift = -65, textangle = 270, showarrow = F, 
                             xref='paper', yref='paper')) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 
@@ -1220,7 +1177,7 @@ graf_A11 <- dt %>%
                       y = 0.98), margin = mrg2,
          annotations = list(x = 0 , y = 0.5, text = "Záporné = skutečný počet nižší než schválený",
                             font = list(size = 14),
-                            xshift = -50, textangle = 270, showarrow = F, 
+                            xshift = -65, textangle = 270, showarrow = F, 
                             xref='paper', yref='paper')) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 ```
@@ -1279,7 +1236,7 @@ graf_A12 <- dt %>%
                       y = 0.98), margin = mrg2,
          annotations = list(x = 0 , y = 0.5, text = "Kladné = skutečný průměrný plat vyšší než schválený",
                             font = list(size = 14),
-                            xshift = -50, textangle = 270, showarrow = F, 
+                            xshift = -65, textangle = 270, showarrow = F, 
                             xref='paper', yref='paper')) |> 
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 ```
@@ -1340,7 +1297,7 @@ graf_A13 <- dt %>%
                       xaxis = list(title = ""), y = 0.98), margin = mrg2,
          annotations = list(list(x = 0 , y = 0.5, text = "Nárůst průměrného platu od roku 2003",
                                  font = list(size = 14),
-                                 xshift = -50, textangle = 270, showarrow = F, 
+                                 xshift = -65, textangle = 270, showarrow = F, 
                                  xref='paper', yref='paper'),
                             list(y = 0 , x = 0.5, text = "Průměrný plat v roce 2003 (tisíce Kč)",
                                  font = list(size = 14),
