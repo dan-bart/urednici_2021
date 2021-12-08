@@ -188,7 +188,8 @@ bar_dt <- dt %>%
   filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
   filter(!is.na(kategorie_2014_cz)) %>%
   filter(!is.na(as.numeric(kap_num))) %>%
-  filter(!name %in% c("ROPO", "SS", "OSS")) %>%
+  filter(!name %in% c("ROPO", "SS", "OSS"), 
+         kategorie_2014_cz != "Státní úředníci") %>%
   group_by(kap_name)%>%
   mutate(bar_name_count = paste(kap_name, " Celkem: ",sum(pocet_zamestnancu))) %>%
   mutate(bar_name_cost = paste(kap_name, " Celkem: ",sum(prostredky_na_platy))) %>%
