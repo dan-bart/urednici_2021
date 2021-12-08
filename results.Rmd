@@ -53,6 +53,7 @@ library(here)
 library(stringr)
 library(janitor)
 library(czso)
+library(kableExtra)
 
 options(scipen = 100, digits = 8)
 knitr::opts_chunk$set(echo=FALSE, out.width="100%", 
@@ -296,7 +297,7 @@ graf_A1 <- tree_data %>%
   ) %>%
   layout(title = list(font=list(color = cap_col),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti, rok 2020</b>", 
                       y = 0.98)) %>%
-  layout( annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", 
+  layout( annotations = list(text = "Poznámka: Pro bližší detail lze kategorie rozkliknout", 
                              x = 1, y = -0.05, showarrow = FALSE))
 
 mrg <- list(l = 0, r = 0, b = 0, t = 0, pad = 0, autoexpand = FALSE)
@@ -318,7 +319,7 @@ graf_1 <- tree_data %>%
   layout(title = list(font=list(color = cap_col),
                       text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti, rok 2020</b>", 
                       y = 0.98)) %>%
-  layout(annotations = list(text = "Pozn: Pro bližší detail lze kategorie rozkliknout", x = 1, 
+  layout(annotations = list(text = "Poznámka: Pro bližší detail lze kategorie rozkliknout", x = 1, 
                              y = -0.05, showarrow = FALSE,
           margin = mrg)) |> 
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm)
@@ -346,7 +347,7 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
   layout(
     plot_bgcolor='whitesmoke',
     hovermode = "closest", legend = list(x = 100, y = 0.5),
-    annotations = list(text = str_wrap("Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí  učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.",40),
+    annotations = list(text = str_wrap("Poznámka: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí  učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -357,14 +358,13 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
                        borderwidth=1,
                        showarrow = FALSE),
     title = list(font=list(color = cap_col),
-                 text = "<b>Graf 2. Po\u010Det st\u00E1tn\u00EDch zam\u011Bstnanc\u016F dle rozpo\u010Dtov\u00FDch kapitol (rok 2020, tis\u00EDce)</b>", y = 0.97),
+                 text = "<b>Graf 2. Počet st\u00E1tn\u00EDch zam\u011Bstnanc\u016F dle rozpo\u010Dtov\u00FDch kapitol (rok 2020, tis\u00EDce)</b>", y = 0.97),
     xaxis = list(tickfont=list(size=10),title = "Kapitoly",tickmode = "array",categoryorder = "array", 
                  categoryarray = arrange(bar_dt, desc(pocet_zamestnancu_agg))$kap_name),
     yaxis = list(gridcolor = grdclr,title = "Po\u010Det zam\u011Bstnanc\u016F"), barmode = "stack",
     margin = mrg2
   ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
-
 graf_2
 ```
 
@@ -567,7 +567,7 @@ graf_4 <- dt %>%
     plot_bgcolor='whitesmoke',
     title = list(font=list(color = cap_col),text = "<b>Graf 4. Počet státních úředníků (2003–2020, tisíce)</b>", 
                  y = 0.98),
-    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b> Graf 4 s kapitolami ministerstev vnitra a zahraničních věcí je v příloze.",40),
+    annotations = list(text = str_wrap("Poznámka: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b> Graf 4 s kapitolami ministerstev vnitra a zahraničních věcí je v příloze.",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -622,7 +622,7 @@ graf_A4 <- vyvoj_bar %>%
     title = list(font=list(color = cap_col),
                  text = "<b>Graf A4. Výdaje na platy státních úředníků (2003–2020, mld. Kč)</b>", 
                  y = 0.98),
-    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
+    annotations = list(text = str_wrap("Poznámka: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -657,7 +657,7 @@ graf_A5 <- vyvoj_bar %>%
     title = list(font=list(color = cap_col),
                  text = "<b>Graf A5. Reálné výdaje na platy státních úředníků (2003–2020, mld. Kč)</b>", 
                  y = 0.98),
-    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
+    annotations = list(text = str_wrap("Poznámka: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -711,7 +711,7 @@ graf_A6 <- aux2 %>%
   layout(margin = mrg2,
     plot_bgcolor='whitesmoke',
     title = list(font=list(color = cap_col),text = str_wrap("<b>Graf A6. Změna reálných výdajů na platy státních úředníků k základně roku 2003</b>",70), y = 0.96),
-    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie.</b> ",40),
+    annotations = list(text = str_wrap("Poznámka: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie.</b> ",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -827,7 +827,7 @@ graf_A7 <- dt %>%
     title = list(font=list(color = cap_col),
                  text = str_wrap("<b>Graf A7. Změna reálných průměrných platů státních úředníků k základně roku 2003</b>",70), 
                  y = 0.96),
-    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b>Přílohu 1: Data a metodologie. </b>",40),
+    annotations = list(text = str_wrap("Poznámka: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b>Přílohu 1: Data a metodologie. </b>",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -897,7 +897,7 @@ graf_6 <- dt %>%
     title = list(font=list(color = cap_col),
                  text = str_wrap("<b>Graf 6. Průměrný plat státních úředníků ve vztahu k průměrné mzdě v národním hospodářství (2003-2020)</b>",60), 
                  y = 0.95),
-    annotations = list(text = str_wrap("Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství. Popisky “Největší a nejmenší nárust” zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárůst by byl 15%.",40),
+    annotations = list(text = str_wrap("Poznámka: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství. Popisky “Největší a nejmenší nárůst” zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárůst by byl 15%.",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -960,7 +960,7 @@ graf_A8 <- dt %>%
   layout(
     plot_bgcolor='whitesmoke',
     title = list(font=list(color = cap_col),text = "<b>Graf A8. Celkové změny platů a počtu zaměstnanců v období 2004-2020</b>", y = 0.98),
-    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
+    annotations = list(text = str_wrap("Poznámka: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -1407,6 +1407,13 @@ Proto v této studii jako státní zaměstnance označujeme všechny, kteří sp
 
 Část informací o zaměstnancích ve služebním poměru poskytuje Státní pokladna (výdaje na platy zaměstnanců ve služebním poměru podle příslušné položky druhového členění, ale bez informací o počtech a průměrných platech), další informace pak i [Výroční zpráva o státní službě](https://www.mvcr.cz/sluzba/clanek/vyrocni-zprava-vyrocni-zprava-o-statni-sluzbe.aspx) (poslední dostupná je za rok 2019).
 
+### Rozpočtové kapitoly a jejich zkratky
+
+
+```{r}
+dt %>% arrange(cz_kap_name)%>% select("Název kapitoly" = cz_kap_name,"Zkratka kapitoly" = kap_name) %>% distinct()  %>%knitr::kable(linesep = "") %>% kable_styling(bootstrap_options = c("striped", "condensed"),full_width = F)
+```
+
 ## Příloha 2: Doplňkové výsledky
 
 Graf A15. Počet zaměstnanců veřejného sektoru celkem (v tisících přepočtených osob)^[Informace pro roky 1996-1998 a období před rokem 1995 nejsou dostupné online. 
@@ -1436,7 +1443,7 @@ graf_A14 <- dt %>%
   layout(
     plot_bgcolor='whitesmoke',
     title = list(font=list(color = cap_col),text = "<b>Graf A14. Počet státních úředníků 2003–2020 (tisíce)</b>", y = 0.98),
-    annotations = list(text = str_wrap("Zahrnuty kapitoly ministerstva vnitra a zahraničních věcí",40),
+    annotations = list(text = str_wrap("Poznámka: Zahrnuty kapitoly ministerstva vnitra a zahraničních věcí",40),
                        align='left',
                        xref='paper',
                        yref='paper',
