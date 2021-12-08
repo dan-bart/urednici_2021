@@ -435,7 +435,8 @@ graf_3 <- bar_dt %>%
     hovertemplate = ~ ifelse(prostredky_na_platy > 0, 
                              paste("<extra></extra>", " Zdroj:", name, "<br>", 
                                    "Kapitola:", cz_kap_name, "<br>", "Pr\u016Fm\u011Brn\u00FD plat:", 
-                                   format(prumerny_plat, big.mark = " "), "K\u010D"), ""),
+                                   format(prumerny_plat, big.mark = " "), "K\u010D"), 
+                             ""),
     hoverinfo = "text"
   ) %>%
   add_trace(type="scatter",mode="markers",
@@ -465,6 +466,7 @@ graf_3
 aux <- bar_dt %>% 
   filter(name %in% c("UO","OSS_SS")) %>% 
   ungroup()
+
 graf_B3 <- aux %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>% 
            fct_relevel("Ministerstva", "Ostatní ústřední")) %>%
@@ -483,8 +485,8 @@ graf_B3 <- aux %>%
   ) %>%
     add_annotations(
       text = ~unique(kategorie_2014_cz),
-      x = 1,
-      y = 1.05,
+      x = 0.99,
+      y = 0.98,
       yref = "paper",
       xref = "paper",
       font = list(family = "verdana", size = 15),
@@ -531,8 +533,8 @@ graf_A3 <- bar_dt %>%
   ) %>%
     add_annotations(
       text = ~unique(kategorie_2014_cz),
-      x = 0.05,
-      y = 0.8,
+      x = 0.02,
+      y = 0.98,
       yref = "paper",
       xref = "paper",
       font = list(family = "verdana", size = 15),
@@ -816,7 +818,9 @@ graf_5
 
 ```{r mean_wage_pct_change_2020}
 graf_A7 <- dt %>%
-  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", "Ostatni ustredni", "Statni sprava"), typ_rozpoctu == "SKUT") %>%
+  filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava", 
+                               "Ostatni ustredni", "Statni sprava"), 
+         typ_rozpoctu == "SKUT") %>%
   filter(!kap_num %in% c(314, 306)) %>%
   # not included in previous
   group_by(kategorie_2014_cz, rok) %>%
@@ -907,15 +911,15 @@ graf_6 <- dt %>%
                        "Neústřední st. správa","Státní úředníci celkem")) %>%
   plot_ly(
     line = list(width = 4),
-    marker = list(size=0.5,symbol = "circle",line = list(width = 5,color="white")),
     x = ~rok, y = ~ wage_to_general * 100, type = "scatter", color = ~kategorie_2014_cz,
     colors = color_map,mode = "line", 
+    marker = list(size=0.5,symbol = "circle", line = list(width = 5, color="white")),
     text = ~ paste(
       " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
       "Nejv\u011Bt\u0161\u00ED nárůst:", "<br>", max_change_kap, ": ", 
       max_change * 100, " %", "<br>",
-      ifelse(min_change>0,"Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"), "<br>", min_change_kap, ": ", 
-      min_change * 100, " %", "<br>"
+      ifelse(min_change > 0, "Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"), 
+      "<br>", min_change_kap, ": ", min_change * 100, " %", "<br>"
     ),
     hoverinfo = "text",
     legendgroup = ~kategorie_2014_cz
@@ -984,8 +988,8 @@ graf_A8 <- dt %>%
   ) %>%
   layout(
     plot_bgcolor='whitesmoke',
-    annotations = list(text = str_wrap("Pro konzistentnost v průběhu let graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Příloha 1: Data a metodologie. </b>",40),
     title = list(font=list(color = cap_col),text = "<b>Graf A8. Celkové změny platů a počtu zaměstnanců v období 2004-2020</b>", y = 0.98),
+    annotations = list(text = str_wrap("Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz <b> Přílohu 1: Data a metodologie. </b>",40),
                        align='left',
                        xref='paper',
                        yref='paper',
@@ -1164,8 +1168,8 @@ graf_A11 <- dt %>%
   ) %>%
     add_annotations(
       text = ~unique(kategorie_2014_cz),
-      x = 0,
-      y = 1.02,
+      x = 0.02,
+      y = 0.98,
       yref = "paper",
       xref = "paper",
       font = list(family = "verdana", size = 12),
@@ -1175,7 +1179,7 @@ graf_A11 <- dt %>%
     ) %>%
     layout(plot_bgcolor='whitesmoke',
            xaxis = list(title=""),
-           yaxis = list(title = "", range = c(-15, 1), ticksuffix = "%",gridcolor="darkgrey"), 
+           yaxis = list(title = "", range = c(-15, 3), ticksuffix = "%",gridcolor = grdclr), 
            legend = list(x = 100, y = 0.5), showlegend = F), keep = TRUE) %>%
   subplot(nrows = 2, shareX = TRUE, shareY = TRUE) %>%
   layout(title = list(font=list(color = cap_col),text = "<b>Graf A11. Rozdíl mezi schváleným a skutečným počtem zaměstnanců</b>", 
@@ -1218,8 +1222,8 @@ graf_A12 <- dt %>%
   ) %>%
     add_annotations(
       text = ~unique(kategorie_2014_cz),
-      x = 0,
-      y = 0.9,
+      x = 0.02,
+      y = 0.98,
       yref = "paper",
       xref = "paper",
       font = list(family = "verdana", size = 12),
@@ -1272,8 +1276,8 @@ graf_A13 <- dt %>%
   ) %>%
     add_annotations(
       text = ~unique(kategorie_2014_cz),
-      x = 0,
-      y = 1,
+      x = 0.02,
+      y = 0.98,
       yref = "paper",
       xref = "paper",
       font = list(family = "verdana", size = 12),
@@ -1282,7 +1286,8 @@ graf_A13 <- dt %>%
       showarrow = FALSE
     ) %>%
     layout(plot_bgcolor='whitesmoke',
-           yaxis = list(title = "", range = c(15, 75), ticksuffix = "%",gridcolor="darkgrey"),
+           yaxis = list(title = "Nárůst průměrného platu od roku 2003",
+                        range = c(15, 75), ticksuffix = "%",gridcolor = grdclr),
            xaxis = list(title = "Pr\u016Fm\u011Brn\u00FD plat v roce 2003 (tisíce Kč)", range = c(15, 35)),
            legend = list(x = 100, y = 0.5), showlegend = F) %>%
     add_text(text = ~ str_wrap(kap_name, 10), textposition = "bottom left",
@@ -1345,7 +1350,7 @@ Pro časové řady, kde se počítá s absolutními metrikami (počty zaměstnan
 Počet zaměstnanců pro kapitolu ministerstva vnitra se mezi roky 2011 a 2012  zvýšily vzhledem ke změně organizační struktury o 321% Pro kapitolu ministerstva zahraničí je to pak 157%. 
 Ponecháním těchto kapitol v grafech časových řad by došlo ke značnému zkreslení zejména grafů  A6.
 Kumulovaná změna reálných výdajů na platy státních úředníků  a  A8. Celkové reálné změny platů a počtu zaměstnanců. 
-Příloha studie obsahuje variantu Grafu 4. Počet státních úředníků 2003-2020 (v tisících), ve které jsou kapitoly ministerstev vnitra a zahraničí zahrnuty. 
+Příloha studie obsahuje variantu Grafu 4. Počet státních úředníků 2003–2020 (v tisících), ve které jsou kapitoly ministerstev vnitra a zahraničí zahrnuty. 
 U časových řad průměrných platů jsme ministerstva vnitra a zahraničních věcí nechali zahrnutá, i když i u nich může dojít k mírnému zkreslení (například pokud došlo k přesunu zaměstnanců s vysokými platy). 
 Podobně jako u těchto dvou ministerstev mohlo dojít k výrazným změnám v počtech zaměstnanců kvůli změnám organizačních struktur, o kterých nevíme.
 Zároveň upozorňujeme, že pohyby v časových řadách mohou být způsobené i přesuny agend a útvarů mezi úřady, které v analýze nemůžeme zohlednit. 
