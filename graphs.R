@@ -61,7 +61,7 @@ color_map <- c("Ministerstva" =             col2hex("darkgrey"),
                "Organizační složky státu" = col2hex("lightcyan"))
 
 kaps <- unique(dt$kap_name)
-color_map_kap <- ifelse(substr(kaps,1,1) == "M", "gold1", "royalblue4")
+color_map_kap <- ifelse(substr(kaps,1,1) == "M", "bisque", "cornflowerblue")
 names(color_map_kap) <- kaps
 
 
@@ -662,24 +662,13 @@ graf_6 <- dt %>%
     ),
     hoverinfo = "text",
     legendgroup = ~kategorie_2014_cz
-  ) %>%
-  layout(
-    title = list(font=list(color = cap_col),
-                 text = "<b>Graf 6. Průměrný plat státních úředníků \n ve vztahu k průměrné mzdě v národním hospodářství (2004-2020)</b>",70),
-    annotations = c(annot_6,list(text = str_wrap("<i>Pozn.: Pro ministerstva a ostatní ústřední orgány použité
-                                         hodnoty průměrné mzdy v Praze. V ostatních případech je jako
-                                         reference použitý průměrný plat v národním hospodářství.
-                                         Hodnota 100% znamená, že průměrný plat v kategorii je stejný
-                                         jako průměrný plat v národním hospodářství. Popisky “Největší
-                                         a nejmenší nárůst” zde vyjadřují procentuální změnu platu ve
-                                         vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu
-                                         financí byl v jednom roce roven 115% pražského platu, a další
-                                         rok vzrostl na 130%, největší nárůst by byl 15%.</i>",250))),
+  ) %>%layout(
+    title = list(font=list(color = cap_col),text = "<b>Graf 6. Průměrný plat státních úředníků \n ve vztahu k průměrné mzdě v národním hospodářství (2004-2020)</b>"),
+    annotations = c(annot_6,list(text = str_wrap("<i>Pozn.: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství. Popisky “Největší a nejmenší nárůst” zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárůst by byl 15%.</i>",250))),
     xaxis = c(frame_y,list(title = "<b>Rok</b>")),
     yaxis = c(frame_y,list(title = "<b>Poměr platů státních úředníku a prům. mzdy (v %)</b>", ticksuffix = "%")),
     margin = mrg2,
-    legend=legend_below) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
+    legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 
 graf_6
 

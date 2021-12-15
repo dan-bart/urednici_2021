@@ -73,6 +73,9 @@ color_map <- c("Ministerstva" =             col2hex("darkgrey"),
                "Státní úředníci" =          col2hex("yellow"),
                "Státní správa" =            col2hex("lightskyblue"),
                "Organizační složky státu" = col2hex("lightcyan"))
+cap_col <- "mediumblue"
+mrg <- list(l = 0, r = 0, b = 0, t = 0, pad = 0, autoexpand = FALSE)
+btnrm <- c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d")
 ```
 
 ```{r, include=FALSE}
