@@ -63,16 +63,27 @@ dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
 graf_list<-readRDS("data-interim/graf_list.rds")
 tree_data<-readRDS("data-interim/tree_data.rds")
-color_map <- c("Ministerstva" =             col2hex("darkgrey"),
+# color_map <- c("Ministerstva" =             col2hex("darkgrey"),
+#                "Neústřední st. správa" =    col2hex("skyblue"),
+#                "Ostatní ústřední" =         col2hex("firebrick"),
+#                "Ostatní vč. armády" =       col2hex("limegreen"),
+#                "Příspěvkové organizace" =   col2hex("sandybrown"),
+#                "Sbory" =                    col2hex("royalblue"),
+#                "Ústřední orgány" =          col2hex("indianred"),
+#                "Státní úředníci" =          col2hex("yellow"),
+#                "Státní správa" =            col2hex("lightskyblue"),
+#                "Organizační složky státu" = col2hex("lightcyan"))
+color_map <- c("Ministerstva" =             col2hex("dimgray"),
                "Neústřední st. správa" =    col2hex("skyblue"),
                "Ostatní ústřední" =         col2hex("firebrick"),
                "Ostatní vč. armády" =       col2hex("limegreen"),
                "Příspěvkové organizace" =   col2hex("sandybrown"),
                "Sbory" =                    col2hex("royalblue"),
                "Ústřední orgány" =          col2hex("indianred"),
-               "Státní úředníci" =          col2hex("yellow"),
+               "Státní úředníci" =          col2hex("mediumpurple"),
                "Státní správa" =            col2hex("lightskyblue"),
                "Organizační složky státu" = col2hex("lightcyan"))
+
 cap_col <- "mediumblue"
 mrg <- list(l = 0, r = 0, b = 0, t = 0, pad = 0, autoexpand = FALSE)
 btnrm <- c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d")
