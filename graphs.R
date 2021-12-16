@@ -49,19 +49,19 @@ kat_order_all <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. sp
                    "Státní úředníci",
                    "Ostatní vč. armády", "Sbory", "Příspěvkové organizace")
 
-color_map <- c("Ministerstva" =             col2hex("darkgrey"),
+color_map <- c("Ministerstva" =             col2hex("dimgray"),
                "Neústřední st. správa" =    col2hex("skyblue"),
                "Ostatní ústřední" =         col2hex("firebrick"),
                "Ostatní vč. armády" =       col2hex("limegreen"),
                "Příspěvkové organizace" =   col2hex("sandybrown"),
                "Sbory" =                    col2hex("royalblue"),
                "Ústřední orgány" =          col2hex("indianred"),
-               "Státní úředníci" =          col2hex("yellow"),
+               "Státní úředníci" =          col2hex("mediumpurple"),
                "Státní správa" =            col2hex("lightskyblue"),
                "Organizační složky státu" = col2hex("lightcyan"))
 
 kaps <- unique(dt$kap_name)
-color_map_kap <- ifelse(substr(kaps,1,1) == "M", "bisque", "cornflowerblue")
+color_map_kap <- ifelse(substr(kaps,1,1) == "M", "dimgray", "cornflowerblue")
 names(color_map_kap) <- kaps
 
 
