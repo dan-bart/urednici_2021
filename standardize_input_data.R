@@ -10,6 +10,7 @@ library(czso)
 source(here::here("R", "listSheets.R"))
 source(here::here("R", "divideMain.R"))
 options("scipen" = 100, "digits" = 4)
+readr::read_csv("http://vdb.czso.cz/pll/eweb/lkod_ld.seznam")
 catalogue <- czso_get_catalogue()
 
 catalogue %>%

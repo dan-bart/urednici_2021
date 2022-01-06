@@ -17,11 +17,16 @@ library(stringr)
 library(janitor)
 library(czso)
 library(kableExtra)
+library(plyr)
 rm(list=ls())
 options(scipen = 100, digits = 8)
 
 dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
+dt$kap_name[dt$kap_name == "Ksen"]<-"KSen"
+dt$kap_name[dt$kap_name == "Kparl"]<-"KParl"
+dt$kap_name[dt$kap_name == "Mzdr"]<-"MZdr"
+dt$kap_name[dt$kap_name == "Mspr"]<-"MSpr"
 
 ## ----plotly-utils------------------------------------------------------------------------------------------------
 btnrm <- c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d")
@@ -175,10 +180,8 @@ graf_A1 <- tree_data %>%
   ) %>%
   layout(title = list(font=list(color = cap_col),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti (2020)</b>",
                       y = 0.98)) %>%
-  layout( annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout</i>",
-                             x = 1, y = -0.05, showarrow = FALSE))
-
-
+layout(annotations = list(x = 0,y = -0.02, showarrow = FALSE, align = "left",
+                          text = str_wrap("<i>Pozn.: Pro bližší detail lze kategorie rozkliknout. Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců</i>",250)))
 graf_1 <- tree_data %>%
   plot_ly(
     type = "treemap",
@@ -196,9 +199,8 @@ graf_1 <- tree_data %>%
   layout(title = list(font=list(color = cap_col),
                       text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti (2020)</b>",
                       y = 0.98)) %>%
-  layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout</i>", x = 1,
-                             y = -0.05, showarrow = FALSE,
-          margin = mrg)) |>
+  layout(annotations = list(x = 0,y = -0.02, showarrow = FALSE, align = "left",
+                            text = str_wrap("<i>Pozn.: Pro bližší detail lze kategorie rozkliknout. Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců</i>",250)))%>%
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm)
 
 graf_1
@@ -276,6 +278,18 @@ vline <- function(x = 0, color = "gray",width=1) {
   )
 }
 
+hline <- function(y = 0, color = "black") {
+  list(
+    type = "line",
+    x0 = 0,
+    x1 = 1,
+    xref = "paper",
+    y0 = y,
+    y1 = y,
+    line = list(color = color,width=2)
+  )
+}
+
 kat_order_graf3 <- c("Ministerstva", "Ostatní ústřední", "Neústřední st. správa",
                    "Ostatní vč. armády", "Sbory", "Příspěvkové organizace")
 
@@ -310,10 +324,20 @@ graf_3 <- bar_dt %>%
             hoverinfo = "text",
             marker=list(size=8,color="black"),
             x = ~prumerny_plat_mean, y=~kategorie_2014_cz) %>%
-  layout(hovermode = "closest",
+  layout(hovermode = "closest", margin = mrg2,
          title = list(font=list(color = cap_col),
                       text = "<b>Graf 3. Pr\u016Fm\u011Brn\u00E9 platy st\u00E1tn\u00EDch zam\u011Bstnanc\u016F (2020)</b>", y = 1.1),
-         xaxis = c(frame_y,list(dtick = 5,title = "<b>Průměrný plat (v tisících Kč)</b>")),
+         annotations = list(align='left',
+                            xref='paper',
+                            yref="paper",
+                            x=0,
+                            y=-0.1,
+                            font = list(size = 12),
+                            bordercolor = 'rgba(0,0,0,0)',
+                            borderwidth=1,
+                            showarrow = FALSE,
+                            text = str_wrap("<i>Pozn.: Průměrné platy se liší dle typu organizací i napříč jednotlivými organizacemi.</i>",250)),
+         xaxis = c(frame_y,list(dtick = 5,title = "<b>Průměrný hrubý měsíční plat (v tisících Kč)</b>")),
          yaxis = c(frame_y,list(title = "")),showlegend = F) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE)
 graf_3
@@ -397,7 +421,7 @@ graf_4 <- dt %>%
   layout(barmode="stack",bargap=0.5,
     title = list(font=list(color = cap_col),text = "<b>Graf 4. Počet státních úředníků (2003–2020)</b>",
                  y = 0.98),
-    annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Přílohu 1: Data a metodologie. Graf 4 s kapitolami ministerstev vnitra a zahraničních věcí je v příloze.</i>",250))),
+    annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. Graf A14 s kapitolami ministerstev vnitra a zahraničních věcí je v příloze.</i>",250))),
     xaxis = c(frame_x,list(title = "<b>Rok</b>",dtick=2)),
     yaxis = c(frame_y,list(title = "<b>Počet státních úředníků (v tisících)</b>")),
     legend = legend_below,
@@ -439,7 +463,7 @@ graf_A4 <- vyvoj_bar %>%
     title = list(font=list(color = cap_col),
                  text = "<b>Graf A4. Výdaje na platy státních úředníků (2003-2020)</b>",
                  y = 0.98),
-    annotations = c(list(text =str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Přílohu 1: Data a metodologie. </i>",250)),
+    annotations = c(list(text =str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. </i>",250)),
                     annot_below),
     xaxis = c(frame_x,list(title = "<b>Rok</b>",xaxis = list(categoryarray = seq(2003,2020), categoryorder = "array"))),
     yaxis = c(frame_y,list(title = "<b>Výdaje na platy (v mld. Kč)</b>",dtick=5)),
@@ -465,7 +489,7 @@ graf_A5 <- vyvoj_bar %>%
          title = list(font=list(color = cap_col),
                       text = "<b>Graf A5. Reálné výdaje na platy státních úředníků (2003-2020)</b>",
                       y = 0.98),
-         annotations = c(list(text =str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Přílohu 1: Data a metodologie. </i>",250)),
+         annotations = c(list(text =str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. </i>",250)),
                          annot_below),
          xaxis = c(frame_x,list(title = "<b>Rok</b>",xaxis = list(categoryarray = seq(2003,2020), categoryorder = "array"))),
          yaxis = c(frame_y,list(title = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2020)</b>")),
@@ -605,7 +629,7 @@ graf_A7 <- dt %>%
   layout(
     title = list(font=list(color = cap_col),text="<b>Graf A7. Změna reálných průměrných platů státních úředníků (k základně roku 2003)</b>",
                  y = 0.96),
-    annotations = c(list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Přílohu 1: Data a metodologie. </i>",250)),annot_below),
+    annotations = c(list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. </i>",250)),annot_below),
     xaxis = c(frame_y,list(title = "<b>Rok</b>")),
     yaxis = c(frame_y,list(title = "<b>Změna reálného průměrného platu oproti roku 2003 \n (v %, ceny roku 2020)</b>",
                  tickprefix = "+", ticksuffix = " %")),
@@ -662,7 +686,8 @@ graf_6 <- dt %>%
     ),
     hoverinfo = "text",
     legendgroup = ~kategorie_2014_cz
-  ) %>%layout(
+  ) %>%
+  layout(shapes = list(hline(100)),
     title = list(font=list(color = cap_col),text = "<b>Graf 6. Průměrný plat státních úředníků \n ve vztahu k průměrné mzdě v národním hospodářství (2004-2020)</b>"),
     annotations = c(annot_6,list(text = str_wrap("<i>Pozn.: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství. Popisky “Největší a nejmenší nárůst” zde vyjadřují procentuální změnu platu ve vztahu k průměrnému platu v ČR. Tedy pokud plat na Ministerstvu financí byl v jednom roce roven 115% pražského platu, a další rok vzrostl na 130%, největší nárůst by byl 15%.</i>",250))),
     xaxis = c(frame_y,list(title = "<b>Rok</b>")),
@@ -716,7 +741,7 @@ graf_A8 <- dt %>%
   ) %>%
   layout(
     title = list(font=list(color = cap_col),text = "<b>Graf A8. Celkové změny platů a počtu zaměstnanců v období 2004-2020</b>", y = 0.98),
-    annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Přílohu 1: Data a metodologie. </i>",250))),
+    annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. </i>",250))),
     showlegend = FALSE,
     xaxis = c(frame_x,list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu (v %)",
                  ticksuffix = "%",range = c(-5,65))),
