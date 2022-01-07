@@ -1189,7 +1189,7 @@ graf_A14 <- dt %>%
   ) %>% add_bars()%>%
   layout(barmode='stack',bargap=0.5,
          title = list(font=list(color = cap_col,size=cap_size),
-                      text = "<b>Graf A14. Výdaje na platy státních úředníků (2003-2020)</b>",
+                      text = "<b>Graf A14. Počet státních úředníků (2003-2020)</b>",
                       y = 0.98),
          annotations = c(list(text =str_wrap("<i>Pozn.: Zahrnuty kapitoly ministerstva vnitra a zahraničních věcí</i>",wrap_len),
                               font = list(size = pozn_size)),
