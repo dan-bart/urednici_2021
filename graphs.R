@@ -28,6 +28,9 @@ dt$kap_name[dt$kap_name == "Kparl"]<-"KParl"
 dt$kap_name[dt$kap_name == "Mzdr"]<-"MZdr"
 dt$kap_name[dt$kap_name == "Mspr"]<-"MSpr"
 
+## abbreviations
+dt %>% arrange(cz_kap_name)%>% select("Název kapitoly" = cz_kap_name,"Zkratka kapitoly" = kap_name) %>% distinct() %>% write_csv("zkratky.csv")
+
 ## ----plotly-utils------------------------------------------------------------------------------------------------
 btnrm <- c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d")
 grdclr <- "grey"
@@ -212,8 +215,8 @@ graf_A1 <- tree_data %>%
   ) %>%
   layout(title = list(font=list(color = cap_col,size=cap_size),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti (2020)</b>",
                       y = 0.98)) %>%
-  layout( annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout. Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců.</i>",
-                             x = 1, y = -0.05, showarrow = FALSE, font = list(size = pozn_size))) %>%
+  layout( annotations = list(text = str_wrap("<i>Pozn.: Pro bližší detail lze kategorie rozkliknout. Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců.</i>",wrap_len),
+                             x = 0, y = -0.05,align="left", showarrow = FALSE, font = list(size = pozn_size))) %>%
   layout(uniformtext=list(minsize=lbl_size, mode='show')) %>%
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
   onRender(js)
@@ -238,8 +241,8 @@ graf_1 <- tree_data %>%
   layout(title = list(font=list(color = cap_col,size=cap_size),
                       text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti (2020)</b>",
                       y = 0.98)) %>%
-  layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout. Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců.</i>", x = 1,
-                             y = -0.05, showarrow = FALSE, font = list(size = pozn_size))) %>%
+  layout( annotations = list(text = str_wrap("<i>Pozn.: Pro bližší detail lze kategorie rozkliknout. Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců.</i>",wrap_len),
+                             x = 0, y = -0.05,align="left", showarrow = FALSE, font = list(size = pozn_size))) %>%
   layout(uniformtext=list(minsize=lbl_size, mode='show')) %>%
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
   onRender(js)
@@ -731,7 +734,7 @@ annot_6<-list(                       align='left',
                                          borderwidth=1,
                                          showarrow = FALSE)
 
-graf_6 <- dt %>%
+dt_g_6 <-dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava",
                                "Ostatni ustredni"),
          typ_rozpoctu == "SKUT") %>%
@@ -751,8 +754,8 @@ graf_6 <- dt %>%
                                    prumerny_plat_agg / phasal_all, prumerny_plat_agg / czsal_all))) %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>%
            fct_relevel("Ministerstva", "Ostatní ústřední",
-                       "Neústřední st. správa","Státní úředníci")) %>%
-  plot_ly(
+                       "Neústřední st. správa","Státní úředníci"))
+graf_6<- dt_g_6%>% plot_ly(
     line = list(width = 7),
     x = ~rok, y = ~ wage_to_general * 100, type = "scatter", color = ~kategorie_2014_cz,
     colors = color_map,mode = "line",
@@ -778,8 +781,7 @@ graf_6 <- dt %>%
     legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
 
-graf_6
-
+#dt_g_6 %>%ungroup() %>% select(-kategorie_2014,-phasal_all,-czsal_all) %>%write_csv("data_graf_6.csv")
 
 ## ----2020_effect-------------------------------------------------------------------------------------------------
 
