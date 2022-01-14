@@ -28,6 +28,9 @@ dt$kap_name[dt$kap_name == "Kparl"]<-"KParl"
 dt$kap_name[dt$kap_name == "Mzdr"]<-"MZdr"
 dt$kap_name[dt$kap_name == "Mspr"]<-"MSpr"
 
+z<-dt%>%filter(kap_name=="MO",rok=="2020",typ_rozpoctu!="UPRAV") %>%select(typ_rozpoctu,kategorie_2014,kap_name,pocet_zamestnancu,prumerny_plat)
+mean(z$prumerny_plat)
+
 ## abbreviations
 dt %>% arrange(cz_kap_name)%>% select("Název kapitoly" = cz_kap_name,"Zkratka kapitoly" = kap_name) %>% distinct() %>% write_csv("zkratky.csv")
 
@@ -172,7 +175,7 @@ dt <- dt %>%
                        fct_relevel(kat_order_all) %>% fct_rev())
 
 abs_metrics <- dt %>%
-  filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
+  filter(rok == 2020, typ_rozpoctu == "SKUT") %>%
   filter(!is.na(as.numeric(kap_num))) %>%
   filter(!name %in% c("ROPO", "SS", "OSS")) %>%
   group_by(kap_name) %>%
@@ -183,7 +186,7 @@ abs_metrics <- dt %>%
   )
 
 bar_dt <- dt %>%
-  filter(rok == 2020, typ_rozpoctu == "SCHV") %>%
+  filter(rok == 2020, typ_rozpoctu == "SKUT") %>% #was typ_rozpoctu = "SCHV"
   filter(!is.na(kategorie_2014_cz)) %>%
   filter(!is.na(as.numeric(kap_num))) %>%
   filter(!name %in% c("ROPO", "SS", "OSS"),
@@ -248,7 +251,16 @@ graf_1 <- tree_data %>%
   onRender(js)
 
 graf_1
+#K zaměstnaností největším patří Generální finanční ředitelství ČR (15 tisíc),
+#Úřad práce (11 tisíc), Ministerstvo vnitra ČR (11 tisíc) a Česká správa sociálního zabezpečení
+#(8 tisíc), Ministerstvo zahraniční věcí ČR (2 tisíce) a Ministerstvo obrany ČR (2 tisíce).
 
+
+z<-bar_dt%>% filter(kategorie_2014%in%c("Ministerstva","Ostatni ustredni","Neustredni st. sprava"))%>%
+  select(kategorie_2014,kap_name,pocet_zamestnancu,prostredky_na_platy) %>% group_by(kap_name)%>%
+  summarise(pocet_zamestancu=sum(pocet_zamestnancu),
+            prostredky_na_platy=sum(prostredky_na_platy))
+sum(z$pocet_zamestancu)
 
 ## ----counts------------------------------------------------------------------------------------------------------
 graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
@@ -359,6 +371,8 @@ dt_mean_salary_all <- dt %>%
          !kategorie_2014 %in% c("Statni sprava", "Statni urednici"), rok == 2020) %>%
   summarise(prumerny_plat = round(sum(prostredky_na_platy)/sum(pocet_zamestnancu)/12/1e3)) %>%
   pull(prumerny_plat)
+
+
 
 graf_3 <- bar_dt %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>%
