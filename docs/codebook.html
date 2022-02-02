@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Codebook</title>
+
+<script src="codebook_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="codebook_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="codebook_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="codebook_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="codebook_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="codebook_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="codebook_files/navigation-1.1/tabsets.js"></script>
+<link href="codebook_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="codebook_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Codebook</h1>
+
+</div>
+
+
+<div id="pb_information" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#pb_information .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 130%;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pb_information .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pb_information .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pb_information .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pb_information .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pb_information .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pb_information .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pb_information .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pb_information .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pb_information .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pb_information .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pb_information .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pb_information .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pb_information .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pb_information .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pb_information .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pb_information .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#pb_information .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pb_information .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#pb_information .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pb_information .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pb_information .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pb_information .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pb_information .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pb_information .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#pb_information .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pb_information .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#pb_information .gt_left {
+  text-align: left;
+}
+
+#pb_information .gt_center {
+  text-align: center;
+}
+
+#pb_information .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pb_information .gt_font_normal {
+  font-weight: normal;
+}
+
+#pb_information .gt_font_bold {
+  font-weight: bold;
+}
+
+#pb_information .gt_font_italic {
+  font-style: italic;
+}
+
+#pb_information .gt_super {
+  font-size: 65%;
+}
+
+#pb_information .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+
+#pb_information {
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: .15px;
+}
+
+#pb_information a {
+  color: #375F84;
+  text-decoration: none;
+}
+
+#pb_information a:hover {
+  color: #375F84;
+  text-decoration: underline;
+}
+
+#pb_information p {
+  overflow: visible;
+  margin-top: 2px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 5px;
+}
+
+#pb_information ul {
+  list-style-type: square;
+  padding-left: 25px;
+  margin-top: -4px;
+  margin-bottom: 6px;
+}
+
+#pb_information li {
+  text-indent: -1px;
+}
+
+#pb_information h4 {
+  font-weight: 500;
+  color: #444444;
+}
+
+#pb_information code {
+  font-family: 'IBM Plex Mono', monospace, courier;
+  font-size: 90%;
+  font-weight: 500;
+  color: #666666;
+  background-color: transparent;
+  padding: 0;
+}
+
+#pb_information .pb_date {
+  text-decoration-style: solid;
+  text-decoration-color: #9933CC;
+  text-decoration-line: underline;
+  text-underline-position: under;
+  font-variant-numeric: tabular-nums;
+  margin-right: 4px;
+}
+
+#pb_information .pb_label {
+  border: solid 1px;
+  border-color: inherit;
+  padding: 0px 3px 0px 3px;
+}
+
+#pb_information .pb_label_rounded {
+  border: solid 1px;
+  border-color: inherit;
+  border-radius: 8px;
+  padding: 0px 8px 0px 8px;
+}
+
+#pb_information .pb_sub_label {
+  font-size: smaller;
+  color: #777777;
+}
+
+#pb_information .pb_col_type {
+  font-size: 75%;
+}
+
+#pb_information .gt_sourcenote {
+  height: 35px;
+  font-size: 60%;
+  padding: 0;
+}
+
+#pb_information .gt_group_heading {
+  text-indent: -3px;
+}
+</style>
+<table class="gt_table" style="table-layout: fixed;; width: 0px">
+  <colgroup>
+    <col style="width:875px;"/>
+  </colgroup>
+  <thead class="gt_header">
+    <tr>
+      <th colspan="1" class="gt_heading gt_title gt_font_normal" style="color: #444444; font-size: 28px; text-align: left; font-weight: 500;">Pointblank Information</th>
+    </tr>
+    <tr>
+      <th colspan="1" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="font-size: 12px; text-align: left;"><span style="text-decoration-style:solid;text-decoration-color:#ADD8E6;text-decoration-line:underline;text-underline-position:under;color:#333333;font-variant-numeric:tabular-nums;padding-left:4px;margin-right:5px;padding-right:2px;">main export</span></p>
+<div style="height:25px;margin-top:10px;"><span style="background-color:#F1D35A;color:#222222;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin:5px 0px 5px 5px;font-weight:bold;border:solid 1px #F1D35A;padding:2px 15px 2px 15px;font-size:smaller;">tibble</span>
+<span style="background-color:none;color:#222222;padding:0.5em 0.5em;position:inherit;margin:5px 10px 5px -4px;font-weight:bold;border:solid 1px #F1D35A;padding:2px 15px 2px 15px;font-size:smaller;">tabulka</span><span style="background-color:#eecbff;color:#333333;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin:5px 0px 5px 5px;font-weight:bold;border:solid 1px #eecbff;padding:2px 15px 2px 15px;font-size:smaller;">Rows</span>
+<span style="background-color:none;color:#333333;padding:0.5em 0.5em;position:inherit;margin:5px 0px 5px -4px;font-weight:bold;border:solid 1px #eecbff;padding:2px 15px 2px 15px;font-size:smaller;">11,809</span>
+<span style="background-color:#BDE7B4;color:#333333;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin:5px 0px 5px 1px;font-weight:bold;border:solid 1px #BDE7B4;padding:2px 15px 2px 15px;font-size:smaller;">Columns</span>
+<span style="background-color:none;color:#333333;padding:0.5em 0.5em;position:inherit;margin:5px 0px 5px -4px;font-weight:bold;border:solid 1px #BDE7B4;padding:2px 15px 2px 15px;font-size:smaller;">34</span></div>
+</th>
+    </tr>
+  </thead>
+  
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <td colspan="1" class="gt_group_heading" style="color: #444444; font-weight: 500; text-transform: uppercase; background-color: #FCFCFC; border-bottom-width: 1; border-bottom-style: solid; border-bottom-color: #EFEFEF;">Table</td>
+    </tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><h4 style="margin-bottom:5px;">INFO</h4>
+<p>Pokud není uvedeno jinak, zdrojem jsou data MF odpovídající Státnímu závěrečnému účtu</p>
+</div></td></tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="1" class="gt_group_heading" style="color: #444444; font-weight: 500; text-transform: uppercase; background-color: #FCFCFC; border-bottom-width: 1; border-bottom-style: solid; border-bottom-color: #EFEFEF;">Columns</td>
+    </tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">faze_rozpoctu</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> fáze rozpočtu - schválený, po změnách, konečný nebo skutečnost</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">rok</code>  <code class="pb_col_type">integer</code></p>
+<p><strong class="pb_sub_label"></strong></p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kap_kod</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Číslo rozpočtové kapitoly</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kap_zkr</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Zkratka rozpočtové kapitoly</p>
+<p><strong class="pb_sub_label">ZDROJ</strong> Autoři</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">platy_a_oppp</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Prostředky na platy a ostatní provedenou práci</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> Hrubý, bez odvodů zaměstnavatele a dalších nákladů práce</p>
+<p><strong class="pb_sub_label">JEDNOTKA</strong> Kč za rok</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">oppp</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Prostředky na ostatní provedenou práci (mimo platy, tj. DPP, DPČ aj.)</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> Hrubý, bez odvodů zaměstnavatele a dalších nákladů práce</p>
+<p><strong class="pb_sub_label">JEDNOTKA</strong> Kč za rok</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">platy</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Prostředky na platy</p>
+<p><strong class="pb_sub_label">JEDNOTKA</strong> Kč za rok</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">pocet_zamestnancu</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Počet zaměstnanců, přepočteno na plné úvazky</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Průměrný plat</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> Hrubý, bez odvodů zaměstnavatele a dalších nákladů práce</p>
+<p><strong class="pb_sub_label">JEDNOTKA</strong> Kč za měsíc</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">poradi_prumerneho_platu</code>  <code class="pb_col_type">integer</code></p>
+<p><strong class="pb_sub_label"></strong></p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">platy_schv_schv</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Index změny schválených rozpočtů mezi lety R a R-1</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = žádná změna, &gt; 1 = meziroční nárůst schválených rozpočtů</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">platy_skut_rozp</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Index změny mezi skutečností a rozpočtem (skutečnost děleno rozpočet).</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = žádná změna, &gt; 1 = skutečnost více než schválený rozpočet</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">platy_skut_skut</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Index změny skutečých výdajů mezi lety R a R-1</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = žádná změna, &gt; 1 = nárůst</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kategorie</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Zkratka kategorie zaměstnanců</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kap_nazev_cc</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Název kapitoly, v_kodu_bez_hacku</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kap_nazev</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Název kapitoly, česky</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kategorie_2014</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Název kategorie zaměstnanců ve studii z roku 2014</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">ceny_index</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Inflace (deflátor)</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> index spotřebitelských cen, meziroční změna vypočtena jako průměr měsíčních indexů proti stejnému měsíci předchozího roku</p>
+<p><strong class="pb_sub_label">ZDROJ</strong> ČSÚ, tabulka 01022, 'Indexy spotřebitelských cen', https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = nulová inflace</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">ceny_inflace</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Inflace v procentním vyjádření</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 0 = nulová inflace</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">ceny_deflator_2003</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Cenový index vůči roku 2003, vypočteno z indexu 'hodnota'</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = nulová inflace</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">ceny_deflator_2020</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Cenový index vůči roku 2020, vypočteno z indexu 'hodnota'</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerna_mzda_cr</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Průměrná mzda v národním hospodářství</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> průměrná měsíční mzda</p>
+<p><strong class="pb_sub_label">ZDROJ</strong> ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerna_mzda_pha</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Průměrná mzda v Praze</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> průměrná měsíční mzda za Prahu</p>
+<p><strong class="pb_sub_label">ZDROJ</strong> ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_skut_skut</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Index změny průměrného platu oproti předchozímu roku</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = žádná změna, &gt; 1 = nárůst</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">mzda_prumer_skut_ke_skut</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label"></strong></p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">plat_base</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label"></strong></p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_real_od2020</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Změna průměrného platu od roku 2003 očištěná o inflaci</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 0 = žádná změna, &gt; 0 = nárůst</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_c2020</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Průměrný plat v cenách roku 2020</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_c2020_mezirocne</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Meziroční změna platů v reálném vyjádření</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> Podle vyjádření v cenách roku 2020</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 0 = žádná změna, 0.01 = nárůst o 1 %</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_2003</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Průměrný plat roku 2003 (pro výpočet)</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_nomi_od2020</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Změna průměrného platu od roku 2003, neočištěno o inflaci</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 0 = žádná změna, 1 = nárůst o 100 %</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_vucinh</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Poměr průměrného platu a průměrné mzdy v národním hospodářství/Praze</p>
+<p><strong class="pb_sub_label">UPŘESNĚNÍ</strong> Pro ústřední orgány počítán</p>
+<p><strong class="pb_sub_label">MĚŘÍTKO</strong> 1 = průměrný plat stejný jako průměrná mzda v NH, &gt; 1 vyšší</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">prumerny_plat_vucinh_mezirocne</code>  <code class="pb_col_type">numeric</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Meziroční změna poměru průměrného platu k průměrné mzdě v národním hospodářství/Praze</p>
+<p><strong class="pb_sub_label">MĚŘÍTKA</strong> 0 = žádná změna, 0.01 = nárůst o 1 p.b.</p>
+</div></td></tr>
+    <tr><td class="gt_row gt_left" style="color: #666666; font-size: smaller; border-top-width: 1; border-top-style: solid; border-top-color: #EFEFEF;"><div class='gt_from_md'><p><code style="margin-bottom:5px;color:#555555;font-weight:500;line-height:2em;border:solid 1px #499FFE;padding:2px 8px 3px 8px;background-color:#FAFAFA;">kategorie_2014_cz</code>  <code class="pb_col_type">character</code></p>
+<p><strong class="pb_sub_label">INFO</strong> Název kategorie zaměstnanců ve studii z roku 2014, česky</p>
+</div></td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="1"><span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin-left:10px;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;padding:2px 10px 2px 10px;">2022-02-02 23:21:47 CET</span>
+<span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;margin:5px 1px 5px 0;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;">&lt; 1 s</span>
+<span style="background-color:#FFF;color:#444;padding:0.5em 0.5em;position:inherit;text-transform:uppercase;margin:5px 1px 5px -1px;border:solid 1px #999999;font-variant-numeric:tabular-nums;border-radius:0;padding:2px 10px 2px 10px;">2022-02-02 23:21:48 CET</span></td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

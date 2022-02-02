@@ -1,0 +1,25 @@
+---
+title: "Codebook"
+output: 
+  html_document:
+    self_contained: no
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'codebook.html'))})
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(pointblank)
+```
+
+```{r codebook}
+cdbk <- readRDS("data-interim/codebook.rds")
+```
+
+```{r codebook-print}
+cdbk
+```
+

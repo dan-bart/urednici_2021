@@ -1,0 +1,141 @@
+type: informant
+tbl: tabulka
+tbl_name: tabulka
+info_label: main export
+lang: en
+locale: en
+table:
+  name: tabulka
+  _columns: 34
+  _rows: 11809.0
+  _type: tbl_df
+  info: Pokud není uvedeno jinak, zdrojem jsou data MF odpovídající Státnímu závěrečnému
+    účtu
+columns:
+  faze_rozpoctu:
+    _type: character
+    info: fáze rozpočtu - schválený, po změnách, konečný nebo skutečnost
+  rok:
+    _type: integer
+  kap_kod:
+    _type: numeric
+    info: Číslo rozpočtové kapitoly
+  kap_zkr:
+    _type: character
+    info: Zkratka rozpočtové kapitoly
+    zdroj: Autoři
+  platy_a_oppp:
+    _type: numeric
+    info: Prostředky na platy a ostatní provedenou práci
+    upřesnění: Hrubý, bez odvodů zaměstnavatele a dalších nákladů práce
+    jednotka: Kč za rok
+  oppp:
+    _type: numeric
+    info: Prostředky na ostatní provedenou práci (mimo platy, tj. DPP, DPČ aj.)
+    upřesnění: Hrubý, bez odvodů zaměstnavatele a dalších nákladů práce
+    jednotka: Kč za rok
+  platy:
+    _type: numeric
+    info: Prostředky na platy
+    jednotka: Kč za rok
+  pocet_zamestnancu:
+    _type: numeric
+    info: Počet zaměstnanců, přepočteno na plné úvazky
+  prumerny_plat:
+    _type: numeric
+    info: Průměrný plat
+    upřesnění: Hrubý, bez odvodů zaměstnavatele a dalších nákladů práce
+    jednotka: Kč za měsíc
+  poradi_prumerneho_platu:
+    _type: integer
+  platy_schv_schv:
+    _type: numeric
+    info: Index změny schválených rozpočtů mezi lety R a R-1
+    měřítko: 1 = žádná změna, > 1 = meziroční nárůst schválených rozpočtů
+  platy_skut_rozp:
+    _type: numeric
+    info: Index změny mezi skutečností a rozpočtem (skutečnost děleno rozpočet).
+    měřítko: 1 = žádná změna, > 1 = skutečnost více než schválený rozpočet
+  platy_skut_skut:
+    _type: numeric
+    info: Index změny skutečých výdajů mezi lety R a R-1
+    měřítko: 1 = žádná změna, > 1 = nárůst
+  kategorie:
+    _type: character
+    info: Zkratka kategorie zaměstnanců
+  kap_nazev_cc:
+    _type: character
+    info: Název kapitoly, v_kodu_bez_hacku
+  kap_nazev:
+    _type: character
+    info: Název kapitoly, česky
+  kategorie_2014:
+    _type: character
+    info: Název kategorie zaměstnanců ve studii z roku 2014
+  ceny_index:
+    _type: numeric
+    info: Inflace (deflátor)
+    upřesnění: index spotřebitelských cen, meziroční změna vypočtena jako průměr měsíčních
+      indexů proti stejnému měsíci předchozího roku
+    zdroj: ČSÚ, tabulka 01022, 'Indexy spotřebitelských cen', https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen
+    měřítko: 1 = nulová inflace
+  ceny_inflace:
+    _type: numeric
+    info: Inflace v procentním vyjádření
+    měřítko: 0 = nulová inflace
+  ceny_deflator_2003:
+    _type: numeric
+    info: Cenový index vůči roku 2003, vypočteno z indexu 'hodnota'
+    měřítko: 1 = nulová inflace
+  ceny_deflator_2020:
+    _type: numeric
+    info: Cenový index vůči roku 2020, vypočteno z indexu 'hodnota'
+  prumerna_mzda_cr:
+    _type: numeric
+    info: Průměrná mzda v národním hospodářství
+    upřesnění: průměrná měsíční mzda
+    zdroj: ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich
+  prumerna_mzda_pha:
+    _type: numeric
+    info: Průměrná mzda v Praze
+    upřesnění: průměrná měsíční mzda za Prahu
+    zdroj: ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich
+  prumerny_plat_skut_skut:
+    _type: numeric
+    info: Index změny průměrného platu oproti předchozímu roku
+    měřítko: 1 = žádná změna, > 1 = nárůst
+  mzda_prumer_skut_ke_skut:
+    _type: numeric
+  plat_base:
+    _type: numeric
+  prumerny_plat_real_od2020:
+    _type: numeric
+    info: Změna průměrného platu od roku 2003 očištěná o inflaci
+    měřítko: 0 = žádná změna, > 0 = nárůst
+  prumerny_plat_c2020:
+    _type: numeric
+    info: Průměrný plat v cenách roku 2020
+  prumerny_plat_c2020_mezirocne:
+    _type: numeric
+    info: Meziroční změna platů v reálném vyjádření
+    upřesnění: Podle vyjádření v cenách roku 2020
+    měřítko: 0 = žádná změna, 0.01 = nárůst o 1 %
+  prumerny_plat_2003:
+    _type: numeric
+    info: Průměrný plat roku 2003 (pro výpočet)
+  prumerny_plat_nomi_od2020:
+    _type: numeric
+    info: Změna průměrného platu od roku 2003, neočištěno o inflaci
+    měřítko: 0 = žádná změna, 1 = nárůst o 100 %
+  prumerny_plat_vucinh:
+    _type: numeric
+    info: Poměr průměrného platu a průměrné mzdy v národním hospodářství/Praze
+    upřesnění: Pro ústřední orgány počítán
+    měřítko: 1 = průměrný plat stejný jako průměrná mzda v NH, > 1 vyšší
+  prumerny_plat_vucinh_mezirocne:
+    _type: numeric
+    info: Meziroční změna poměru průměrného platu k průměrné mzdě v národním hospodářství/Praze
+    měřítka: 0 = žádná změna, 0.01 = nárůst o 1 p.b.
+  kategorie_2014_cz:
+    _type: character
+    info: Název kategorie zaměstnanců ve studii z roku 2014, česky
