@@ -16,7 +16,7 @@ Text v souboru `results.Rmd` neodpovídá textu studie, který prošel oddělen�
 
 Exportována v CSV a parquet do adresáře `data-export`, spolu s codebookem 
 
-- lidsky čitelný popis na [webu](https://dan-bartusek.github.io/codebook.html)
+- lidsky čitelný popis na [webu](https://dan-bart.github.io/urednici_2021/codebook.html)
 - YAML export v souboru `codebook.yml`
 
 Názvy sloupců v exportech jsou upraveny pro srozumitelnost, neodpovídají názvům v kódu. Rozdíly lze odvodit ze skriptu `export_data.R`.
