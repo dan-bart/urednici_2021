@@ -83,22 +83,24 @@ columns:
     _type: numeric
     info: Inflace v procentním vyjádření
     měřítko: 0 = nulová inflace
+    zdroj: Odvozeno ze sloupce 'ceny_index'
   ceny_deflator_2003:
     _type: numeric
-    info: Cenový index vůči roku 2003, vypočteno z indexu 'hodnota'
+    info: Cenový index vůči roku 2003
     měřítko: 1 = nulová inflace
+    zdroj: Odvozeno ze sloupce 'ceny_index'
   ceny_deflator_2020:
     _type: numeric
-    info: Cenový index vůči roku 2020, vypočteno z indexu 'hodnota'
+    info: Cenový index vůči roku 2020
   prumerna_mzda_cr:
     _type: numeric
     info: Průměrná mzda v národním hospodářství
-    upřesnění: průměrná měsíční mzda
+    upřesnění: průměrná hrubá měsíční mzda
     zdroj: ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich
   prumerna_mzda_pha:
     _type: numeric
     info: Průměrná mzda v Praze
-    upřesnění: průměrná měsíční mzda za Prahu
+    upřesnění: průměrná hrubá měsíční mzda za Prahu
     zdroj: ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich
   prumerny_plat_skut_skut:
     _type: numeric

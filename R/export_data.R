@@ -83,19 +83,21 @@ cdbk <- create_informant(main_df_update, label = "main export", tbl_name = "tabu
                měřítko = "1 = nulová inflace") |>
   info_columns("ceny_inflace",
                info = "Inflace v procentním vyjádření",
-               měřítko = "0 = nulová inflace") |>
+               měřítko = "0 = nulová inflace",
+               zdroj = "Odvozeno ze sloupce 'ceny_index'") |>
   info_columns("ceny_deflator_2003",
-               info = "Cenový index vůči roku 2003, vypočteno z indexu 'hodnota'",
-               měřítko = "1 = nulová inflace") |>
+               info = "Cenový index vůči roku 2003",
+               měřítko = "1 = nulová inflace",
+               zdroj = "Odvozeno ze sloupce 'ceny_index'") |>
   info_columns("ceny_deflator_2020",
-               info = "Cenový index vůči roku 2020, vypočteno z indexu 'hodnota'") |>
+               info = "Cenový index vůči roku 2020") |>
   info_columns("prumerna_mzda_cr",
                info = "Průměrná mzda v národním hospodářství",
-               upřesnění = "průměrná měsíční mzda",
+               upřesnění = "průměrná hrubá měsíční mzda",
                zdroj = "ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich") |>
   info_columns("prumerna_mzda_pha",
                info = "Průměrná mzda v Praze",
-               upřesnění = "průměrná měsíční mzda za Prahu",
+               upřesnění = "průměrná hrubá měsíční mzda za Prahu",
                zdroj = "ČSÚ, datová sada 11080, https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich") |>
   info_columns("prumerny_plat_skut_skut",
                info = "Index změny průměrného platu oproti předchozímu roku",
