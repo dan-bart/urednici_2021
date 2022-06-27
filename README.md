@@ -4,7 +4,7 @@ Datová analýza: Státní zaměstnanci a úředníci
 
 ## Aktuální výsledky
 
-[Hlavní výsledky](https://dan-bart.github.io/urednici_2021/results.html) aktualizovány v červnu 2022 na základě dat do roku 2021, tj. včetně skutečného plnění rozpočtu 2021. Studie a její grafy na webu IDEA stále odrážejí stav s daty do roku 2020.
+[Hlavní výsledky](https://dan-bart.github.io/urednici_2021/index.html) aktualizovány v červnu 2022 na základě dat do roku 2021, tj. včetně skutečného plnění rozpočtu 2021. Studie a její grafy na webu IDEA stále odrážejí stav s daty do roku 2020.
 
 Technický log k využití aktualizovaných dat je v log.md, potažmo [log.html](https://dan-bart.github.io/urednici_2021/log.html)
 
