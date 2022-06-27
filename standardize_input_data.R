@@ -18,7 +18,7 @@ catalogue %>%
   select(dataset_id, title, description)
 
 # load new data
-input <- read_excel_allsheets("./data-input/data_2021.xls")
+input <- read_excel_allsheets("./data-input/data_2021_skut.xls")
 # load old data
 chapters_old <- read.csv("./data-input/legacy/chapters_ALL.csv", encoding = "UTF-8")
 grp_old <- read.csv("./data-input/legacy/groups_ALL.csv", encoding = "UTF-8")
@@ -54,9 +54,10 @@ section_names <- c(
   "Rozpocet_a_rok", "full_name", "kap_num", "kap_name", "Prostredky na platy a OPPP", "OPPP", "Prostredky na platy",
   "Pocet zamestnancu", "Prumerný plat", "Poradí prumerného platu", "Schv ke schv", "Skut k rozp", "Skut ke skut"
 )
+
+source(here::here("R", "divideMain.R"))
 main_df <- data.frame(matrix(ncol = length(section_names), nrow = 0))
 colnames(main_df) <- section_names
-
 
 for (i in 1:length(main_names)) {
   res <- divide_sections(main_names[[i]], names(main_names[i]), section_names)
@@ -65,13 +66,13 @@ for (i in 1:length(main_names)) {
 
 
 # sheets with various types of polozky
-polozky <- data.frame(matrix(ncol = length(section_names), nrow = 0))
-colnames(polozky) <- section_names
-
-for (i in 1:length(polozky_names)) {
-  res <- divide_sections(polozky_names[[i]], names(polozky_names[i]), section_names)
-  polozky <- rbind(polozky, res)
-}
+# polozky <- data.frame(matrix(ncol = length(section_names), nrow = 0))
+# colnames(polozky) <- section_names
+#
+# for (i in 1:length(polozky_names)) {
+#   res <- divide_sections(polozky_names[[i]], names(polozky_names[i]), section_names)
+#   polozky <- rbind(polozky, res)
+# }
 
 # sheets with subgroups
 source(here::here("R", "divideMain.R"))
@@ -247,6 +248,7 @@ wages_early <- chapters_old %>%
   select(Year, czsal_all, phasal_all) %>%
   unique() %>%
   mutate(Year = substr(Year, 1, 4))
+
 wages_benchmark <- wages_early %>%
   filter(Year < 2011) %>%
   rename("rok" = Year) %>%
@@ -262,19 +264,20 @@ df_infl <- data.frame(
   inflation = c(0.1, 2.8, 1.9, 2.5, 2.8, 6.3, 1.0, 1.5, 1.9, 3.3, 1.4, 0.4, 0.3, 0.7, 2.5, 2.1, 2.8, 3.2) / 100 + 1
 )
 
-df_infl <- czso_get_table("010022", dest_dir = "data-input/czso")%>% filter(is.na(ucel_txt)) %>%
+df_infl <- czso_get_table("010022", dest_dir = "data-input/czso", force_redownload = T) %>%
+  filter(is.na(ucel_txt)) %>%
   filter(casz_txt == "stejné období předchozího roku") %>%
   group_by(rok) %>%
   summarise(hodnota = mean(hodnota)) %>%
   select(contains("obdobi"),rok, hodnota) %>%
   mutate(inflation=hodnota/100)%>%
   arrange(rok)%>%
-  filter(rok>=2003,rok<=2020)
+  filter(rok>=2003,rok<=2021)
 
 df_infl$base_2003 <- 0
-df_infl$base_2020 <- 0
+df_infl$base_2021 <- 0
 df_infl[1, "base_2003"] <- 1
-df_infl[nrow(df_infl), "base_2020"] <- 1
+df_infl[nrow(df_infl), "base_2021"] <- 1
 
 
 for (i in 2:nrow(df_infl)) {
@@ -283,7 +286,7 @@ for (i in 2:nrow(df_infl)) {
 
 
 for (i in (nrow(df_infl) - 1):1) {
-  df_infl[i, "base_2020"] <- df_infl[i + 1, "base_2020"] * df_infl[i+1, "inflation"]
+  df_infl[i, "base_2021"] <- df_infl[i + 1, "base_2021"] * df_infl[i+1, "inflation"]
 }
 
 main_df_recat <- main_df %>%
@@ -318,10 +321,10 @@ main_df_update <- bind_rows(main_df_recat,
   mutate(mzda_prumer_skut_ke_skut = (prumerny_plat / lag(prumerny_plat) - 1)) %>%
   mutate(plat_base = prostredky_na_platy[1]) %>%
   mutate(cum_pct_wage_change_real = (prostredky_na_platy / base_2003 - plat_base) / plat_base) %>%
-  mutate(wage_in_2020 = prumerny_plat * base_2020) %>%
-  mutate(wage_in_2020_change = wage_in_2020 / lag(wage_in_2020) - 1) %>%
-  mutate(wage_base = wage_in_2020[1]) %>%
-  mutate(cum_pct_wage_change = (wage_in_2020 - wage_base) / wage_base) %>%
+  mutate(wage_in_2021 = prumerny_plat * base_2021) %>%
+  mutate(wage_in_2021_change = wage_in_2021 / lag(wage_in_2021) - 1) %>%
+  mutate(wage_base = wage_in_2021[1]) %>%
+  mutate(cum_pct_wage_change = (wage_in_2021 - wage_base) / wage_base) %>%
   mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"), prumerny_plat / phasal_all, prumerny_plat / czsal_all))) %>%
   mutate(mzda_k_nh = wage_to_general / lag(wage_to_general) - 1) %>%
   ungroup() %>%
@@ -335,7 +338,7 @@ main_df %>% filter( typ_rozpoctu == "SCHV", rok == 2021) %>% select(kap_num,name
 # save all dataframes
 saveRDS(main_df_update, file = "./data-interim/sections.rds")
 saveRDS(jednotl_df, file = "./data-interim/jednotlivci.rds")
-saveRDS(polozky, file = "./data-interim/organizace.rds")
+# saveRDS(polozky, file = "./data-interim/organizace.rds")
 saveRDS(summary, file = "./data-interim/summary.rds")
 
 

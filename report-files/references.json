@@ -103,36 +103,5 @@
         "title": "Státní úředníci: Kolik jich vlastně je, kde a za jaké platy pracují",
         "title-short": "Státní úředníci",
         "type": "report"
-    },
-    {
-        "URL": "https://CRAN.R-project.org/package=czso",
-        "accessed": {
-            "date-parts": []
-        },
-        "author": [
-            {
-                "family": "Bouchal",
-                "given": "Petr"
-            }
-        ],
-        "id": "bouchal2020",
-        "issued": {
-            "date-parts": [
-                [
-                    2020,
-                    4,
-                    7
-                ]
-            ]
-        },
-        "key": "4FVJZA6G",
-        "libraryid": "4",
-        "providerkey": "Zotero",
-        "rights": "MIT + file LICENSE",
-        "source": "R-Packages",
-        "title": "czso: Use Open Data from the Czech Statistical Office in R",
-        "title-short": "czso",
-        "type": "book",
-        "versionnumber": "0.2.3"
     }
 ]

@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.2",
+    "Version": "4.2.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -39,10 +39,10 @@
     },
     "Matrix": {
       "Package": "Matrix",
-      "Version": "1.2-18",
+      "Version": "1.4-1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "08588806cba69f04797dab50627428ed"
+      "Hash": "699c47c606293bdfbc9fd78a93c9c8fe"
     },
     "R6": {
       "Package": "R6",
@@ -354,10 +354,10 @@
     },
     "gert": {
       "Package": "gert",
-      "Version": "1.3.0",
+      "Version": "1.6.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "56f398846cd40937be6b435a66bd3f37"
+      "Hash": "98c014c4c933f23ea5a0321a4d0b588b"
     },
     "getPass": {
       "Package": "getPass",
@@ -571,10 +571,10 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.8-33",
+      "Version": "1.8-40",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "eb7b6439bc6d812eed2cddba5edc6be3"
+      "Hash": "c6b2fdb18cf68ab613bd564363e1ba0d"
     },
     "mime": {
       "Package": "mime",
@@ -592,17 +592,17 @@
     },
     "nlme": {
       "Package": "nlme",
-      "Version": "3.1-149",
+      "Version": "3.1-158",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "7c24ab3a1e3afe50388eb2d893aab255"
+      "Hash": "9469aeaeddf4f48a7ac70877d0b7ba36"
     },
     "openssl": {
       "Package": "openssl",
-      "Version": "1.4.4",
+      "Version": "2.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f4dbc5a47fd93d3415249884d31d6791"
+      "Hash": "6d3bef2e305f55c705c674653c7d7d3d"
     },
     "packrat": {
       "Package": "packrat",
@@ -627,10 +627,10 @@
     },
     "pkgload": {
       "Package": "pkgload",
-      "Version": "1.2.3",
+      "Version": "1.2.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "302276471121c41f47380243b82d5882"
+      "Hash": "7533cd805940821bf23eaf3c8d4c1735"
     },
     "plotly": {
       "Package": "plotly",
@@ -831,10 +831,10 @@
     },
     "stringi": {
       "Package": "stringi",
-      "Version": "1.6.2",
+      "Version": "1.7.6",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "9df5e6f9a7fa11b84adf0429961de66a"
+      "Hash": "bba431031d30789535745a9627ac9271"
     },
     "stringr": {
       "Package": "stringr",

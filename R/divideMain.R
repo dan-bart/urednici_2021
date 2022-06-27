@@ -78,13 +78,9 @@ divide_sections <- function(df, sheet_name, section_names) {
     if (is.na(df[1, i]) || grepl("INDEX", df[1, i])) {
       next
     }
-    # last section, that has not been provided, we do not want it in the main dataframe
-    if (grepl("2021", df[1, i]) && grepl("UPRAV", df[1, i])) {
-      break
-    }
     ncols <- 1 # count the number of columns belonging to this section
     for (j in i + 1:ncol(df)) {
-      if (is.na(df[1, j]) || grepl("INDEX", df[1, j])) {
+      if (!is.null(df[1, j]) && (is.na(df[1, j]) || grepl("INDEX", df[1, j]))) {
         ncols <- 1 + ncols
       } else { # next section beginning
         break
@@ -99,8 +95,8 @@ divide_sections <- function(df, sheet_name, section_names) {
     section <- section[-c(nrow(section) - 1), ]
     # there are three types of section: SKUTECNY ROZPOCET, SCHVALENY ROZPOCET, UPRAVENY ROZPOCET
     # the sections end with index comparison to previous years, we treat each section differently
-    if (grepl("SKUT", df[1, i]) && ncol(section) == 11) {
-      section <- section[, -11]
+    if (grepl("SKUT", df[1, i]) && ncol(section) %in% 10:11) {
+      if(ncol(section == 11)) section <- section[, -11]
       section <- add_column(section, NA, .after = 8)
     } else if (grepl("SCHV", df[1, i]) && ncol(section) == 9) {
       section <- add_column(section, NA, .after = 9)
@@ -124,6 +120,9 @@ divide_sections <- function(df, sheet_name, section_names) {
     # finally assign the colnames and merge with the main dataframe
     colnames(section) <- section_names
     res <- rbind(res, section)
+    if(is.na(df[1, i]) && is.na(df[1, i + 1])) {
+      break
+    }
   }
 
 
@@ -160,6 +159,7 @@ divide_sections <- function(df, sheet_name, section_names) {
   res$typ_rozpoctu[which(grepl("SKUT", res$typ_rozpoctu))] <- "SKUT"
   res$typ_rozpoctu[which(grepl("SCHV", res$typ_rozpoctu))] <- "SCHV"
   res$typ_rozpoctu[which(grepl("UPRAV", res$typ_rozpoctu))] <- "UPRAV"
+
   return(res)
 }
 
@@ -181,13 +181,9 @@ divide_jednotl <- function(df, sheet_name, section_names) {
     if (is.na(df[1, i]) || grepl("INDEX", df[1, i])) {
       next
     }
-    # last section, that has not been provided, we do not want it in the main dataframe
-    if (grepl("2021", df[1, i]) && grepl("UPRAV", df[1, i])) {
-      break
-    }
     ncols <- 1 # count the number of columns belonging to this section
     for (j in i + 1:ncol(df)) {
-      if (is.na(df[1, j]) || grepl("INDEX", df[1, j])) {
+      if (!is.null(df[1, j]) && (is.na(df[1, j]) || grepl("INDEX", df[1, j]))) {
         ncols <- 1 + ncols
       } else { # next section beginning
         break
@@ -199,8 +195,8 @@ divide_jednotl <- function(df, sheet_name, section_names) {
     # there are three types of section: SKUTECNY ROZPOCET, SCHVALENY ROZPOCET, UPRAVENY ROZPOCET
     # the sections end with index comparison to previous years, we treat each section differently
 
-    if (grepl("SKUT", df[1, i]) && ncol(section) == 12) {
-      section <- section[, -12] # empty column
+    if (grepl("SKUT", df[1, i]) && ncol(section) %in% 11:12) {
+      if(ncol(section) == 12) section <- section[, -12] # empty column
       section <- add_column(section, NA, .after = 9)
     } else if (grepl("SCHV", df[1, i])) {
       # OSS SS - jednotl: chybí index prumerného platu za schv.rozpoctem každého roku
@@ -287,13 +283,9 @@ divide_summary <- function(df, sheet_name, section_names) {
     if (is.na(df[1, i]) || grepl("INDEX", df[1, i])) {
       next
     }
-    # last section, that has not been provided, we do not want it in the main dataframe
-    if (grepl("2021", df[1, i]) && grepl("UPRAV", df[1, i])) {
-      break
-    }
     ncols <- 1 # count the number of columns belonging to this section
     for (j in i + 1:ncol(df)) {
-      if (is.na(df[1, j]) || grepl("INDEX", df[1, j])) {
+      if (!is.null(df[1, j]) && (is.na(df[1, j]) || grepl("INDEX", df[1, j]))) {
         ncols <- 1 + ncols
       } else { # next section beginning
         break
@@ -305,8 +297,8 @@ divide_summary <- function(df, sheet_name, section_names) {
 
     # there are three types of section: SKUTECNY ROZPOCET, SCHVALENY ROZPOCET, UPRAVENY ROZPOCET
     # the sections end with index comparison to previous years, we treat each section differently
-    if (grepl("SKUT", df[1, i]) && ncol(section) == 10) {
-      section <- section[, -10]
+    if (grepl("SKUT", df[1, i]) && ncol(section) %in% 9:10) {
+      if(ncol(section) == 10) section <- section[, -10]
       section <- add_column(section, NA, .after = 7)
     } else if (grepl("SCHV", df[1, i]) && ncol(section) == 8) {
       section <- add_column(section, NA, .after = 8)

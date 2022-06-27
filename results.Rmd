@@ -2,7 +2,7 @@
 title: "St\u00E1tn\u00ED zam\u011Bstnanci a \u00FA\u0159edn\u00EDci: kde pracuj\u00ED a za kolik?"
 author: "Daniel Bartu\u0161ek, Petr Bouchal, Petr Jansk\u00FD"
 subtitle: Pracovní verze studie IDEA
-date: listopad 2021 (pracovní verze)
+date: červen 2022 (předběžná aktualizace)
 output:
   bookdown::html_document2:
     number_sections: no
@@ -110,7 +110,7 @@ graf_A1 <- tree_data %>%
                             " Pod\u00EDl na celku:", round(cost_perc*100,1), "%"),
     domain = list(column = 0)
   ) %>%
-  layout(title = list(font=list(color = cap_col),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti (2020)</b>",
+  layout(title = list(font=list(color = cap_col),text = "<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti (2021)</b>",
                       y = 0.98)) %>%
   layout( annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout</i>",
                              x = 1, y = -0.05, showarrow = FALSE))
@@ -131,7 +131,7 @@ graf_1 <- tree_data %>%
     domain = list(column = 0)
   ) %>%
   layout(title = list(font=list(color = cap_col),
-                      text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti (2020)</b>",
+                      text = "<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti (2021)</b>",
                       y = 0.98)) %>%
   layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout</i>", x = 1,
                              y = -0.05, showarrow = FALSE,
@@ -152,13 +152,18 @@ text-align: left}
 
 ::::{.bs-callout .bs-callout-green}
 
+## Poznámka
+
+Aktualizováno v červnu 2022 na základě dat ze SZÚ 2022 s čísly o výsledku plnění rozpočtu za rok 2021. Aktualizovány grafy i shrnutí níže. [Studie IDEA](https://idea.cerge-ei.cz/files/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.html#p=2) a její online grafy stále odpovídají stavu z ledna 2021 na základě dat do roku 2020.
+
 ## Shrnutí
 
-* Téměř polovina z milionu zaměstnanců veřejného sektoru je placena ze státního rozpočtu: 464 tisíc státních zaměstnanců dle údajů pro rok 2020.
-* Větší část těchto státních zaměstnanců spadá pod příspěvkové organizace (265 tisíc), zahrnující především školy, a menší část ostatních státních zaměstnanců (198 tisíc) spadá pod řadu různorodých organizací, od armády a policii až po ministerstva a úřady práce. → [více](#zam) + [graf](#zam-tree-pocet)
+* Téměř polovina z milionu zaměstnanců veřejného sektoru je placena ze státního rozpočtu: 471 tisíc státních zaměstnanců dle údajů pro rok 2021.
+* Větší část těchto státních zaměstnanců spadá pod příspěvkové organizace (271 tisíc), zahrnující především školy, a menší část ostatních státních zaměstnanců (200 tisíc) spadá pod řadu různorodých organizací, od armády a policii až po ministerstva a úřady práce. → [více](#zam) + [graf](#zam-tree-pocet)
 * Jen malou část státních zaměstnanců lze označit za státní úředníky (zhruba 78 tisíc). → [více](#ured)
-* Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůstu o pět tisíc státních úředníků a do roku 2020 jejich počet nedoznal významnější změny. → [více](#ured) + [graf](#ured-pocet)
-* Ačkoliv reálné průměrné platy státních úředníků od roku 2013 soustavně rostly → [graf](#ured-plat), od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice. → [více](#ured) + [graf](#ured-plat-rel)
+* Počet státních úředníků v průběhu posledních dvou dekád kolísal. Mezi roky 2003 a 2010 jejich počet mírně narostl o necelé dva tisíce. Mezi roky 2010 a 2011 došlo k poklesu o tři tisíce během ekonomické krize v době Nečasovy vlády. Mezi lety 2010 a 2015 došlo k celkovému nárůstu o pět tisíc státních úředníků a do roku 2021 jejich počet nedoznal významnější změny. → [více](#ured) + [graf](#ured-pocet)
+* Ačkoliv reálné průměrné platy státních úředníků od roku 2013 do roku 2020 soustavně rostly → [graf](#ured-plat), od roku 2018 zaostával tento růst znatelně za nárůstem mezd v celé ekonomice. → [více](#ured) + [graf](#ured-plat-rel)
+* v roce 2021 průměrný plat úředníků poprvé od roku 2012 klesl v reálném vyjádření. Ve vztahu k průměrné mzdě v ekonomice poklesl průměrný plat státních úředníků nejprudčeji od roku 2011. 
 
 ::::
 
@@ -278,7 +283,7 @@ graf_list[["graf_6"]]
 
 ### Detaily
 
-Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2021: <https://www.czso.cz/csu/czso/10-trh-prace-sdpe56comt>)
+Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2020: <https://www.czso.cz/csu/czso/10-trh-prace-sdpe56comt>)
 
 ## Příloha 1: Data a metodologie {#ap1}
 
