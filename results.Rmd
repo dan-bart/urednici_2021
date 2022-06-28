@@ -150,11 +150,15 @@ text-align: left}
 
 </style>
 
-::::{.bs-callout .bs-callout-green}
+::::{.bs-callout .bs-callout-grey}
 
-## Poznámka
+## Aktualizace 2022
 
 Aktualizováno v červnu 2022 na základě dat ze SZÚ 2022 s čísly o výsledku plnění rozpočtu za rok 2021. Aktualizovány grafy i shrnutí níže. [Studie IDEA](https://idea.cerge-ei.cz/files/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.html#p=2) a její online grafy stále odpovídají stavu z ledna 2021 na základě dat do roku 2020.
+
+::::
+
+::::{.bs-callout .bs-callout-green}
 
 ## Shrnutí
 
