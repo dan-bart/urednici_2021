@@ -20,6 +20,8 @@ knit: (function(input_file, encoding) {
 
 Protože nevyužíváme data za jednotlivé organizace, jejich načítání z nového soubory jsem neřešil a obecně ho ve skriptu vypnul.
 
+V nových datech také chybí tabulky s výseky za jednotlivé paragrafy (např. státní služba, vojáci atd.). Ta sice nepoužíváme, ale minimálně státní služba má tu výhodu, že jde napojit na data ze [systemizace](https://github.com/petrbouchal/systemizace), tj. časem bude možná užitečné si to dožádat.
+
 Co z toho plyne:
 
 - pokud opět někdy dostaneme data s pouze částečnými údaji za daný rok (tj. např. jen rozpočet, bez skutečnosti), bude potřeba se vrátit k původní logice skriptu - jde o logiku iterací ve funkcích `divide_*()` - popř. vytvořit univerzálnější logiku načítání této tabulky
