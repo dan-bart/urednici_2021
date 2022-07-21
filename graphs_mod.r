@@ -1,13 +1,18 @@
 library(ff)
 
 if(!dir.exists("graphs_mod")){dir.create("graphs_mod")}
-if(!dir.exists("graphs_mod/icons/")){file.move("www/icons/","graphs_mod/icons")}
-if(!dir.exists("graphs_mod/js")){file.move("www/js/","graphs_mod/js")}
-if(!dir.exists("graphs_mod/styles/")){file.move("www/styles/","graphs_mod/styles")}
+
+if(!dir.exists("graphs_mod/icons")){dir.create("graphs_mod/icons")}
+if(!dir.exists("graphs_mod/js")){dir.create("graphs_mod/js")}
+if(!dir.exists("graphs_mod/styles")){dir.create("graphs_mod/styles")}
+
+if(!dir.exists("graphs_mod/icons")){fs::dir_copy("www/icons/","graphs_mod/")}
+if(!dir.exists("graphs_mod/js")){fs::dir_copy("www/js/","graphs_mod")}
+if(!dir.exists("graphs_mod/styles/")){fs::dir_copy("www/styles/","graphs_mod/")}
 
 template <- readLines("www/template.html")
 
-lfiles <- list.files("graphs")
+lfiles <- list.files("graphs", full.names = FALSE)
 lfiles <- lfiles[grepl("html",lfiles) & !grepl("mod",lfiles)]
 lfiles <- lfiles[order(as.numeric(gsub("[^0-9]","",lfiles)))]
 
@@ -23,15 +28,15 @@ toc_list <- c(
             }),'</ul>')
 
 for(i in 1:length(lfiles)){
-  f <- lfiles[i]  
+  f <- lfiles[i]
   cat(f,"\n")
-  
-  gr <- readLines(f)
+
+  gr <- readLines(file.path("graphs", f))
   gr_content <- gr[grepl('id="htmlwidget',gr) | grepl('type="application',gr)]
   gr_content <- gsub('id=\\"htmlwidget_container\\"','class="htmlwidget_container" style="height:100%"',gr_content)
   # gr_content <- gsub('id=\\"htmlwidget_container\\"','class="htmlwidget_container"',gr_content)
   gr_content <- gsub('height\\:400px','height:100%"',gr_content)
-  
+
   extra_script <- paste0('<script>
 function placeLegendAnnot() {
 plot_height = $(".plot-container").outerHeight();
@@ -52,19 +57,19 @@ ifelse(i %in% c(11),100,
 };
 window.addEventListener("DOMContentLoaded", placeLegendAnnot, false);
 </script>')
-  
+
   toc <- toc_list
   toc[grepl(f,toc)] <- gsub("tocify-item","tocify-item active",toc[grepl(f,toc)])
   toc <- paste(toc,collapse="\n")
 
   gr <- unlist(lapply(as.list(template), function(x)
-    if(grepl("page title here",x)) stringr::str_to_title(gsub("[[:punct:]]"," ",gsub("\\.html","",f))) 
+    if(grepl("page title here",x)) stringr::str_to_title(gsub("[[:punct:]]"," ",gsub("\\.html","",f)))
     else if(grepl("list of graphs here",x)) toc
     else if(grepl("graph content here",x)) gr_content
     else if(grepl("extra script here",x)) extra_script
     else x
     ))
- 
+
   writeLines(gr,paste0("graphs_mod/",f))
 }
 
@@ -79,18 +84,18 @@ window.addEventListener("DOMContentLoaded", placeLegendAnnot, false);
       "</table>"),
     collapse=""
   )
-  
+
   toc <- toc_list
   toc[grepl("zkratky",toc)] <- gsub("tocify-item","tocify-item active",toc[grepl("zkratky",toc)])
   toc <- paste(toc,collapse="\n")
-  
+
   tb <- unlist(lapply(as.list(template), function(x)
-    if(grepl("page title here",x)) "Seznam zkratek" 
+    if(grepl("page title here",x)) "Seznam zkratek"
     else if(grepl("list of graphs here",x)) toc
     else if(grepl("table content here",x)) tb_content
     else if(grepl("extra script here",x)) ""
     else x
   ))
-  
+
   writeLines(tb,paste0("graphs_mod/zkratky.html"))
 }
