@@ -118,7 +118,19 @@ kaps <- unique(dt$kap_name)
 color_map_kap <- ifelse(substr(kaps,1,1) == "M", "dimgray", "cornflowerblue")
 names(color_map_kap) <- kaps
 
+# Theme gg ----------------------------------------------------------------
 
+theme_urednici <- theme(legend.position = "bottom",
+                        axis.title = element_text(face = "bold"),
+                        axis.ticks = element_line(colour = "darkgrey"),
+                        legend.text = element_text(size = 15),
+                        panel.border = element_rect(colour = "black", fill = NA),
+                        panel.grid.major = element_line(colour = "darkgrey"),
+                        plot.title = element_text(family = "Georgia", hjust = 0.5,
+                                                  colour = "#0000cd", face = "bold", size = 18),
+                        panel.grid.minor = element_blank(),
+                        plot.caption.position = "panel",
+                        plot.caption = element_text(hjust = 0))
 
 ## ----tree_prep---------------------------------------------------------------------------------------------------
 aux <- dt %>%
@@ -649,7 +661,7 @@ na platy státních úředníků (k základně roku 2003)</b>",60)),
 
 
 ## ----mean_wage_2021----------------------------------------------------------------------------------------------
-graf_5 <- dt %>%
+graf_5_dt <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava",
                                "Ostatni ustredni", "Statni urednici"),
          typ_rozpoctu == "SKUT") %>%
@@ -666,23 +678,23 @@ graf_5 <- dt %>%
   mutate(wage_in_2021 = prumerny_plat_agg * base_2021) %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>%
            fct_relevel("Ministerstva", "Ostatní ústřední",
-                       "Neústřední st. správa","Státní úředníci")) %>%
-  plot_ly(
-    x = ~rok, y = ~ wage_in_2021 / 1000, type = "scatter", color = ~kategorie_2014_cz,
-    colors = color_map,
-    mode = "line", line = list(width = 7),
-    marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3)),
-    text = ~ paste(
-      " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>", "Hodnota:",
-      format(round(wage_in_2021, 0), big.mark = " "), "K\u010D", "<br>",
-      "Nejv\u011Bt\u0161\u00ED nárůst:", "<br>", max_change_kap, ": ",
-      max_change * 100, " %", "<br>",
-      ifelse(min_change>0,"Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"), "<br>",
-      min_change_kap, ": ",
-      min_change * 100, " %"),
-    hoverlabel = list(font=list(size=hover_size)),
-    hoverinfo = "text",
-    legendgroup = ~kategorie_2014_cz) %>%
+                       "Neústřední st. správa","Státní úředníci"))
+graf_5 <- plot_ly(graf_5_dt,
+        x = ~rok, y = ~ wage_in_2021 / 1000, type = "scatter", color = ~kategorie_2014_cz,
+        colors = color_map,
+        mode = "line", line = list(width = 7),
+        marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3)),
+        text = ~ paste(
+          " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>", "Hodnota:",
+          format(round(wage_in_2021, 0), big.mark = " "), "K\u010D", "<br>",
+          "Nejv\u011Bt\u0161\u00ED nárůst:", "<br>", max_change_kap, ": ",
+          max_change * 100, " %", "<br>",
+          ifelse(min_change>0,"Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"), "<br>",
+          min_change_kap, ": ",
+          min_change * 100, " %"),
+        hoverlabel = list(font=list(size=hover_size)),
+        hoverinfo = "text",
+        legendgroup = ~kategorie_2014_cz) %>%
   layout(
     legend = legend_below,
     annotations = c(list(text = str_wrap("<i>Pozn.: Reálné hrubé měsíční platy jsou uvedeny v cenách roku 2021.</i>",wrap_len),
@@ -698,6 +710,22 @@ graf_5 <- dt %>%
 graf_5
 
 
+# G5 static ---------------------------------------------------------------
+
+graf_5_static <- ggplot(graf_5_dt, aes(rok, wage_in_2021/1e3, colour = kategorie_2014_cz)) +
+  geom_line(size = 1.9) +
+  geom_point(colour = "black", size = 1.9) +
+  theme_minimal(base_family = "Calibri", base_size = 14) +
+  theme_urednici +
+  scale_color_manual(values = color_map, name = NULL, limits = force) +
+  scale_x_continuous(breaks = seq(2003, 2021, 2)) +
+  labs(title = "Graf 5. Průměrné platy státních úředníků (2004–2021)",
+       x = "Rok",
+       y = "Reálné průměrné hrubé měsíční mzdy (tis. Kč) v cenách roku 2021",
+       caption = "Pozn.: reálné hrubé měsíční platy, uvedené v cenách roku 2021")
+graf_5_static
+
+ggsave("graphs-static/graf-5.png", plot = graf_5_static, width = 8, height = 5, scale = 1.5, bg = "white")
 
 ## ----mean_wage_pct_change_2021-----------------------------------------------------------------------------------
 graf_A7 <- dt %>%
@@ -765,7 +793,7 @@ annot_6<-list(                       align='left',
                                          borderwidth=1,
                                          showarrow = FALSE)
 
-graf_6 <- dt %>%
+graf_6_dt <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava",
                                "Ostatni ustredni", "Statni urednici"),
          typ_rozpoctu == "SKUT") %>%
@@ -784,35 +812,55 @@ graf_6 <- dt %>%
                                    prumerny_plat_agg / phasal_all, prumerny_plat_agg / czsal_all))) %>%
   mutate(kategorie_2014_cz = as.factor(kategorie_2014_cz) %>%
            fct_relevel("Ministerstva", "Ostatní ústřední",
-                       "Neústřední st. správa","Státní úředníci")) %>%
-  plot_ly(
-    line = list(width = 7),
-    x = ~rok, y = ~ wage_to_general * 100, type = "scatter", color = ~kategorie_2014_cz,
-    colors = color_map,mode = "line",
-    marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3)),
-    text = ~ paste(
-      " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
-      "Nejv\u011Bt\u0161\u00ED nárůst:", "<br>", max_change_kap, ": ",
-      max_change * 100, " %", "<br>",
-      ifelse(min_change > 0, "Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"),
-      "<br>", min_change_kap, ": ", min_change * 100, " %", "<br>"
-    ),
-    hoverlabel = list(font=list(size=hover_size)),
-    hoverinfo = "text",
-    legendgroup = ~kategorie_2014_cz
-  ) %>%layout(
-    shapes = list(hline(100)),
-    title = list(font=title_font,
-                 text = "<b>Graf 6. Průměrný plat státních úředníků \n ve vztahu k průměrné mzdě v národním hospodářství (2004-2021)</b>"),
-    annotations = c(annot_6,list(text = str_wrap("<i>Pozn.: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.</i>",wrap_len),
-                                 font = pozn_font_small)),
-    xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font)),
-    yaxis = c(num_ticks,frame_y,list(title = "<b>Poměr platů státních úředníku a prům. mzdy (v %)</b>", ticksuffix = "%",titlefont = axis_font)),
-    margin = mrg5,
-    legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+                       "Neústřední st. správa","Státní úředníci"))
+graf_6 <- plot_ly(graf_6_dt,
+        line = list(width = 7),
+        x = ~rok, y = ~ wage_to_general * 100, type = "scatter", color = ~kategorie_2014_cz,
+        colors = color_map,mode = "line",
+        marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3)),
+        text = ~ paste(
+          " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
+          "Nejv\u011Bt\u0161\u00ED nárůst:", "<br>", max_change_kap, ": ",
+          max_change * 100, " %", "<br>",
+          ifelse(min_change > 0, "Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"),
+          "<br>", min_change_kap, ": ", min_change * 100, " %", "<br>"
+        ),
+        hoverlabel = list(font=list(size=hover_size)),
+        hoverinfo = "text",
+        legendgroup = ~kategorie_2014_cz
+) %>%layout(
+  shapes = list(hline(100)),
+  title = list(font=title_font,
+               text = "<b>Graf 6. Průměrný plat státních úředníků \n ve vztahu k průměrné mzdě v národním hospodářství (2004-2021)</b>"),
+  annotations = c(annot_6,list(text = str_wrap("<i>Pozn.: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.</i>",wrap_len),
+                               font = pozn_font_small)),
+  xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font)),
+  yaxis = c(num_ticks,frame_y,list(title = "<b>Poměr platů státních úředníku a prům. mzdy (v %)</b>", ticksuffix = "%",titlefont = axis_font)),
+  margin = mrg5,
+  legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
 
 graf_6
+
+# G6 static ---------------------------------------------------------------
+
+graf_6_static <- ggplot(graf_6_dt, aes(rok, wage_to_general, colour = kategorie_2014_cz)) +
+  geom_line(size = 1.9) +
+  geom_point(colour = "black", size = 1.9) +
+  theme_minimal(base_family = "Calibri", base_size = 14) +
+  theme_urednici +
+  scale_color_manual(values = color_map, name = NULL, limits = force) +
+  scale_x_continuous(breaks = seq(2003, 2021, 2)) +
+  ptrr::scale_y_percent_cz() +
+  labs(title = "Graf 6. Průměrný plat státních úředníků \nve vztahu k průměrné mzdě v národním hospodářství (2004-2021)",
+       y = "Poměr platů státních úředníku a prům. mzdy (v %)",
+       x = "Rok",
+       caption = str_wrap("Pozn.: pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.",
+                          150))
+
+graf_6_static
+
+ggsave("graphs-static/graf-6.png", plot = graf_6_static, width = 8, height = 5, scale = 1.5, bg = "white")
 
 
 ## ----2021_effect-------------------------------------------------------------------------------------------------
