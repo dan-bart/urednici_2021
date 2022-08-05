@@ -1,0 +1,11 @@
+theme_urednici <- theme(legend.position = "bottom",
+                        axis.title = element_text(face = "bold"),
+                        axis.ticks = element_line(colour = "darkgrey"),
+                        legend.text = element_text(size = 15),
+                        panel.border = element_rect(colour = "black", fill = NA),
+                        panel.grid.major = element_line(colour = "darkgrey"),
+                        plot.title = element_text(family = "Georgia", hjust = 0.5,
+                                                  colour = "#0000cd", face = "bold", size = 18),
+                        panel.grid.minor = element_blank(),
+                        plot.caption.position = "panel",
+                        plot.caption = element_text(hjust = 0))

@@ -18,7 +18,6 @@ library(janitor)
 library(czso)
 library(kableExtra)
 library(htmlwidgets)
-rm(list=ls())
 options(scipen = 100, digits = 8)
 
 dt <- readRDS("./data-interim/sections.rds")
@@ -120,17 +119,7 @@ names(color_map_kap) <- kaps
 
 # Theme gg ----------------------------------------------------------------
 
-theme_urednici <- theme(legend.position = "bottom",
-                        axis.title = element_text(face = "bold"),
-                        axis.ticks = element_line(colour = "darkgrey"),
-                        legend.text = element_text(size = 15),
-                        panel.border = element_rect(colour = "black", fill = NA),
-                        panel.grid.major = element_line(colour = "darkgrey"),
-                        plot.title = element_text(family = "Georgia", hjust = 0.5,
-                                                  colour = "#0000cd", face = "bold", size = 18),
-                        panel.grid.minor = element_blank(),
-                        plot.caption.position = "panel",
-                        plot.caption = element_text(hjust = 0))
+source("theme.R")
 
 ## ----tree_prep---------------------------------------------------------------------------------------------------
 aux <- dt %>%
@@ -795,7 +784,7 @@ annot_6<-list(                       align='left',
 
 graf_6_dt <- dt %>%
   filter(kategorie_2014 %in% c("Ministerstva", "Neustredni st. sprava",
-                               "Ostatni ustredni", "Statni urednici"),
+                               "Ostatni ustredni"),
          typ_rozpoctu == "SKUT") %>%
   #filter(!kap_num %in% c(314, 306)) %>%
   group_by(kategorie_2014, kategorie_2014_cz, rok) %>%
