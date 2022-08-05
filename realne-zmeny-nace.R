@@ -18,7 +18,7 @@ infl_qonq <- infl |>
   group_by(rok, ctvrtletí) |>
   summarise(inflace_qonq = (mean(hodnota) - 100)/100, .groups = "drop")
 
-1zm_plt_dt <- zm |>
+zm_plt_dt <- zm |>
   filter(stapro_txt == "Průměrná hrubá mzda na zaměstnance",
          typosoby_txt == "přepočtený") |>
   mutate(ctvrtletí = as.numeric(ctvrtletí),
