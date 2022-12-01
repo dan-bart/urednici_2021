@@ -287,7 +287,7 @@ graf_list[["graf_6"]]
 
 ### Detaily
 
-Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2020: <https://www.czso.cz/csu/czso/10-trh-prace-sdpe56comt>)
+Statistické ročenky České republiky - za jednotlivé roky. (Zde například za rok 2022: <https://www.czso.cz/csu/czso/10-trh-prace-sdpe56comt>)
 
 ## Příloha 1: Data a metodologie {#ap1}
 
@@ -347,8 +347,8 @@ Dodatečná data používáme **Českého statistického úřadu** o mzdách v e
 - pro údaje o cenových hladinách a inflaci (například pro výpočet reálného průměrného hrubé měsíčního platu) používáme [datovou sadu ČSÚ s indexy spotřebitelských cen](https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen) (kód 010022, roky 2003–2020).
 
 Nejlepší agregátní data o státních zaměstnancích od Ministerstva financí využíváme v této studii, ale pro celou množinu **zaměstnanců veřejného sektoru** poskytují jediné systematické údaje **Statistické ročenky** Českého statistického úřadu pro jednotlivé roky. 
-Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje, kromě státních zaměstnanců, například obce a kraje nebo i veřejné finanční i nefinanční firmy. Poslední dostupný údaj je z [ročenky za rok 2020](https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om) s předběžnými informacemi pro rok 2019 (konkrétně tabulka 10-A3 k trhu práce). 
-Podle tohoto zdroje veřejný sektor celkem v roce 2019 zaměstnával 1012,5 tisíc zaměstnanců (přepočtených na plné úvazky). 
+Pro tyto účely je veřejný sektor velmi široce definován a zahrnuje, kromě státních zaměstnanců, například obce a kraje nebo i veřejné finanční i nefinanční firmy. Poslední dostupný údaj je z [ročenky 2022](https://www.czso.cz/csu/czso/10-trh-prace-2d1v7b3uqe) s předběžnými informacemi pro rok 2020 (konkrétně tabulka 10-A3 k trhu práce). 
+Podle tohoto zdroje veřejný sektor celkem v roce 2020 zaměstnával 1024,2 tisíc zaměstnanců (přepočtených na plné úvazky). 
 Pro další roky (1995, 1999-2019; ostatní roky nejsou podle všeho dostupné online) shrnujeme tyto informace v grafu A15 v příloze. Mezi lety 1995 (1646 tisíc) a 2012 (921,4 tisíc) došlo k výraznému poklesu počtu zaměstnanců veřejného sektoru a mezi roky 2012 a 2019 došlo k postupnému, mírnému nárůstu. 
 Jediné další informace ve Statistické ročence jsou, že, například pro rok 2019, z celkového počtu 1012,5 tisíc zaměstnanců veřejného sektoru jich 327,8 tisíc pracovalo ve veřejných nefinančních podnicích, 1,6 tisíc ve veřejných finančních institucích a 682,2 tisíc ve vládních institucích (z toho 297.8 tisíc ústřední, 382.3 neústřední a 6,1 fondy sociálního zabezpečení) a jejich průměrné hrubé měsíční mzdy ve stejném členění. 
 Toto jsou relativně málo detailní informace, které neumožňují analýzu na úrovni jednotlivých organizací veřejného sektoru. Zaměřujeme se tedy v této studii na analýzu dat od Ministerstva financí, z kterých toho víme více o tom, kolik a kde a za jaké průměrné platy státních zaměstnanců pracuje. 
