@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.2.0",
+    "Version": "4.2.1",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -64,6 +64,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dab19adae4440ae55aa8a9d238b246bb"
+    },
+    "Rttf2pt1": {
+      "Package": "Rttf2pt1",
+      "Version": "1.3.10",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8952819f94cd9fce521f9b1cb558f8a4"
     },
     "arrow": {
       "Package": "arrow",
@@ -310,6 +317,20 @@
       "Repository": "CRAN",
       "Hash": "ec8ca05cffcc70569eaaad8469d2a3a7"
     },
+    "extrafont": {
+      "Package": "extrafont",
+      "Version": "0.18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "07a8a50195fc77e8690fd8bc4e87e6a0"
+    },
+    "extrafontdb": {
+      "Package": "extrafontdb",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a861555ddec7451c653b40e713166c6f"
+    },
     "fansi": {
       "Package": "fansi",
       "Version": "0.5.0",
@@ -331,6 +352,13 @@
       "Repository": "CRAN",
       "Hash": "77bd60a6157420d4ffa93b27cf6a58b8"
     },
+    "ff": {
+      "Package": "ff",
+      "Version": "4.0.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2b752347760bb54007ac1182d80b3799"
+    },
     "forcats": {
       "Package": "forcats",
       "Version": "0.5.1",
@@ -344,6 +372,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "44594a07a42e5f91fac9f93fda6d0109"
+    },
+    "gdtools": {
+      "Package": "gdtools",
+      "Version": "0.2.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "bdfa7431687797edff8c9b0eb9271cc8"
     },
     "generics": {
       "Package": "generics",
@@ -449,6 +484,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "e4bf161ccb74a2c1c0e8ac63bbe332b4"
+    },
+    "hrbrthemes": {
+      "Package": "hrbrthemes",
+      "Version": "0.8.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0d1257948f016840ad90320ed19c8c7d"
     },
     "htmltools": {
       "Package": "htmltools",
@@ -634,15 +676,10 @@
     },
     "plotly": {
       "Package": "plotly",
-      "Version": "4.9.4.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "plotly",
-      "RemoteUsername": "ropensci",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "079ac68218b51e16b676f916d871739e6c496fd0",
-      "Hash": "fd63e73b74d7891544a18196ab107e1a"
+      "Version": "4.10.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3781cf6971c6467fa842a63725bbee9e"
     },
     "pointblank": {
       "Package": "pointblank",
@@ -698,12 +735,31 @@
       "Repository": "CRAN",
       "Hash": "32620e2001c1dce1af49c49dccbb9420"
     },
+    "ptrr": {
+      "Package": "ptrr",
+      "Version": "0.2.1.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "petrbouchal",
+      "RemoteRepo": "ptrr",
+      "RemoteRef": "master",
+      "RemoteSha": "3ceb0da328597b82bc668630350e94b52426d3ed",
+      "Hash": "9e2b3c9c414498b3d88f7789e7ae8d50"
+    },
     "purrr": {
       "Package": "purrr",
       "Version": "0.3.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "97def703420c8ab10d8f0e6c72101e02"
+    },
+    "ragg": {
+      "Package": "ragg",
+      "Version": "1.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "14932bb6f2739c771ca4ceaba6b4248e"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -859,10 +915,10 @@
     },
     "systemfonts": {
       "Package": "systemfonts",
-      "Version": "1.0.2",
+      "Version": "1.0.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f2e17ba09737e2e7e2ec40fc1f9b6e08"
+      "Hash": "90b28393209827327de889f49935140a"
     },
     "testthat": {
       "Package": "testthat",
@@ -870,6 +926,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "89e55ebe4f5ddd7f43f0f2bc6d96c950"
+    },
+    "textshaping": {
+      "Package": "textshaping",
+      "Version": "0.3.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1ab6223d3670fac7143202cb6a2d43d5"
     },
     "tibble": {
       "Package": "tibble",
