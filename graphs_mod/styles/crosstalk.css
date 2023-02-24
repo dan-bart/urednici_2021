@@ -1,0 +1,88 @@
+.container-fluid.crosstalk-bscols {
+margin-left: -30px;
+margin-right: -30px;
+white-space: normal;
+}
+
+body > .container-fluid.crosstalk-bscols {
+margin-left: auto;
+margin-right: auto;
+}
+.crosstalk-input-checkboxgroup .crosstalk-options-group .crosstalk-options-column {
+display: inline-block;
+padding-right: 12px;
+vertical-align: top;
+}
+@media only screen and (max-width:480px) {
+.crosstalk-input-checkboxgroup .crosstalk-options-group .crosstalk-options-column {
+display: block;
+padding-right: inherit;
+}
+}
+
+slide:not(.current) .plotly.html-widget{
+display: none;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover {
+background-color: #c90239 !important;
+color: #fff !important;
+}
+
+a {
+color: #c90239 !important;
+}
+
+li.tocify-item a {
+padding:2px !important;
+}
+
+.tocify ul, .tocify li {
+line-height: 30px !important;
+}
+
+.tocify-subheader li {
+font-size: 15px !important;
+}
+
+.tocify {
+margin-left: 0px !important;
+width: 100% !important;
+font-size: 16px !important;
+}
+
+div.span2 {
+max-height: 100% !important;
+overflow-y: auto !important;
+overflow-x: hidden !important;
+padding-right: 9px !important;
+}
+
+div.span10 {
+max-height: 100% !important;
+overflow-y: auto !important;
+overflow-x: hidden !important;
+}
+
+button {
+font-size: 18px !important;
+line-height: 24px !important;
+}
+
+@media (aspect-ratio: 16/9) {
+html {
+zoom: 2 !important;
+}
+}
+
+.annotation-text {
+font-family: Georgia,Times,Times New Roman,serif !important;
+}
+
+.dataTables_filter {
+float: left !important;
+}
+
+.btn {
+white-space: normal;
+}

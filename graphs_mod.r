@@ -1,14 +1,36 @@
 library(ff)
 
+crosstalk_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "crosstalk")[1]
+file.copy(file.path(crosstalk_dir, "js/crosstalk.js"), "www/js", overwrite = TRUE)
+
+plotly_binding_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "plotly\\-binding")[1]
+file.copy(file.path(plotly_binding_dir, "plotly.js"),
+          "www/js/plotly-htmlwidgets.js", overwrite = TRUE)
+
+plotly_main_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "plotly\\-main")[1]
+file.copy(file.path(plotly_main_dir, "plotly-latest.min.js"),
+          "www/js/plotly.js", overwrite = TRUE)
+
+htmlwidgets_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "htmlwidgets")[1]
+file.copy(file.path(htmlwidgets_dir, "htmlwidgets.js"),
+          "www/js/htmlwidgets.js", overwrite = TRUE)
+
+jquery_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "jquery")[1]
+file.copy(file.path(jquery_dir, "jquery.js"),
+          "www/js/htmlwidgets.js", overwrite = TRUE)
+
+jquery_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "jquery")[1]
+file.copy(file.path(jquery_dir, "jquery.js"),
+          "www/js/htmlwidgets.js", overwrite = TRUE)
+
+
+
+
 if(!dir.exists("graphs_mod")){dir.create("graphs_mod")}
 
-if(!dir.exists("graphs_mod/icons")){dir.create("graphs_mod/icons")}
-if(!dir.exists("graphs_mod/js")){dir.create("graphs_mod/js")}
-if(!dir.exists("graphs_mod/styles")){dir.create("graphs_mod/styles")}
-
-if(!dir.exists("graphs_mod/icons")){fs::dir_copy("www/icons/","graphs_mod/")}
-if(!dir.exists("graphs_mod/js")){fs::dir_copy("www/js/","graphs_mod")}
-if(!dir.exists("graphs_mod/styles/")){fs::dir_copy("www/styles/","graphs_mod/")}
+fs::dir_copy("www/icons/","graphs_mod/", overwrite = TRUE)
+fs::dir_copy("www/js/","graphs_mod", overwrite = TRUE)
+fs::dir_copy("www/styles/","graphs_mod/", overwrite = TRUE)
 
 template <- readLines("www/template.html")
 
@@ -17,14 +39,14 @@ lfiles <- lfiles[grepl("html",lfiles) & !grepl("mod",lfiles)]
 lfiles <- lfiles[order(as.numeric(gsub("[^0-9]","",lfiles)))]
 
 toc_list <- c(
-            '<ul class="tocify-header nav nav-list" style="display: block;"><li class="tocify-item" style="cursor: pointer;"><a href="https://ideaapps.cerge-ei.cz/urednici_2021/zkratky.html" target="_blank">Seznam zkratek</a></li>',
+            '<ul class="tocify-header nav nav-list" style="display: block;"><li class="tocify-item" style="cursor: pointer;"><a href="zkratky.html" target="_blank">Seznam zkratek</a></li>',
             '<ul class="tocify-header nav nav-list" style="display: block;"><li>Hlavní grafy</li>',
             sapply(lfiles[!grepl("A",lfiles,ignore.case = F)],function(li){
-              paste0('<ul class="tocify-subheader nav nav-list" style="display: block;"><li class="tocify-item" style="cursor: pointer;"><a href="https://ideaapps.cerge-ei.cz/urednici_2021/',li,'">',stringr::str_to_title(gsub("[[:punct:]]"," ",gsub("\\.html","",li))),'</a></li></ul>')
+              paste0('<ul class="tocify-subheader nav nav-list" style="display: block;"><li class="tocify-item" style="cursor: pointer;"><a href="',li,'">',stringr::str_to_title(gsub("[[:punct:]]"," ",gsub("\\.html","",li))),'</a></li></ul>')
             }),'</ul>',
             '<ul class="tocify-header nav nav-list" style="display: block;"><li>Grafy z přílohy</li>',
             sapply(lfiles[grepl("A",lfiles,ignore.case = F)],function(li){
-              paste0('<ul class="tocify-subheader nav nav-list" style="display: block;"><li class="tocify-item" style="cursor: pointer;"><a href="https://ideaapps.cerge-ei.cz/urednici_2021/',li,'">',stringr::str_to_title(gsub("[[:punct:]]"," ",gsub("\\.html","",li))),'</a></li></ul>')
+              paste0('<ul class="tocify-subheader nav nav-list" style="display: block;"><li class="tocify-item" style="cursor: pointer;"><a href="',li,'">',stringr::str_to_title(gsub("[[:punct:]]"," ",gsub("\\.html","",li))),'</a></li></ul>')
             }),'</ul>')
 
 for(i in 1:length(lfiles)){
