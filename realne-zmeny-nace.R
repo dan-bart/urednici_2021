@@ -6,8 +6,14 @@ library(forcats)
 
 source("theme.R")
 
-zm <- czso::czso_get_table("110079") # mzdy podle NACE
-infl <- czso::czso_get_table("010022") # indexy spotř. cen
+infl <- czso::czso_get_table("010022", force_redownload = TRUE) # indexy spotř. cen
+max(infl$obdobido)
+
+zm <- czso::czso_get_table("110079", force_redownload = TRUE) # mzdy podle NACE
+count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
+czso::czso_get_dataset_metadata("110079")
+zm <- czso:::read_czso_csv("https://www.czso.cz/documents/62353418/171454104/110079-22data090722.csv/18c4739a-bbcf-49e3-96f0-6749ad50c3e6?version=1.1")
+count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
 
 zm |> count(odvetvi_txt)
 
@@ -23,12 +29,12 @@ zm_plt_dt <- zm |>
          typosoby_txt == "přepočtený") |>
   mutate(ctvrtletí = as.numeric(ctvrtletí),
          tm = make_date(rok, ctvrtletí * 3),
-         clr = case_when(odvetvi_kod == "O" ~ "státní správa",
+         clr = case_when(odvetvi_kod == "O" ~ "veřejná správa",
                          # odvetvi_kod %in% c("P") ~ "vzdělávání",
                          odvetvi_kod %in% c("M") ~ "profesní",
                          odvetvi_kod %in% c("J") ~ "ICT",
                          TRUE ~ "ostatní") |>
-           as_factor() |> fct_relevel("ostatní", "profesní", "ICT", "státní správa"),
+           as_factor() |> fct_relevel("ostatní", "profesní", "ICT", "veřejná správa"),
          public = odvetvi_kod %in% c("O")) |>
   arrange(tm, odvetvi_kod) |>
   group_by(odvetvi_kod) |>
@@ -42,13 +48,13 @@ zm_plt <- ggplot(zm_plt_dt,
                  aes(tm - days(15), zmena_qonq - inflace_qonq, colour = clr, size = public)) +
   guides(colour = guide_legend(reverse = T, title = "Skupina NACE"), size = "none") +
   scale_size_manual(values = c(1, 2), expand = expansion(0, 0)) +
-  ptrr::scale_y_percent_cz(limits = c(-.2, .2), expand = expansion(0, 0)) +
-  labs(title = "Reálná změna platů podle NACE skupin, 2003 - 1Q 2022",
+  ptrr::scale_y_percent_cz(limits = c(-.2, .2), expand = expansion(0, 0), breaks = seq(-.2, .2, .05)) +
+  labs(title = "Reálná změna platů podle NACE skupin za předchozí rok, 2003 - 3Q 2022",
        x = "Rok", y = "Reálná meziroční změna (očištěno o inflaci)",
        caption = "Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)") +
   scale_x_date(date_breaks = "1 years", date_labels = "%Y",
                expand = expansion(0, 0),
-               limits = c(as.Date("2003-01-01"), as.Date("2022-07-01"))) +
+               limits = c(as.Date("2003-01-01"), as.Date("2022-10-01"))) +
   geom_hline(yintercept = 0, colour = "grey10", linetype = "solid") +
   scale_color_manual(values = c("grey40", "blue3", "goldenrod", "red3")) +
   geom_point(alpha = .6) +
