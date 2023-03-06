@@ -46,6 +46,33 @@ zm_plt_dt_q <- zm |>
   select(tm, zmena = zmena_qonq, clr, hodnota, public, inflace = inflace_qonq) |>
   ungroup() |>
   arrange(clr)
+
+infl_yony <- infl |>
+  filter(casz_txt == "stejné období předchozího roku",
+         is.na(ucel_txt)) |> # všechny druhy zboží/služeb
+  group_by(rok) |>
+  summarise(inflace_yony = (mean(hodnota) - 100)/100, .groups = "drop")
+
+zm_plt_dt_y <- zm |>
+  filter(stapro_txt == "Průměrná hrubá mzda na zaměstnance",
+         typosoby_txt == "přepočtený") |>
+  group_by(rok, odvetvi_kod, odvetvi_txt) |>
+  summarise(hodnota = mean(hodnota)) |>
+  mutate(tm = make_date(rok, 01, 01),
+         clr = case_when(odvetvi_kod == "O" ~ "veřejná správa",
+                         # odvetvi_kod %in% c("P") ~ "vzdělávání",
+                         is.na(odvetvi_kod) ~ "celá ekonomika",
+                         odvetvi_kod %in% c("M") ~ "profesní",
+                         odvetvi_kod %in% c("J") ~ "ICT",
+                         TRUE ~ "ostatní") |>
+           as_factor() |> fct_relevel("ostatní", "profesní", "ICT", "veřejná správa"),
+         public = odvetvi_kod %in% c("O")) |>
+  arrange(tm, odvetvi_kod) |>
+  group_by(odvetvi_kod) |>
+  mutate(zmena_yony = (hodnota - lag(hodnota, n = 1))/lag(hodnota, n = 1)) |>
+  left_join(infl_yony) |>
+  select(tm, zmena = zmena_yony, clr, hodnota, public, inflace = inflace_yony) |>
+  mutate(realna_zmena = zmena - inflace) |>
   ungroup() |>
   arrange(clr)
 
