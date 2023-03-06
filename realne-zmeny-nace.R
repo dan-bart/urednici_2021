@@ -17,6 +17,8 @@ count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
 
 zm |> count(odvetvi_txt)
 
+# Q on Q ------------------------------------------------------------------
+
 infl_qonq <- infl |>
   filter(casz_txt == "stejné období předchozího roku",
          is.na(ucel_txt)) |> # všechny druhy zboží/služeb
@@ -24,13 +26,14 @@ infl_qonq <- infl |>
   group_by(rok, ctvrtletí) |>
   summarise(inflace_qonq = (mean(hodnota) - 100)/100, .groups = "drop")
 
-zm_plt_dt <- zm |>
+zm_plt_dt_q <- zm |>
   filter(stapro_txt == "Průměrná hrubá mzda na zaměstnance",
          typosoby_txt == "přepočtený") |>
   mutate(ctvrtletí = as.numeric(ctvrtletí),
          tm = make_date(rok, ctvrtletí * 3),
          clr = case_when(odvetvi_kod == "O" ~ "veřejná správa",
                          # odvetvi_kod %in% c("P") ~ "vzdělávání",
+                         is.na(odvetvi_kod) ~ "celá ekonomika",
                          odvetvi_kod %in% c("M") ~ "profesní",
                          odvetvi_kod %in% c("J") ~ "ICT",
                          TRUE ~ "ostatní") |>
@@ -40,7 +43,9 @@ zm_plt_dt <- zm |>
   group_by(odvetvi_kod) |>
   mutate(zmena_qonq = (hodnota - lag(hodnota, n = 4))/lag(hodnota, n = 4)) |>
   left_join(infl_qonq) |>
-  select(tm, zmena_qonq, clr, hodnota, public, inflace_qonq) |>
+  select(tm, zmena = zmena_qonq, clr, hodnota, public, inflace = inflace_qonq) |>
+  ungroup() |>
+  arrange(clr)
   ungroup() |>
   arrange(clr)
 
