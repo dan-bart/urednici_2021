@@ -10,13 +10,21 @@ source("theme.R")
 infl <- czso::czso_get_table("010022", force_redownload = TRUE) # indexy spotř. cen
 max(infl$obdobido)
 
+infl |> count(casz_txt)
+
 zm <- czso::czso_get_table("110079", force_redownload = TRUE) # mzdy podle NACE
 count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
+count(zm, rok, ctvrtletí) |> filter(rok == 2022)
+
 czso::czso_get_dataset_metadata("110079")
 zm <- czso:::read_czso_csv("https://www.czso.cz/documents/62353418/171454104/110079-22data090722.csv/18c4739a-bbcf-49e3-96f0-6749ad50c3e6?version=1.1")
 count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
 
 zm |> count(odvetvi_txt)
+zm |> count(odvetvi_kod)
+zm |> count(odvetvi_kod, odvetvi_txt)
+zm |> count(stapro_txt)
+zm |> count()
 
 # Q on Q ------------------------------------------------------------------
 
