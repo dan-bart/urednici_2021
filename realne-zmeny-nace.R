@@ -3,6 +3,7 @@ library(stringr)
 library(ggplot2)
 library(lubridate)
 library(forcats)
+library(tidyr)
 
 source("theme.R")
 
@@ -76,28 +77,60 @@ zm_plt_dt_y <- zm |>
   ungroup() |>
   arrange(clr)
 
-zm_plt <- ggplot(zm_plt_dt,
-                 aes(tm - days(15), zmena_qonq - inflace_qonq, colour = clr, size = public)) +
-  guides(colour = guide_legend(reverse = T, title = "Skupina NACE"), size = "none") +
-  scale_size_manual(values = c(1, 2), expand = expansion(0, 0)) +
-  ptrr::scale_y_percent_cz(limits = c(-.2, .2), expand = expansion(0, 0), breaks = seq(-.2, .2, .05)) +
-  labs(title = "Reálná změna platů podle NACE skupin za předchozí rok, 2003 - 3Q 2022",
-       x = "Rok", y = "Reálná meziroční změna (očištěno o inflaci)",
-       caption = "Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)") +
-  scale_x_date(date_breaks = "1 years", date_labels = "%Y",
-               expand = expansion(0, 0),
-               limits = c(as.Date("2003-01-01"), as.Date("2022-10-01"))) +
-  geom_hline(yintercept = 0, colour = "grey10", linetype = "solid") +
-  scale_color_manual(values = c("grey40", "blue3", "goldenrod", "red3")) +
-  geom_point(alpha = .6) +
-  theme_urednici +
-  theme(panel.grid.major = element_line(color = "white"))
+zm_plt_dt_y |>
+  filter(tm == "2021-01-01", is.na(odvetvi_kod)) |>
+  mutate(realna_zmena = zmena - inflace)
 
-zm_plt
+make_nace_plot <- function(data) {
+  zm_plt <- ggplot(data |>
+                       # filter(month(tm) == 12) |> mutate(tm = floor_date(tm, "year")) |>
+                       filter(),
+                     aes(tm, realna_zmena, colour = clr, size = clr != "ostatní",
+                         group = clr)) +
+    guides(colour = guide_legend(reverse = T, title = "Skupina NACE (odvětví)"), size = "none") +
+    scale_size_manual(values = c(1, 2), expand = expansion(0, 0), guide = "none") +
+    ptrr::scale_y_percent_cz(expand = expansion(0, 0),
+                             # limits = c(-.2, .2),
+                             breaks = seq(-.2, .2, .05)) +
+    labs(title = "Meziroční reálná změna platů podle NACE skupin (odvětví)",
+         x = "Rok", y = "Reálná meziroční změna (očištěno o inflaci)",
+         caption = "Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)") +
+    scale_x_date(date_breaks = "1 years", date_labels = "%Y",
+                 expand = expansion(0, 0),
+                 limits = c(as.Date("2000-09-01"), as.Date("2022-03-31"))) +
+    geom_hline(yintercept = 0, colour = "grey10", linetype = "solid") +
+    geom_point(aes(alpha = clr != "ostatní"), fill = "white") +
+    scale_alpha_discrete(range = c(.6, 1), guide = "none") +
+    geom_line(data = ~subset(., clr == "celá ekonomika")) +
+    geom_point(data = ~subset(., clr == "celá ekonomika"), size = 2) +
+    geom_point(data = ~subset(., clr == "celá ekonomika"), colour = "white", size = 1.2) +
+    geom_line(data = ~subset(., public == TRUE)) +
+    geom_point(data = ~subset(., public == TRUE), size = 2) +
+    geom_point(data = ~subset(., public == TRUE), colour = "white", size = 1.2) +
+    scale_color_manual(values = c(ostatní = "grey40", profesní = "blue3",
+                                  `celá ekonomika` = "grey20",
+                                  `ICT` = "goldenrod", `veřejná správa` = "red3")) +
+    theme_urednici +
+    theme(panel.grid.major = element_line(color = "white")) +
+    theme(axis.title = element_text(size = 14),
+          axis.text = element_text(size = 12),
+          legend.title = element_text(size = 12),
+          legend.text = element_text(size = 12))
+  zm_plt
+}
 
-ggsave(plot = zm_plt, "plt_twitter.png", bg = "white", scale = 3, dpi = 300, device = ragg::agg_png,
+zm_plt_y <- make_nace_plot(zm_plt_dt_y)
+zm_plt_y
+zm_plt_y2 <- make_nace_plot(zm_plt_dt_y2)
+zm_plt_y
+
+zm_plt_q <- make_nace_plot(zm_plt_dt_q)
+zm_plt_q4 <- make_nace_plot(zm_plt_dt_q |> filter(month(tm) == 12) |> mutate(tm = floor_date(tm, "year")))
+zm_plt_y_2021 <- make_nace_plot(zm_plt_dt_y |> filter(tm < "2022-01-01"))
+
+ggsave(plot = zm_plt_y, "plt_twitter.png", bg = "white", scale = 3, dpi = 300, device = ragg::agg_png,
        width = 1200, height = 675, limitsize = FALSE, units = "px")
-ggsave(plot = zm_plt, "plt_facebook.png", bg = "white", scale = 3, dpi = 300, device = ragg::agg_png,
+ggsave(plot = zm_plt_y, "plt_facebook.png", bg = "white", scale = 3, dpi = 300, device = ragg::agg_png,
        width = 1200, height = 630, limitsize = FALSE, units = "px")
 
 
