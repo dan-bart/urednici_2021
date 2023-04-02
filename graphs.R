@@ -1349,6 +1349,6 @@ names(graf_list)<-c(
 saveRDS(graf_list,"data-interim/graf_list.rds")
 saveRDS(tree_data,"data-interim/tree_data.rds")
 for (i in 1:length(graf_list)){
-  htmlwidgets::saveWidget(as_widget(graf_list[[i]]), paste0("graphs/",names(graf_list)[i],".html"), libdir = "js")
+  htmlwidgets::saveWidget(as_widget(graf_list[[i]]), paste0("graphs/",names(graf_list)[i],".html"), libdir = "js", selfcontained = FALSE)
 }
 
