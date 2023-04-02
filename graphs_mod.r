@@ -2,6 +2,7 @@ library(ff)
 
 crosstalk_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "crosstalk")[1]
 file.copy(file.path(crosstalk_dir, "js/crosstalk.js"), "www/js", overwrite = TRUE)
+file.copy(file.path(crosstalk_dir, "js/crosstalk.js.map"), "www/js", overwrite = TRUE)
 
 plotly_binding_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "plotly\\-binding")[1]
 file.copy(file.path(plotly_binding_dir, "plotly.js"),
@@ -17,20 +18,13 @@ file.copy(file.path(htmlwidgets_dir, "htmlwidgets.js"),
 
 jquery_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "jquery")[1]
 file.copy(file.path(jquery_dir, "jquery.js"),
-          "www/js/htmlwidgets.js", overwrite = TRUE)
-
-jquery_dir <- fs::dir_ls("graphs/js/", type = "directory", regexp = "jquery")[1]
-file.copy(file.path(jquery_dir, "jquery.js"),
-          "www/js/htmlwidgets.js", overwrite = TRUE)
-
-
-
+          "www/js/jquery.js", overwrite = TRUE)
 
 if(!dir.exists("graphs_mod")){dir.create("graphs_mod")}
 
-fs::dir_copy("www/icons/","graphs_mod/", overwrite = TRUE)
-fs::dir_copy("www/js/","graphs_mod", overwrite = TRUE)
-fs::dir_copy("www/styles/","graphs_mod/", overwrite = TRUE)
+fs::dir_copy("www/icons/","graphs_mod/icons", overwrite = TRUE)
+fs::dir_copy("www/js/","graphs_mod/js", overwrite = TRUE)
+fs::dir_copy("www/styles/","graphs_mod/styles", overwrite = TRUE)
 
 template <- readLines("www/template.html")
 
