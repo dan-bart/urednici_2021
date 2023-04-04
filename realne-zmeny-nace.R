@@ -239,3 +239,5 @@ ggsave(plot = zm_plt_y, "plt_facebook.png", bg = "white", scale = 3, dpi = 300, 
 zm_plt_dt_y |> filter(tm > "2021-12-31", is.na(odvetvi_kod))
 zm_plt_dt_y2 |> filter(tm > "2021-12-31", is.na(odvetvi_kod))
 make_nace_plot(zm_plt_dt_y2)
+
+writexl::write_xlsx(zm_plt_dt_y2, "data-export/platy_nace_realne.xlsx")
