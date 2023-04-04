@@ -229,6 +229,7 @@ zm_plt_y_2021
 # Plot and export ---------------------------------------------------------
 
 zm_plt_y <- make_nace_plot(zm_plt_dt_y)
+zm_plt_y
 ggsave(plot = zm_plt_y, "plt_twitter.png", bg = "white", scale = 3, dpi = 300, device = ragg::agg_png,
        width = 1200, height = 675, limitsize = FALSE, units = "px")
 ggsave(plot = zm_plt_y, "plt_facebook.png", bg = "white", scale = 3, dpi = 300, device = ragg::agg_png,
