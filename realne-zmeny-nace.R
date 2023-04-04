@@ -25,12 +25,8 @@ infl |>
   select(rok, hodnota)
 
 zm <- czso::czso_get_table("110079", force_redownload = TRUE) # mzdy podle NACE
-count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
-count(zm, rok, ctvrtletí) |> filter(rok == 2022)
-
-czso::czso_get_dataset_metadata("110079")
-zm <- czso:::read_czso_csv("https://www.czso.cz/documents/62353418/171454104/110079-22data090722.csv/18c4739a-bbcf-49e3-96f0-6749ad50c3e6?version=1.1")
-count(zm, rok, ctvrtletí) |> arrange(desc(rok)) |> head()
+count(zm, rok, ctvrtleti) |> arrange(desc(rok)) |> head()
+count(zm, rok, ctvrtleti) |> filter(rok == 2022)
 
 zm |> count(odvetvi_txt)
 zm |> count(odvetvi_kod)
@@ -110,8 +106,6 @@ make_nace_plot <- function(data, add_years = 5) {
           legend.text = element_text(size = 12))
   zm_plt
 }
-
-make_nace_plot(zm_plt_dt_y)
 
 # Q on Q ------------------------------------------------------------------
 
@@ -221,7 +215,6 @@ zm_plt_dt_y2 <- zm |>
 make_nace_plot(zm_plt_dt_y)
 make_nace_plot(zm_plt_dt_y2)
 
-zm_plt_y
 # zm_plt_y2 <- make_nace_plot(zm_plt_dt_y2)
 # zm_plt_y
 
