@@ -170,10 +170,11 @@ zm_plt_dt_y <- zm |>
                          odvetvi_kod %in% c("J") ~ "ICT",
                          TRUE ~ "Ostatní") |>
            as_factor() |> fct_relevel("Ostatní", "Profesní", "ICT", "Veřejná správa"),
-         public = odvetvi_kod %in% c("O")) |>
+         public = odvetvi_kod %in% c("O"),
+         public_broad = odvetvi_kod %in% c("O", "P", "Q")) |>
   ungroup() |>
   left_join(infl_yony, by = "rok") |>
-  select(tm, clr, hodnota, public, inflace = inflace_yony, odvetvi_kod, odvetvi_txt) |>
+  select(tm, clr, hodnota, public, public_broad, inflace = inflace_yony, odvetvi_kod, odvetvi_txt) |>
   arrange(odvetvi_kod, tm) |>
   group_by(odvetvi_kod) |>
   mutate(nominalni_zmena = hodnota/lag(hodnota, 1),
@@ -198,10 +199,11 @@ zm_plt_dt_y2 <- zm |>
                          odvetvi_kod %in% c("J") ~ "ICT",
                          TRUE ~ "Ostatní") |>
            as_factor() |> fct_relevel("Ostatní", "Profesní", "ICT", "Veřejná správa"),
-         public = odvetvi_kod %in% c("O")) |>
+         public = odvetvi_kod %in% c("O"),
+         public_broad = odvetvi_kod %in% c("O", "P", "Q")) |>
   ungroup() |>
   left_join(infl_index, by = "rok") |>
-  select(tm, clr, hodnota, public, inflace_index, odvetvi_kod, odvetvi_txt) |>
+  select(tm, clr, hodnota, public, public_broad, inflace_index, odvetvi_kod, odvetvi_txt) |>
   arrange(odvetvi_kod, tm) |>
   group_by(odvetvi_kod) |>
   mutate(realna_mzda = hodnota/inflace_index*100,
