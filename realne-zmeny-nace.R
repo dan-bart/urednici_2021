@@ -204,7 +204,7 @@ zm_plt_dt_y2 <- zm |>
   select(tm, clr, hodnota, public, inflace_index, odvetvi_kod, odvetvi_txt) |>
   arrange(odvetvi_kod, tm) |>
   group_by(odvetvi_kod) |>
-  mutate(realna_mzda = hodnota/inflace_index,
+  mutate(realna_mzda = hodnota/inflace_index*100,
          nominalni_rozdil = hodnota - lag(hodnota, 1),
          realna_zmena = realna_mzda/lag(realna_mzda, 1) - 1) |>
   ungroup() |>
