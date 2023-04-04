@@ -118,15 +118,15 @@ make_nace_plot(zm_plt_dt_y)
 infl_qonq <- infl |>
   filter(casz_txt == "stejné období předchozího roku",
          is.na(ucel_txt)) |> # všechny druhy zboží/služeb
-  mutate(ctvrtletí = quarter(obdobiod)) |>
-  group_by(rok, ctvrtletí) |>
+  mutate(ctvrtleti = quarter(obdobiod)) |>
+  group_by(rok, ctvrtleti) |>
   summarise(inflace_qonq = (mean(hodnota) - 100)/100, .groups = "drop")
 
 zm_plt_dt_q <- zm |>
   filter(stapro_txt == "Průměrná hrubá mzda na zaměstnance",
          typosoby_txt == "přepočtený") |>
-  mutate(ctvrtletí = as.numeric(ctvrtletí),
-         tm = make_date(rok, ctvrtletí * 3),
+  mutate(ctvrtleti = as.numeric(ctvrtleti),
+         tm = make_date(rok, ctvrtleti * 3),
          clr = case_when(odvetvi_kod == "O" ~ "veřejná správa",
                          # odvetvi_kod %in% c("P") ~ "vzdělávání",
                          is.na(odvetvi_kod) ~ "celá ekonomika",
@@ -136,7 +136,7 @@ zm_plt_dt_q <- zm |>
            as_factor() |> fct_relevel("ostatní", "profesní", "ICT", "veřejná správa"),
          public = odvetvi_kod %in% c("O")) |>
   ungroup() |>
-  left_join(infl_qonq, by = c("rok", "ctvrtletí")) |>
+  left_join(infl_qonq, by = c("rok", "ctvrtleti")) |>
   arrange(odvetvi_kod, tm) |>
   group_by(odvetvi_kod) |>
   mutate(realna_mzda = hodnota/(1 + inflace_qonq),
