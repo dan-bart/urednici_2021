@@ -54,9 +54,9 @@ make_nace_plot <- function(data, add_years = 5) {
   new_breaks <- make_date(seq(year(min(data$tm)), year(max(data$tm))))
   print(new_breaks)
 
-  format_pct_change <- scales::label_number(.1, 100, suffix = " %", decimal.mark = ",",
+  fmt_pct_change <- scales::label_number(.1, 100, suffix = " %", decimal.mark = ",",
                                             style_positive = "plus", style_negative = "minus")
-  format_pct_change_axis <- scales::label_number(1, 100, suffix = " %", decimal.mark = ",",
+  fmt_pct_change_axis <- scales::label_number(1, 100, suffix = " %", decimal.mark = ",",
                                                  style_positive = "plus", style_negative = "minus")
 
   zm_plt <- ggplot(data |>
@@ -74,7 +74,7 @@ make_nace_plot <- function(data, add_years = 5) {
     geom_point(data = ~subset(., public == TRUE), size = 2) +
     geom_point(data = ~subset(., public == TRUE), colour = "white", size = 1.2) +
     geom_label(data = ~subset(., needs_label),
-               aes(label = paste(format_pct_change(realna_zmena), name_for_label), fill = clr),
+               aes(label = paste(fmt_pct_change(realna_zmena), name_for_label), fill = clr),
                label.padding = unit(0.2, "lines"),
                hjust = 0, nudge_x = 40, color = "white", family = "Arial", size = 3, fontface = "bold") +
     scale_color_manual(values = c(Ostatní = "grey40", Profesní = "blue3",
@@ -92,7 +92,7 @@ make_nace_plot <- function(data, add_years = 5) {
                  ) +
     scale_y_continuous(expand = expansion(add = c(.02, 0.001)),
                              # limits = c(-.2, .2),
-                       labels = format_pct_change_axis,
+                       labels = fmt_pct_change_axis,
                        breaks = seq(-.3, .3, .05)) +
     guides(colour = guide_legend(reverse = T, title = "Skupina NACE (odvětví)"), size = "none", fill = "none") +
     labs(title = "Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %",
@@ -177,6 +177,7 @@ zm_plt_dt_y <- zm |>
   select(tm, clr, hodnota, public, public_broad, inflace = inflace_yony, odvetvi_kod, odvetvi_txt) |>
   arrange(odvetvi_kod, tm) |>
   group_by(odvetvi_kod) |>
+  # počítáme nominální a reálnou změnu
   mutate(nominalni_zmena = hodnota/lag(hodnota, 1),
          realna_zmena = nominalni_zmena/inflace*100 - 1) |>
   ungroup() |>
@@ -206,6 +207,8 @@ zm_plt_dt_y2 <- zm |>
   select(tm, clr, hodnota, public, public_broad, inflace_index, odvetvi_kod, odvetvi_txt) |>
   arrange(odvetvi_kod, tm) |>
   group_by(odvetvi_kod) |>
+  # počítáme reálnou mzdu a z ní reálnou změnu
+  # mělo by to vyjít stejně
   mutate(realna_mzda = hodnota/inflace_index*100,
          nominalni_rozdil = hodnota - lag(hodnota, 1),
          realna_zmena = realna_mzda/lag(realna_mzda, 1) - 1) |>
