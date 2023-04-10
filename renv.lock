@@ -193,10 +193,10 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "3.1.0",
+      "Version": "3.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "66a3834e54593c89d8beefb312347e58"
+      "Hash": "89e6d8219950eac806ae0c489052048a"
     },
     "clipr": {
       "Package": "clipr",
@@ -410,10 +410,10 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.3.3",
+      "Version": "3.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3eb6477d01eb5bbdc03f7d5f70f2733e"
+      "Hash": "3a147ee02e85a8941aad9909f1b43b7b"
     },
     "gh": {
       "Package": "gh",
@@ -592,10 +592,10 @@
     },
     "lifecycle": {
       "Package": "lifecycle",
-      "Version": "1.0.0",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3471fb65971f1a7b2d4ae7848cf2db8d"
+      "Hash": "001cecbeac1cff9301bdc3775ee46a86"
     },
     "lubridate": {
       "Package": "lubridate",
@@ -805,10 +805,10 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.11",
+      "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "515f341d3affe0de9e4a7f762efb0456"
+      "Hash": "dc079ccd156cde8647360f473c1fa718"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
@@ -854,10 +854,10 @@
     },
     "scales": {
       "Package": "scales",
-      "Version": "1.1.1",
+      "Version": "1.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6f76f71042411426ec8df6c54f34e6dd"
+      "Hash": "906cb23d2f1c5680b8ce439b44c6fa63"
     },
     "selectr": {
       "Package": "selectr",
@@ -985,10 +985,10 @@
     },
     "vctrs": {
       "Package": "vctrs",
-      "Version": "0.3.8",
+      "Version": "0.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ecf749a1b39ea72bd9b51b76292261f1"
+      "Hash": "06eceb3a5d716fd0654cc23ca3d71a99"
     },
     "viridisLite": {
       "Package": "viridisLite",
@@ -1020,10 +1020,10 @@
     },
     "withr": {
       "Package": "withr",
-      "Version": "2.4.2",
+      "Version": "2.5.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ad03909b44677f930fa156d47d7a3aeb"
+      "Hash": "c0e49a9760983e81e55cdd9be92e7182"
     },
     "xfun": {
       "Package": "xfun",

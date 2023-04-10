@@ -18,14 +18,14 @@ main_df_update <- readRDS("./data-interim/sections.rds") |>
          ceny_index = hodnota,
          ceny_inflace = inflation,
          ceny_deflator_2003 = base_2003,
-         ceny_deflator_2021 = base_2021,
+         ceny_deflator_2022 = base_2022,
          prumerna_mzda_cr = czsal_all,
          prumerna_mzda_pha = phasal_all,
          prumerny_plat_skut_skut = platy_skut_ke_skut,
-         prumerny_plat_c2021 = wage_in_2021,
-         prumerny_plat_c2021_mezirocne = wage_in_2021_change,
-         prumerny_plat_real_od2021 = cum_pct_wage_change_real,
-         prumerny_plat_nomi_od2021 = cum_pct_wage_change,
+         prumerny_plat_c2022 = wage_in_2022,
+         prumerny_plat_c2022_mezirocne = wage_in_2022_change,
+         prumerny_plat_real_od2022 = cum_pct_wage_change_real,
+         prumerny_plat_nomi_od2022 = cum_pct_wage_change,
          prumerny_plat_2003 = wage_base,
          prumerny_plat_vucinh  = wage_to_general,
          prumerny_plat_vucinh_mezirocne  = mzda_k_nh
@@ -91,8 +91,8 @@ cdbk <- create_informant(main_df_update, label = "main export", tbl_name = "tabu
                info = "Cenový index vůči roku 2003",
                měřítko = "1 = nulová inflace",
                zdroj = "Odvozeno ze sloupce 'ceny_index'") |>
-  info_columns("ceny_deflator_2021",
-               info = "Cenový index vůči roku 2021") |>
+  info_columns("ceny_deflator_2022",
+               info = "Cenový index vůči roku 2022") |>
   info_columns("prumerna_mzda_cr",
                info = "Průměrná mzda v národním hospodářství",
                upřesnění = "průměrná hrubá měsíční mzda",
@@ -104,18 +104,18 @@ cdbk <- create_informant(main_df_update, label = "main export", tbl_name = "tabu
   info_columns("prumerny_plat_skut_skut",
                info = "Index změny průměrného platu oproti předchozímu roku",
                měřítko = "1 = žádná změna, > 1 = nárůst") |>
-  info_columns("prumerny_plat_real_od2021",
+  info_columns("prumerny_plat_real_od2022",
                info = "Změna průměrného platu od roku 2003 očištěná o inflaci",
                měřítko = "0 = žádná změna, > 0 = nárůst") |>
-  info_columns("prumerny_plat_c2021",
-               info = "Průměrný plat v cenách roku 2021") |>
-  info_columns("prumerny_plat_c2021_mezirocne",
+  info_columns("prumerny_plat_c2022",
+               info = "Průměrný plat v cenách roku 2022") |>
+  info_columns("prumerny_plat_c2022_mezirocne",
                info = "Meziroční změna platů v reálném vyjádření",
-               upřesnění = "Podle vyjádření v cenách roku 2021",
+               upřesnění = "Podle vyjádření v cenách roku 2022",
                měřítko = "0 = žádná změna, 0.01 = nárůst o 1 %") |>
   info_columns("prumerny_plat_2003",
                info = "Průměrný plat roku 2003 (pro výpočet)") |>
-  info_columns("prumerny_plat_nomi_od2021",
+  info_columns("prumerny_plat_nomi_od2022",
                info = "Změna průměrného platu od roku 2003, neočištěno o inflaci",
                měřítko = "0 = žádná změna, 1 = nárůst o 100 %") |>
   info_columns("prumerny_plat_vucinh",

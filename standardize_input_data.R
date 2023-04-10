@@ -238,11 +238,17 @@ czech_signs_dict <- data.frame(kategorie_2014 = kategorie_2021,
                                kategorie_2014_cz = kategorie_2021_cz)
 
 ### wages
-wages_later <- czso_get_table("110080") %>%
+wages_later <- czso_get_table("110080", force_redownload = TRUE) %>%
   filter(is.na(POHLAVI_txt), is.na(SPKVANTIL_txt), uzemi_kod %in% c(19, 3018)) %>%
   select(rok, hodnota, uzemi_kod) %>%
   spread(key = uzemi_kod, value = hodnota) %>%
-  rename("czsal_all" = 2, "phasal_all" = 3)
+  rename("czsal_all" = 2, "phasal_all" = 3) |>
+  # manually add numbers from ISPV for regional & CZ pay 2022
+  # in 2021, ISPV numbers corresponded to those published by CZSO in dataset 110080
+  # can be dropped in May 2023 when CZSO releases 2022 data
+  # see
+  add_row(rok = 2022, czsal_all = 43413, phasal_all = 54015)
+
 
 wages_early <- chapters_old %>%
   select(Year, czsal_all, phasal_all) %>%

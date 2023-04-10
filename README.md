@@ -4,9 +4,9 @@ Datová analýza: Státní zaměstnanci a úředníci
 
 ## Aktuální výsledky
 
-[Hlavní výsledky](https://dan-bart.github.io/urednici_2021/index.html) aktualizovány v červnu 2022 na základě dat do roku 2021, tj. včetně skutečného plnění rozpočtu 2021. Studie a její grafy na webu IDEA stále odrážejí stav s daty do roku 2020.
+[Hlavní výsledky](https://idea-cergeei.github.io/studie-urednici/index.html) aktualizovány v červnu 2022 na základě dat do roku 2021, tj. včetně skutečného plnění rozpočtu 2021. Studie a její grafy na webu IDEA stále odrážejí stav s daty do roku 2020.
 
-Technický log k využití aktualizovaných dat je v log.md, potažmo [log.html](https://dan-bart.github.io/urednici_2021/log.html)
+Technický log k využití aktualizovaných dat je v log.md, potažmo [log.html](https://idea-cergeei.github.io/studie-urednici/log.html)
 
 ## Studie
 
@@ -22,7 +22,7 @@ Text v souboru `results.Rmd` neodpovídá textu studie, který prošel oddělen�
 
 Exportována v CSV a parquet do adresáře `data-export`, spolu s codebookem 
 
-- lidsky čitelný popis na [webu](https://dan-bart.github.io/urednici_2021/codebook.html)
+- lidsky čitelný popis na [webu](https://idea-cergeei.github.io/studie-urednici/codebook.html)
 - YAML export v souboru `codebook.yml`
 
 Názvy sloupců v exportech jsou upraveny pro srozumitelnost, neodpovídají názvům v kódu. Rozdíly lze odvodit ze skriptu `export_data.R`.
