@@ -278,7 +278,7 @@ df_infl <- czso_get_table("010022", dest_dir = "data-input/czso", force_redownlo
   select(contains("obdobi"),rok, hodnota) %>%
   mutate(inflation=hodnota/100)%>%
   arrange(rok)%>%
-  filter(rok>=2003,rok<=2023)
+  filter(rok>=2003,rok<=2022)
 
 df_infl$base_2003 <- 0
 df_infl$base_2022 <- 0
@@ -349,3 +349,4 @@ saveRDS(summary, file = "./data-interim/summary.rds")
 
 
 main_df_update %>% filter(typ_rozpoctu=="SKUT",kap_num ==306,name=="SS") %>% select(name,kategorie_2014,kategorie_2014_cz) %>% unique()
+
