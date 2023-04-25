@@ -24,11 +24,12 @@ dt <- readRDS("./data-interim/sections.rds")
 sum <- readRDS("./data-interim/summary.rds")
 
 dt$kap_name[dt$kap_name == "Ksen"] <- "KSen"
-dt$kap_name[dt$kap_name == "Kparl"] <- "KParl"
-dt$kap_name[dt$kap_name == "Mzdr"] <- "MZdr"
-dt$kap_name[dt$kap_name == "Mspr"] <- "MSpr"
+dt$kap_name[dt$kap_name == "Kparl"] <- "KSněm"
+dt$kap_name[dt$kap_name == "Mzdr"] <- "MZd"
+dt$kap_name[dt$kap_name == "Mspr"] <- "MSp"
 
 ## ----plotly-utils------------------------------------------------------------------------------------------------
+
 btnrm <- c("zoomIn2d", "zoomOut2d", "pan2d", "lasso2d", "select2d", "autoScale2d")
 grdclr <- "grey"
 cap_col <- "mediumblue"

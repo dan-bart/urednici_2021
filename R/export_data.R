@@ -32,6 +32,11 @@ main_df_update <- readRDS("./data-interim/sections.rds") |>
          ) |>
   mutate(date = make_date(rok))
 
+main_df_update$kap_zkr[main_df_update$kap_zkr == "Ksen"] <- "KSen"
+main_df_update$kap_zkr[main_df_update$kap_zkr == "Kparl"] <- "KSněm"
+main_df_update$kap_zkr[main_df_update$kap_zkr == "Mzdr"] <- "MZd"
+main_df_update$kap_zkr[main_df_update$kap_zkr == "Mspr"] <- "MSp"
+
 
 readr::write_excel_csv2(main_df_update, "data-export/data_all.csv")
 arrow::write_parquet(main_df_update, "data-export/data_all.parquet")
