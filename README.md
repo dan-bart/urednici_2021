@@ -1,10 +1,12 @@
-# urednici_2021
+# Státní úředníci: studie / aplikace IDEA při CERGE-EI
 
 Datová analýza: Státní zaměstnanci a úředníci
 
 ## Aktuální výsledky
 
 [Hlavní výsledky](https://idea-cergeei.github.io/studie-urednici/index.html) aktualizovány v červnu 2022 na základě dat do roku 2021, tj. včetně skutečného plnění rozpočtu 2021. Studie a její grafy na webu IDEA stále odrážejí stav s daty do roku 2020.
+
+Aktualizace s daty za rok 2022 je v přípravě - výsledek bude grafová miniaplikace bez studie.
 
 Technický log k využití aktualizovaných dat je v log.md, potažmo [log.html](https://idea-cergeei.github.io/studie-urednici/log.html)
 
