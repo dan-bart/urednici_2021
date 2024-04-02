@@ -3,6 +3,8 @@ library(readr)
 library(dplyr)
 library(lubridate)
 
+options(scipen = 99)
+
 main_df_update <- readRDS("./data-interim/sections.rds") |>
   rename(faze_rozpoctu = typ_rozpoctu,
          kap_kod = kap_num,
