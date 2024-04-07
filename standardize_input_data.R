@@ -10,12 +10,12 @@ library(czso)
 source(here::here("R", "listSheets.R"))
 source(here::here("R", "divideMain.R"))
 options("scipen" = 100, "digits" = 4)
-readr::read_csv("http://vdb.czso.cz/pll/eweb/lkod_ld.seznam")
-catalogue <- czso_get_catalogue()
+# readr::read_csv("http://vdb.czso.cz/pll/eweb/lkod_ld.seznam")
+# catalogue <- czso_get_catalogue()
 
-catalogue %>%
-  filter(str_detect(title, "[Mm]zd[ay]")) %>%
-  select(dataset_id, title, description)
+# catalogue %>%
+#   filter(str_detect(title, "[Mm]zd[ay]")) %>%
+#   select(dataset_id, title, description)
 
 # load new data
 input <- read_excel_allsheets("./data-input/data_2022.xls")
