@@ -4,9 +4,9 @@ df_infl <- czso_get_table("010022", dest_dir = "data-input/czso", force_redownlo
   filter(is.na(ucel_txt)) %>%
   filter(casz_txt == "stejné období předchozího roku") %>%
   group_by(rok) %>%
-  summarise(hodnota = mean(hodnota)) %>%
-  select(contains("obdobi"),rok, hodnota) %>%
-  mutate(inflation=hodnota/100)%>%
+  summarise(ceny_index = mean(hodnota)) %>%
+  select(contains("obdobi"),rok, ceny_index) %>%
+  mutate(inflation=ceny_index/100)%>%
   arrange(rok)%>%
   filter(rok>=2003,rok<=2023)
 

@@ -1,103 +1,120 @@
-# remotes::install_github("petrbouchal/statnipokladna", force = TRUE)
-
 library(statnipokladna)
 library(readr)
 library(dplyr)
 library(stringr)
 library(ggplot2)
 library(arrow)
+library(tidyr)
 
 options(statnipokladna.dest_dir = "data-input/budget_data")
 orgs <- read_parquet("data-interim/sp_orgs.parquet")
 
 orgs_uo <- orgs |> filter(poddruhuj_nazev == "OSS - správce kapitoly")
 
-rozp <- sp_get_table("budget-central", 2015:2023, 12)
-names(rozp)
+rozp0 <- sp_get_table("budget-central", 2015:2023, 12)
 
-rozppp <- rozp |>
+rozp <- rozp0 |>
     filter(str_detect(polozka, "^50")) |>
     sp_add_codelist("polozka") |>
     sp_add_codelist(orgs) |>
     sp_add_codelist("kapitola") |>
     mutate(kapitola_nazev = str_squish(kapitola_nazev))
 
-rozpp <- rozppp |>
+names(rozp)
+
+rozp |>
+  filter(vykaz_year %in% 2022:2023,
+         orgs_nazev %in% c("Ministerstvo obrany", "Ministerstvo vnitra",
+                           "Ministerstvo financí", "Ministerstvo spravedlnosti"),
+         podseskupeni == "Platy") |>
+  count(vykaz_year, orgs_nazev, polozka == 5012, wt = budget_spending/1e6) |>
+  spread(vykaz_year, n)
+
+rozp |>
+  filter(vykaz_year %in% 2022:2023,
+         # orgs_nazev %in% c("Ministerstvo obrany", "Ministerstvo vnitra"),
+         podseskupeni == "Platy", polozka == 5012) |>
+  count(kapitola_nazev, wt = )
+
+rozp |>
+  count(seskupeni, podseskupeni)
+
+rozp_sum <- rozp |>
     group_by(vykaz_year, vykaz_date, polozka, polozka_nazev, kapitola,
              kapitola_nazev, orgs_nazev,
              druhuj_nazev, poddruhuj_nazev,
              ico, seskupeni, podseskupeni) |>
     summarise(across(starts_with("budget_"), sum), .groups = "drop")
 
-names(rozpp)
+names(rozp_sum)
 
-rozpp |>
+rozp_sum |>
     filter(podseskupeni == "Platy") |>
     count(polozka, polozka_nazev)
 
-names(rozpp)
+names(rozp_sum)
 
-count(rozpp, seskupeni) |> filter(str_detect(seskupeni, "Plat"))
+count(rozp_sum, seskupeni) |> filter(str_detect(seskupeni, "Plat"))
 
-rozpp |>
+rozp_sum |>
     count(vykaz_year, wt = budget_spending)
 
-rozp |>
-    count(kon_pol)
-
-rozpp_uo <- rozpp |>
+rozp_sum_uo <- rozp_sum |>
     filter(str_detect(polozka, "^50")) |>
     # filter(seskupeni == "Platy a podobné a související výdaje") |>
     # filter(podseskupeni %in% c("Platy", "Ostatní platby za provedenou práci")) |>
     filter(podseskupeni %in% c("Platy")) |>
-    filter(polozka != "5012") |>
-    count(kapitola_nazev, druhuj_nazev, kapitola,
+    filter(polozka != "5012" | polozka == 5012 & kapitola_nazev == "Ministerstvo vnitra") |>
+    group_by(kapitola_nazev, druhuj_nazev, kapitola,
         #   orgs_nazev,
         vykaz_year,
         poddruhuj_nazev,
-        wt = budget_spending / 1e6
     ) |>
+  summarise(schv = sum(budget_adopted),
+            uprav = sum(budget_amended),
+            skut = sum(budget_spending), .groups = "drop") |>
     filter(
         # str_detect(orgs_nazev, "Ministerstvo"),
         druhuj_nazev == "OSS",
         poddruhuj_nazev == "OSS - správce kapitoly",
         # orgs_uo_nazev == "Ministerstvo obrany",
-        vykaz_year == 2021
-    )
+        # vykaz_year == 2023
+    ) |>
+  mutate(promenna = "platy",
+         kap_kod = str_sub(kapitola, 2, 4), rok = as.numeric(vykaz_year)) |>
+  select(kap_kod, schv, uprav, skut, rok, promenna)
 
+# sp_get_codelist("polozka") |>
+#   mutate(today = Sys.Date()) |>
+#   filter(between(today, start_date, end_date)) |>
+#   filter(podseskupeni == "Platy") |>
+#   distinct(polozka, nazev)
 
-ggplot(rozpp_uo, aes(vykaz_year, n/1e9, fill = polozka_nazev, group = polozka_nazev)) +
-    geom_area() +
-    facet_wrap(~kapitola_nazev)
+rozp_sum_uo_oppp <- rozp_sum |>
+  filter(str_detect(polozka, "^50")) |>
+  # filter(seskupeni == "Platy a podobné a související výdaje") |>
+  # filter(podseskupeni %in% c("Platy", "Ostatní platby za provedenou práci")) |>
+  filter(podseskupeni %in% c("Výdaje na ostatní platby za provedenou práci",
+                             "Ostatní platby za provedenou práci")) |>
+  filter(polozka != "5012") |>
+  group_by(kapitola_nazev, druhuj_nazev, kapitola,
+           #   orgs_nazev,
+           vykaz_year,
+           poddruhuj_nazev,
+  ) |>
+  summarise(schv = sum(budget_adopted),
+            uprav = sum(budget_amended),
+            skut = sum(budget_spending), .groups = "drop") |>
+  filter(
+    # str_detect(orgs_nazev, "Ministerstvo"),
+    druhuj_nazev == "OSS",
+    poddruhuj_nazev == "OSS - správce kapitoly",
+    # orgs_uo_nazev == "Ministerstvo obrany",
+    # vykaz_year == 2023
+  ) |>
+  mutate(promenna = "oppp",
+         kap_kod = str_sub(kapitola, 2, 4), rok = as.numeric(vykaz_year)) |>
+  select(kap_kod, schv, uprav, skut, rok, promenna)
 
-
-names(rozpp)
-
-rozpp |>
-    filter(seskupeni == "Platy a podobné a související výdaje") |>
-    filter(podseskupeni %in% c("Platy", "Ostatní platby za provedenou práci")) |>
-    filter(polozka_nazev %in% c("Odbytné", "Odchodné"))|>
-    count(kapitola_nazev, orgs_nazev, vykaz_year, podseskupeni, polozka_nazev, wt = budget_spending) |>
-    ggplot(aes(vykaz_year, n / 1e6, fill = polozka_nazev, group = polozka_nazev)) +
-    geom_col() +
-    facet_wrap(~kapitola_nazev)
-
-3e9/1e6
-3000*12*50000
-
-dta <- read_parquet("data-export/data_all.parquet")
-
-names(dta)
-
-dta |> count(kategorie)
-
-dta_uo <- dta |>
-    filter(faze_rozpoctu == "SKUT", rok == 2021, kategorie == "UO") |>
-    select(kap_nazev, kap_zkr, platy, kap_kod) |>
-    mutate(kap_nazev = str_squish(kap_nazev)) |>
-    mutate(platy = platy / 1e6, kap_kod = paste0("0", kap_kod))
-
-dta_uo |>
-    left_join(rozpp_uo, by = c(kap_kod = "kapitola")) |>
-    mutate(podil = platy/n) |>
-    count(abs(podil - 1) < 0.00001)
+write_rds(rozp_sum_uo, "data-interim/sp_platy_uo.rds")
+write_rds(rozp_sum_uo_oppp, "data-interim/sp_oppp_uo.rds")
