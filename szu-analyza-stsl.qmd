@@ -36,7 +36,7 @@ source("R/compare-adjusted.R")
 
 ```{r}
 dta_uo_all <- read_rds("data-interim/szu-uo-all-do2023.rds")
-syst_pocty_long_uo <- read_parquet("~/cpers/systemizace/data-export/systemizace_pocty_long.parquet")
+syst_pocty_long_uo <- read_parquet("https://github.com/petrbouchal/systemizace/raw/main/data-export/systemizace_pocty_long.parquet")
 ```
 
 ```{r}
