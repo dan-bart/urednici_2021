@@ -31,12 +31,6 @@ rozp |>
   spread(vykaz_year, n)
 
 rozp |>
-  filter(vykaz_year %in% 2022:2023,
-         # orgs_nazev %in% c("Ministerstvo obrany", "Ministerstvo vnitra"),
-         podseskupeni == "Platy", polozka == 5012) |>
-  count(kapitola_nazev, wt = )
-
-rozp |>
   count(seskupeni, podseskupeni)
 
 rozp_sum <- rozp |>
