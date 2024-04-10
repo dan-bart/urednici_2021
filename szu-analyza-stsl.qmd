@@ -64,8 +64,6 @@ dta_uo_all_mean <- dta_uo_all |>
             prumerny_plat_c2023 = sum(platy_real)/sum(pocet_zamestnancu)/12)
 ```
 
-# Blah
-
 ::: {.callout-tip}
 
 ### Jak data číst
@@ -73,15 +71,20 @@ dta_uo_all_mean <- dta_uo_all |>
 - "v cenách roku 2023" znamená, že čísla za předchozí roky jsme upravili tak, aby odpovídaly cenové hladině roku 2023 na základě kumulativní inflace mezi daným rokem a rokem 2023
 - pokud není uvedeno jinak, grafy ukazující data za pouze jeden rok se týkají roku 2023
 
+Pozor: ve většině agregátních výpočtů vylučujeme Ministerstvo obrany (MO), protože pro něj není dostupná konzistentní časová řada. V grafech, kde jsou údaje MO zobrazeny samostatně, ze stejného důvodu není pro MO zobrazen rok 2023.
+
 :::
 
 ::: {.callout-note collapse=true}
 
 ### Zdroje dat
 
-Pokud není u jednotlivých grafů uvedeno jinak, vycházíme z dat Státního závěrečného účtu, resp. Monitoru státní pokladny (oba sledují stejné věci.)
+Pokud není u jednotlivých grafů uvedeno jinak, vycházíme z dat Státního závěrečného účtu, resp. [Monitoru státní pokladny](https://monitor.statnipokladna.cz/datovy-katalog/transakcni-data) (oba sledují stejné věci.)
 
-Pro vybrané části využítáme Informační systém o průměrném výdělku, popř. výstupy ČSÚ.
+Pro vybrané části využítáme [Informační systém o průměrném výdělku](https://www.ispv.cz/), popř. výstupy ČSÚ:
+
+- Inflace: [Indexy spotřebitelských cen (010022-24)](https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen) - využíváme průměrnou roční hodnotu meziročního růstu cen
+- Mzdy: [Průměrná hrubá měsíční mzda a medián mezd v krajích (110080-23)](https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich) - průměrné mzdy za daný rok (kumulativně) přepočtené na plný úvazek, doplněné o stejné údaje z Veřejné databáze za rok 2023. Jde o data na základě strukturálních statistik.
 
 :::
 
