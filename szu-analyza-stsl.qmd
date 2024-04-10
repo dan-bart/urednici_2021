@@ -402,7 +402,7 @@ syst_pocty_long_uo |>
                              override.aes = aes(size = 3))) +
   theme_ptrr("both", legend.position = "top", multiplot = TRUE) +
   labs(title = "Změna průměrné platové třídy podle úřadů, 2019-2024") +
-  scale_y_continuous(labels = scales::label_percent(style_positive = "plus", suffix = " %"))
+  scale_y_continuous(labels = scales::label_number(decimal.mark = ",", style_positive = "plus"))
 ```
 ### Další vysvětlení, aneb co nevíme
 
