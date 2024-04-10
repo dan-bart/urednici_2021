@@ -16,7 +16,7 @@ pv_pha_lastyr <- pv_pha_urls |>
   select(url, name)
 
 map2(pv_pha_lastyr$url, file.path("data-input/ispv", pv_pha_lastyr$name),
-     download.file)
+     curl::curl_download)
 
 pv_edu_pg <- pv_bind(
   pv_reg_monthlypay_education(paste0("data-input/ispv/Pra_",
