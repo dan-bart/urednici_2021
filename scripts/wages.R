@@ -2,6 +2,7 @@ library(czso)
 library(dplyr)
 library(tidyr)
 library(readr)
+library(lubridate)
 
 wages_later <- czso_get_table("110080", force_redownload = TRUE) %>%
   filter(is.na(POHLAVI_txt), is.na(SPKVANTIL_txt), uzemi_kod %in% c(19, 3018)) %>%
