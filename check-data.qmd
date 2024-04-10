@@ -1,0 +1,48 @@
+---
+title: "Check sources"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document.
+To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code.
+You can embed code like this:
+
+```{r}
+library(dplyr)
+library(readr)
+```
+
+
+```{r}
+szu <- read_rds("data-interim/szu-uo-all-do2023.rds")
+sp <- read_rds("data-interim/sp_platy_uo.rds")
+
+```
+
+You can add options to executable code like this
+
+```{r}
+szu_s <- szu |> 
+  filter(rok == 2022, faze_rozpoctu == "SKUT") |> 
+  select(kap_zkr, kap_kod, platy_szu = platy, pocet_zamestnancu, rok)
+```
+
+```{r}
+sp_s <- sp |> 
+  filter(rok == 2022, promenna %in% c("platy")) |> 
+  select(kap_kod, platy_sp = skut, rok)
+  
+```
+
+```{r}
+left_join(szu_s, sp_s) |> 
+  mutate(rozdil = round(platy_szu - platy_sp))
+```
+
