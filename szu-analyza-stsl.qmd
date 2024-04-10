@@ -12,6 +12,7 @@ execute:
   echo: false
   warning: false
 lang: cs
+output-file: "index.html"
 ---
 
 ```{r setup}
@@ -62,6 +63,28 @@ dta_uo_all_mean <- dta_uo_all |>
             prumerny_plat_vuciinh = mean(prumerny_plat / phasal_all),
             prumerny_plat_c2023 = sum(platy_real)/sum(pocet_zamestnancu)/12)
 ```
+
+# Blah
+
+::: {.callout-tip}
+
+### Jak data číst
+
+- "v cenách roku 2023" znamená, že čísla za předchozí roky jsme upravili tak, aby odpovídaly cenové hladině roku 2023 na základě kumulativní inflace mezi daným rokem a rokem 2023
+- pokud není uvedeno jinak, grafy ukazující data za pouze jeden rok se týkají roku 2023
+
+:::
+
+::: {.callout-note collapse=true}
+
+### Zdroje dat
+
+Pokud není u jednotlivých grafů uvedeno jinak, vycházíme z dat Státního závěrečného účtu, resp. Monitoru státní pokladny (oba sledují stejné věci.)
+
+Pro vybrané části využítáme Informační systém o průměrném výdělku, popř. výstupy ČSÚ.
+
+:::
+
 
 # Jak se vyvíjely počty zaměstnanců?
 
@@ -172,7 +195,7 @@ dta_uo_all_mean |>
   geom_line(aes(colour = "Průměr všech úřadů"), size = 1) +
   geom_point(aes(y = prumerny_plat[rok == 2023]/1e3, 
                  x = rok[rok == 2023])) +
-  geom_line(size = 1, aes(y = phasal_all/1e3, colour = "Praha - všichni zaměstnanci")) +
+  geom_line(size = 1, aes(y = phasal_all/1e3, colour = "Praha - celá pracovní síla")) +
   geom_text(aes(y = prumerny_plat[rok == 2023]/1e3, 
                 x = rok[rok == 2023],
                 label = ptrr::label_number_cz()(prumerny_plat[rok == 2023])),
@@ -180,11 +203,12 @@ dta_uo_all_mean |>
   scale_x_continuous(breaks = seq(from = 2003, to = 2023, by = 4), 
                      expand = expansion(add = c(0, 2))) +
   theme_ptrr("both", legend.position = "top") +
-  scale_colour_manual(values = c(`Praha - všichni zaměstnanci` = "darkred", 
+  scale_colour_manual(values = c(`Praha - celá pracovní síla` = "darkred", 
                                  `Jednotlivé úřady` = "grey",
                                  `Průměr všech úřadů` = "darkblue"),
                       name = NULL) +
-  labs(title = "Vývoj průměrných platů na úřadech a v Praze, 2003-2023")
+  labs(title = "Vývoj průměrných platů na úřadech ve srovnání s trhem práce v Praze, 2003-2023",
+       subtitle = "Měsíční nominální platy/mzdy v tis. Kč")
 ```
 
 ```{r}
@@ -205,7 +229,8 @@ dta_uo_all_mean |>
   scale_y_percent_cz() +
   theme_ptrr("both") +
   labs() +
-  labs(title = "Vývoj průměrných platů úřadů jako % průměrné mzdy v Praze")
+  labs(title = "Vývoj průměrných platů úřadů jako % průměrné mzdy v Praze",
+       subtitle = "100 % = průměrná hrubá měsíční mzda v Praze")
 ```
 
 ```{r}
@@ -225,7 +250,8 @@ ggplot(dta_plt, aes(rok, prumerny_plat/1e3 / phasal_all * 1e3,
   ptrr::theme_ptrr(multiplot = TRUE, gridlines = "both") + 
   scale_colour_manual(values = c(Ostatní = "grey40", Ministerstva = "darkblue"),
                       guide = "none") +
-  labs(title = "Vývoj průměrných platů úřadů jako % průměrného platu v Praze")
+  labs(title = "Vývoj průměrných platů úřadů jako % průměrného platu v Praze",
+       subtitle = "100 % = průměrná hrubá měsíční mzda v Praze")
 
 ```
 
@@ -240,7 +266,7 @@ dta_uo_sub |>
   theme_ptrr("both", legend.position = "top", axis.text.y = element_blank(),
              legend.key.height = unit(6, "pt")) +
   labs(title = "Průměrné platy na úřadech jako % rozdíl od průměrného platu v Praze",
-       subtitle = "Rok 2023")  +
+       subtitle = "Rok 2023\n0 % = průměrná hrubá měsíční mzda v Praze")  +
   scale_fill_manual(values = c(`FALSE` = "grey40", `TRUE` = "darkblue"),
                     labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(fill = guide_legend(title = NULL, reverse = TRUE,
@@ -281,7 +307,7 @@ dta_uo_all_mean |>
   geom_line(aes(colour = "Průměr všech úřadů"), size = 1) +
   geom_point(aes(y = prumerny_plat[rok == 2023]/1e3, 
                  x = rok[rok == 2023])) +
-  geom_line(size = 1, aes(y = phasal_all_c2023/1e3, colour = "Praha - všichni zaměstnanci")) +
+  geom_line(size = 1, aes(y = phasal_all_c2023/1e3, colour = "Praha - celá pracovní síla")) +
   geom_text(aes(y = prumerny_plat[rok == 2023]/1e3, 
                 x = rok[rok == 2023],
                 label = ptrr::label_number_cz()(prumerny_plat_c2023[rok == 2023])),
@@ -289,7 +315,7 @@ dta_uo_all_mean |>
   scale_x_continuous(breaks = seq(from = 2003, to = 2023, by = 4), 
                      expand = expansion(add = c(0, 2))) +
   theme_ptrr("both", legend.position = "top") +
-  scale_colour_manual(values = c(`Praha - všichni zaměstnanci` = "darkred", 
+  scale_colour_manual(values = c(`Praha - celá pracovní síla` = "darkred", 
                                  `Jednotlivé úřady` = "grey",
                                  `Průměr všech úřadů` = "darkblue"),
                       name = NULL) +
@@ -316,14 +342,14 @@ dta_uo_all |>
                                override.aes = aes(size = 3))) +
   ptrr::theme_ptrr("both", multiplot = TRUE, legend.position = "right") + 
   labs(title = "Průměrné platy podle úřadů, v cenách roku 2023",
-       subtitle = "červeně platová úroveň Prahy")
+       subtitle = "červeně platová úroveň Prahy\nNominální měsíční platy/mzdy v tis. Kč")
 ```
 
 ## Sektorové srovnání
 
 ![](images/sektory-real.png)
 
-## Jak se podařilo udržet zabránit poklesu reálných platů? 
+## Jak se podařilo zbrzdit pokles reálných platů? 
 
 ### Snižování stavů? 
 
@@ -434,7 +460,7 @@ make_plot_paycomp_adjusted(pv_edu_pg, syst_pocty_long_uo, dta_uo_all, rok = isvs
   scale_fill_manual(labels = c("", ""),
                     values = c(rgb(0, 0, 0, alpha = 0), rgb(0, 0, 0, alpha = 0))) +
   guides(fill = guide_legend(title = NULL)) +
-  labs(subtitle = "100 % = platová úroveň Prahy\n\n")
+  labs(subtitle = "100 % = průměrná mzda v Praze\n\n")
 ```
 
 ...ale při alespoň hrubém očištění o strukturu zaměstnanců se obrázek liší.
