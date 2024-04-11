@@ -82,6 +82,7 @@ make_plot_paycomp_adjusted <- function(pv_edu_pg, syst_pocty_long_uo, dta_uo_all
                panel.grid.minor.x = element_line(linewidth = .1)) +
     scale_x_percent_cz(limits = c(0, 1.4), n.breaks = 8, expand = expansion(add = c(0, 0.05))) +
     labs(title = "Průměrné platy ministerstev ve srovnání s pracovní sílou Prahy (2023)",
+         subtitle = "100 % = platová úroveň Prahy\nSloupce: očištěno o vzdělanostní strukturu\nModré body: hrubé srovnání",
          caption = "Zdroj: systemizace 2024 (pouze ústřední orgán, služební i pracovní místa), SZÚ 2023 a ISPV.\nVzdělanostní struktura odvozena od zastoupení platových tříd na každém úřadu.")
 
   # ggplot(platy_equiv_long, aes(y = kapitola_zkr)) +
