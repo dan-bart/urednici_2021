@@ -32,6 +32,7 @@ library(purrr)
 
 ```{r}
 source("R/compare-adjusted.R")
+set_ptrr_ggplot_fonts()
 ```
 
 
@@ -60,6 +61,8 @@ dta_uo_all_mean <- dta_uo_all |>
   summarise(prumerny_plat = sum(platy)/sum(pocet_zamestnancu)/12,
             phasal_all = mean(phasal_all),
             phasal_all_c2023 = mean(phasal_all * ceny_deflator_2023),
+            czsal_all = mean(czsal_all),
+            czsal_all_c2023 = mean(czsal_all * ceny_deflator_2023),
             prumerny_plat_vuciinh = mean(prumerny_plat / phasal_all),
             prumerny_plat_c2023 = sum(platy_real)/sum(pocet_zamestnancu)/12)
 ```
@@ -84,7 +87,7 @@ Pokud není u jednotlivých grafů uvedeno jinak, vycházíme z dat Státního z
 Pro vybrané části využítáme [Informační systém o průměrném výdělku](https://www.ispv.cz/), popř. výstupy ČSÚ:
 
 - Inflace: [Indexy spotřebitelských cen (010022-24)](https://www.czso.cz/csu/czso/indexy-spotrebitelskych-cen) - využíváme průměrnou roční hodnotu meziročního růstu cen
-- Mzdy: [Průměrná hrubá měsíční mzda a medián mezd v krajích (110080-23)](https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich) - průměrné mzdy za daný rok (kumulativně) přepočtené na plný úvazek, doplněné o stejné údaje z Veřejné databáze za rok 2023. Jde o data na základě strukturálních statistik.
+- Mzdy: [Průměrná hrubá měsíční mzda a medián mezd v krajích (110080-23)](https://www.czso.cz/csu/czso/prumerna-hruba-mesicni-mzda-a-median-mezd-v-krajich) - průměrné mzdy za daný rok (kumulativně) přepočtené na plný úvazek, doplněné o [stejné údaje z Veřejné databáze za rok 2023](https://vdb.czso.cz/vdbvo2/faces/cs/index.jsf?page=vystup-objekt&pvo=MZD01-A&z=T&f=TABULKA&skupId=855&katalog=30852&pvo=MZD01-A&evo=v208_!_MZD-LEG3-MZD01_1#w=). Jde o data na základě strukturálních statistik.
 
 :::
 
@@ -118,7 +121,7 @@ dta_uo_all |>
   ggplot(aes(rok, pocet_zamestnancu, fill = kap_mini)) +
   geom_col() +
   facet_wrap(~kap_zkr) +
-  scale_x_continuous(breaks = seq(from = 2012, to = 2023, by = 4)) + 
+  scale_x_continuous(breaks = seq(from = 2013, to = 2023, by = 10), labels = c(2013, 23)) + 
   scale_fill_manual(values = c(`FALSE` = "grey40", `TRUE` = "darkblue"),
                     labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(fill = guide_legend(title = NULL, reverse = TRUE,
@@ -139,7 +142,7 @@ dta_uo_sub |>
   ggplot(aes(rok, platy/1e9, fill = kap_mini)) +
   geom_col() +
   labs(title = "Výdaje na platy, nominálně", subtitle = "Mld. Kč") +
-  scale_x_continuous(breaks = seq(from = 2011, to = 2023, by = 4)) + 
+  scale_x_continuous(breaks = seq(from = 2012, to = 2023, by = 1)) + 
   scale_fill_manual(values = c(`FALSE` = "grey40", `TRUE` = "darkblue"),
                     labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(fill = guide_legend(title = NULL, reverse = TRUE,
@@ -156,7 +159,7 @@ dta_uo_sub |>
   ggplot(aes(rok, platy/1e9, fill = kap_mini)) +
   geom_col(colour = NA) + 
   labs(title = "Výdaje na platy, v cenách roku 2023", subtitle = "Mld. Kč") +
-  scale_x_continuous(breaks = seq(from = 2011, to = 2023, by = 4)) + 
+  scale_x_continuous(breaks = seq(from = 2012, to = 2023, by = 1)) + 
   scale_fill_manual(values = c(`FALSE` = "grey40", `TRUE` = "darkblue"),
                     labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(fill = guide_legend(title = NULL, reverse = TRUE,
@@ -174,7 +177,7 @@ dta_uo_all |>
   ggplot(aes(rok, platy/1e6 * ceny_deflator_2023, fill = kap_mini)) +
   geom_col() +
   facet_wrap(~kap_zkr) +
-  scale_x_continuous(breaks = seq(from = 2012, to = 2023, by = 4)) + 
+  scale_x_continuous(breaks = seq(from = 2013, to = 2023, by = 10), labels = c(2013, 23)) + 
   scale_fill_manual(values = c(`FALSE` = "grey40", `TRUE` = "darkblue"),
                     labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(fill = guide_legend(title = NULL, reverse = TRUE,
@@ -214,6 +217,7 @@ dta_uo_all_mean |>
        subtitle = "Měsíční nominální platy/mzdy v tis. Kč")
 ```
 
+
 ```{r}
 dta_uo_all_mean |>
   ggplot(aes(rok, prumerny_plat_vuciinh)) +
@@ -229,7 +233,7 @@ dta_uo_all_mean |>
             hjust = "outward", nudge_x = .2) +
   scale_x_continuous(breaks = seq(from = 2003, to = 2023, by = 4), 
                      expand = expansion(add = c(0, 2))) +
-  scale_y_percent_cz() +
+  scale_y_percent_cz(n.breaks = 6) +
   theme_ptrr("both") +
   labs() +
   labs(title = "Vývoj průměrných platů úřadů jako % průměrné mzdy v Praze",
@@ -262,8 +266,9 @@ ggplot(dta_plt, aes(rok, prumerny_plat/1e3 / phasal_all * 1e3,
 ```{r}
 dta_uo_sub |> 
   filter(rok == 2023) |> 
-  mutate(kap_zkr = fct_reorder(kap_zkr, prumerny_plat/phasal_all + 1)) |> 
-  ggplot(aes(kap_zkr, prumerny_plat/phasal_all - 1)) +
+  mutate(kap_zkr = fct_reorder(kap_zkr, prumerny_plat/phasal_all + 1),
+         yval = prumerny_plat/phasal_all - 1) |>
+  ggplot(aes(kap_zkr, yval)) +
   geom_col(aes(fill = kap_mini)) + 
   coord_flip() +
   theme_ptrr("both", legend.position = "top", axis.text.y = element_blank(),
@@ -274,11 +279,13 @@ dta_uo_sub |>
                     labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(fill = guide_legend(title = NULL, reverse = TRUE,
                              override.aes = aes(size = 3))) +
-  geom_label(aes(label = paste0("  ", kap_zkr, "  ")), hjust = "outward",
+  geom_label(aes(label = paste0("  ", kap_zkr, "  "),
+                 y = yval,
+                 hjust = if_else(yval > 0, 0, 1)),
             size = 3, family = "IBM Plex Sans Condensed", 
             label.padding = unit(0, "pt"), label.size = 0) +
   scale_y_percent_cz(label = scales::label_percent(style_positive = "plus", suffix = " %"),
-                     expand = expansion(add = c(.1, .1)))
+                     expand = expansion(add = c(.1, .1)), n.breaks = 12)
 
 ```
 
@@ -326,6 +333,37 @@ dta_uo_all_mean |>
 ```
 
 ```{r}
+dta_delta <- dta_uo_all_mean |> 
+  filter(rok %in% 2018:2023) |> 
+  pivot_longer(cols = c(czsal_all_c2023, phasal_all_c2023, prumerny_plat_c2023)) |> 
+  mutate(value = value/first(value) - 1, 
+         lab = if_else(rok == max(rok), name, NA),
+         lab = case_match(lab,
+                          "czsal_all_c2023" ~ "Průměrná mzda v ČR",
+                          "phasal_all_c2023" ~ "Průměrná mzda v Praze",
+                          "prumerny_plat_c2023" ~ "Ústřední úřady",
+                          ),
+         .by = name)
+
+
+dta_delta |> 
+  ggplot(aes(rok, value, colour = name)) +
+  geom_hline(yintercept = 0, colour = "grey40") +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  geom_text(aes(label = lab), hjust = 0, nudge_x = .2) + 
+  theme_ptrr("both", legend.position = "none") +
+  scale_y_continuous(labels = label_percent_cz(style_positive = "plus"), n.breaks = 6) +
+  scale_color_manual(values = c("grey20", "darkred", "darkblue")) +
+  scale_x_continuous(limits = c(2018, 2025), breaks = 2018:2023) +
+  labs(title = "Změná reálných platů od roku 2018",
+       subtitle = "Průměrné platy v cenách roku 2023: úřady, ČR, Praha",)
+```
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+
 dta_uo_all |>
   drop_na(kap_zkr) |>
   filter(faze_rozpoctu == "SKUT",
@@ -338,12 +376,13 @@ dta_uo_all |>
   geom_line(aes(y = prumerny_plat * ceny_deflator_2023/1e3, colour = kap_mini)) +
   geom_line(aes(y = phasal_all * ceny_deflator_2023/1e3), colour = "darkred") +
   facet_wrap(~kap_zkr) +
-  scale_y_number_cz(n.breaks = 3) +
+  scale_x_continuous(n.breaks = 5) + 
+  scale_y_number_cz(n.breaks = 5) +
   scale_colour_manual(values = c(`FALSE` = "grey40", `TRUE` = "darkblue"),
                       labels = c(`FALSE` = "Ostatní", `TRUE` = "Ministerstva")) +
   guides(colour = guide_legend(title = NULL, reverse = TRUE,
                                override.aes = aes(size = 3))) +
-  ptrr::theme_ptrr("both", multiplot = TRUE, legend.position = "right") + 
+  ptrr::theme_ptrr("both", multiplot = TRUE, legend.position = "top") + 
   labs(title = "Průměrné platy podle úřadů, v cenách roku 2023",
        subtitle = "červeně platová úroveň Prahy\nNominální měsíční platy/mzdy v tis. Kč")
 ```
