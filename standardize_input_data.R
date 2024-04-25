@@ -55,7 +55,6 @@ section_names <- c(
   "Pocet zamestnancu", "Prumerný plat", "Poradí prumerného platu", "Schv ke schv", "Skut k rozp", "Skut ke skut"
 )
 
-source(here::here("R", "divideMain.R"))
 main_df <- data.frame(matrix(ncol = length(section_names), nrow = 0))
 colnames(main_df) <- section_names
 
@@ -75,7 +74,6 @@ for (i in 1:length(main_names)) {
 # }
 
 # sheets with subgroups
-source(here::here("R", "divideMain.R"))
 
 jednotl_section_names <- c(
   "Rozpocet_a_rok", "full_name", "kap_num", "kap_name", "Organizace", "Prostredky na platy a OPPP", "OPPP", "Prostredky na platy",
@@ -242,12 +240,7 @@ wages_later <- czso_get_table("110080", force_redownload = TRUE) %>%
   filter(is.na(POHLAVI_txt), is.na(SPKVANTIL_txt), uzemi_kod %in% c(19, 3018)) %>%
   select(rok, hodnota, uzemi_kod) %>%
   spread(key = uzemi_kod, value = hodnota) %>%
-  rename("czsal_all" = 2, "phasal_all" = 3) |>
-  # manually add numbers from ISPV for regional & CZ pay 2022
-  # in 2021, ISPV numbers corresponded to those published by CZSO in dataset 110080
-  # can be dropped in May 2023 when CZSO releases 2022 data
-  # see
-  add_row(rok = 2022, czsal_all = 43413, phasal_all = 54015)
+  rename("czsal_all" = 2, "phasal_all" = 3)
 
 
 wages_early <- chapters_old %>%
