@@ -21,7 +21,7 @@ library(htmlwidgets)
 options(scipen = 100, digits = 8)
 
 dt <- readRDS("./data-interim/sections.rds")
-sum <- readRDS("./data-interim/summary.rds")
+dt_sum <- readRDS("./data-interim/summary.rds")
 
 dt$kap_name[dt$kap_name == "Ksen"] <- "KSen"
 dt$kap_name[dt$kap_name == "Kparl"] <- "KSněm"
@@ -131,17 +131,27 @@ aux <- dt %>%
   group_by(kategorie_2014_cz) %>%
   summarise(cost = sum(prostredky_na_platy),
             count = sum(pocet_zamestnancu)) %>%
-  rename("labels" = kategorie_2014_cz) %>%
-  mutate(parents = c("\u00DAst\u0159edn\u00ED org\u00E1ny",
-                     "St\u00E1tn\u00ED \u00FA\u0159edn\u00EDci",
-                     "\u00DAst\u0159edn\u00ED org\u00E1ny",
-                     "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", "",
-                     "St\u00E1tn\u00ED spr\u00E1va"))
+  rename(labels = kategorie_2014_cz) %>%
+  mutate(parents = case_match(labels,
+                              "Příspěvkové organizace" ~ "",
+                              "Sbory" ~ "Státní správa",
+                              "Ostatní vč. armády" ~ "Organizační složky státu",
+                              "Neústřední st. správa" ~ "Státní úředníci",
+                              "Ostatní ústřední" ~ "Ústřední orgány",
+                              "Ministerstva" ~ "Ústřední orgány"
 
-to_append <- data.frame(
-  labels = c("\u00DAst\u0159edn\u00ED org\u00E1ny", "St\u00E1tn\u00ED \u00FA\u0159edn\u00EDci", "St\u00E1tn\u00ED spr\u00E1va",
-             "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu"),
-  parents = c("St\u00E1tn\u00ED \u00FA\u0159edn\u00EDci","St\u00E1tn\u00ED spr\u00E1va", "Organiza\u010Dn\u00ED slo\u017Eky st\u00E1tu", ""),
+  ))
+
+aux_sum <- aux |>
+  summarise(across(c(cost, count), sum), .by = parents)
+
+to_append = tribble(
+  ~labels,               ~parents,
+  "Ústřední orgány", "Státní úředníci",
+  "Státní úředníci", "Státní správa",
+  "Státní správa", "Organizační složky státu",
+  "Organizační složky státu", "") |>
+  mutate(
   cost = c(
     aux$cost[aux$labels == "Ministerstva"] +
       aux$cost[aux$labels == "Ostatn\u00ED \u00FAst\u0159edn\u00ED"],
@@ -173,10 +183,9 @@ to_append <- data.frame(
       aux$count[aux$labels == "Sbory"] +
       aux$count[aux$labels == "Ne\u00FAst\u0159edn\u00ED st. spr\u00E1va"] +
       aux$count[aux$labels == "Ostatn\u00ED v\u010D. arm\u00E1dy"]
-  )
-)
+  ))
 
-tree_data <- rbind(aux, to_append)
+tree_data <- bind_rows(aux, to_append)
 
 tree_data <- tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$parents == "")]),
                                   "count_perc" = count/sum(count[which(tree_data$parents  == "")]),
@@ -251,7 +260,7 @@ graf_1 <- tree_data %>%
     type = "treemap",
     branchvalues = "total",
     labels = ~tree_data$labels,
-    parents = tree_data$parents,
+    parents = ~tree_data$parents,
     marker=list(colors=color_map),
     pathbar=list(side="bottom",thickness=30),
     values = tree_data$count,
@@ -660,14 +669,14 @@ graf_A6 <- aux2 %>%
     title = list(font=title_font,
                  text = str_wrap("<b>Graf A6. Změna reálných výdajů
 na platy státních úředníků (k základně roku 2003)</b>",60)),
-annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie.</i>",200),
-                                 font = pozn_font)),
-xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",standoff=10),
-                                 titlefont = axis_font)),
-yaxis = c(num_ticks,frame_y,list(title = str_wrap("<b>Změna reálných výdajů na platy oproti roku 2003
+    annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie.</i>",200),
+                                     font = pozn_font)),
+    xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",standoff=10),
+                                     titlefont = axis_font)),
+    yaxis = c(num_ticks,frame_y,list(title = str_wrap("<b>Změna reálných výdajů na platy oproti roku 2003
 (v %, ceny roku 2022)</b>",50), ticksuffix = "%",titlefont = axis_font)),
-margin = mrg5,
-legend=legend_below) %>%
+    margin = mrg5,
+    legend=legend_below) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
 
@@ -1314,8 +1323,8 @@ graf_A14 <- dt %>%
                                           titlefont = axis_font,
                                           xaxis = list(categoryarray = seq(2003,2022),
                                                        categoryorder = "array"))),
-         yaxis = c(num_ticks,frame_y,list(title = "<b>Počet státních úředníků (v tisících)</b>",t
-                                          itlefont = axis_font)),
+         yaxis = c(num_ticks,frame_y,list(title = "<b>Počet státních úředníků (v tisících)</b>",
+                                          titlefont = axis_font)),
          legend = legend_below, margin = mrg2
   ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
