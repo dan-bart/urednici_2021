@@ -37,21 +37,6 @@ both
 ```
 
 ```{r}
-tinyplot(platy_szu ~ platy_sp | kap_zkr, data = both,
-         palette = "dark", pch  = 16,
-         grid = TRUE, frame = FALSE)
-```
-
-```{r}
-plt(
-  Sepal.Length ~ Petal.Length | Species, 
-  data = iris,
-  palette = "dark", pch  = 16,
-  grid = TRUE, frame = FALSE
-)
-```
-
-```{r}
 op = tpar(
   bty    = "n",           # No box (frame) around the plot 
   family = "IBM Plex Sans", # Use R's Hershey font instead of Arial default
@@ -60,13 +45,7 @@ op = tpar(
   pch    = 16             # Filled points as default
 )
 
-aq = airquality
-aq$Month = factor(month.abb[aq$Month], levels = month.abb[5:9])
-
-plt(
-  Temp ~ Day | Month, data = aq,
-  type = "b",
-  palette = palette.colors(palette = "tableau", alpha = 0.5),
-  main = "Daily temperatures by month"
-)
+tinyplot(platy_szu ~ platy_sp | kap_zkr, data = both,
+         palette = "dark", pch  = 16,
+         grid = TRUE, frame = FALSE)
 ```
