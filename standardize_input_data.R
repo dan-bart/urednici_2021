@@ -240,7 +240,12 @@ wages_later <- czso_get_table("110080", force_redownload = TRUE) %>%
   filter(is.na(POHLAVI_txt), is.na(SPKVANTIL_txt), uzemi_kod %in% c(19, 3018)) %>%
   select(rok, hodnota, uzemi_kod) %>%
   spread(key = uzemi_kod, value = hodnota) %>%
-  rename("czsal_all" = 2, "phasal_all" = 3)
+  rename("czsal_all" = 2, "phasal_all" = 3) |>
+  # manually add numbers from ISPV for regional & CZ pay 2023
+  # in 2022, ISPV numbers sorta corresponded to those published by CZSO in dataset 110080
+  # can be dropped in May 2024 when CZSO releases 2023 data
+  # see
+  add_row(rok = 2023, czsal_all = 47527, phasal_all = 57817)
 
 
 wages_early <- chapters_old %>%
