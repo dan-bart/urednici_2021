@@ -18,6 +18,7 @@ library(janitor)
 library(czso)
 library(kableExtra)
 library(htmlwidgets)
+library(coloratio)
 options(scipen = 100, digits = 8)
 
 dt <- readRDS("./data-interim/sections.rds")
@@ -104,20 +105,14 @@ color_map <- c("Ministerstva" =             "#BEBEBE",
                "Státní správa" =            "#9BC9E9",
                "Organizační složky státu" = "#C4DFF2")
 
-text_color_map <- c("Ministerstva" =             "#000000",
-                    "Neústřední st. správa" =    "#000000",
-                    "Ostatní ústřední" =         "#FFFFFF",
-                    "Ostatní vč. armády" =       "#000000",
-                    "Příspěvkové organizace" =   "#000000",
-                    "Sbory" =                    "#FFFFFF",
-                    "Ústřední orgány" =          "#000000",
-                    "Státní úředníci" =          "#FFFFFF",
-                    "Státní správa" =            "#000000",
-                    "Organizační složky státu" = "#000000")
+text_color_map <- coloratio::cr_choose_bw(color_map)
+names(text_color_map) <- names(color_map)
 
 kaps <- unique(dt$kap_name)
 color_map_kap <- ifelse(substr(kaps,1,1) == "M", "dimgray", "cornflowerblue")
 names(color_map_kap) <- kaps
+cols_df <- tibble(labels = names(color_map), color = unname(color_map)) |>
+  mutate(color_text = cr_choose_bw(color_map))
 
 # Theme gg ----------------------------------------------------------------
 
@@ -226,20 +221,21 @@ lty <- c(schvaleny = "dash", skutecnost = "solid")
 ## ----tree_plot---------------------------------------------------------------------------------------------------
 
 graf_A1 <- tree_data %>%
+  left_join(cols_df, by = "labels") |>
   plot_ly(
     type = "treemap",
     branchvalues = "total",
     labels = ~tree_data$labels,
-    parents = tree_data$parents,
-    marker=list(colors=color_map),
-    pathbar=list(side="bottom",thickness=30),
+    parents = ~tree_data$parents,
+    marker = list(colors = ~color),
+    pathbar = list(side = "bottom", thickness = 30),
     values = tree_data$cost,
-    textfont = list(family="Calibri",color=text_color_map),
+    textfont = list(family = "Calibri",color = text_color_map),
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ",
                             labels, "<br>", " Rozpo\u010Det:",
                             format(cost, big.mark = " "), "K\u010D", "<br>",
-                            " Pod\u00EDl na celku:", round(cost_perc*100,1), "%"),
-    hoverlabel = list(font=list(size=hover_size,color=text_color_map)),
+                            " Pod\u00EDl na celku:", round(cost_perc * 100, 1), "%"),
+    hoverlabel = list(font = list(size = hover_size, color = text_color_map)),
     domain = list(column = 0)
   ) %>%
   layout(title = list(font=title_font,
@@ -249,37 +245,39 @@ graf_A1 <- tree_data %>%
          margin = mrg8) %>%
   layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout.</i>",
                             x = 1, y = -0.05, showarrow = FALSE, font = pozn_font)) %>%
-  layout(uniformtext=list(minsize=lbl_size, mode='show')) %>%
+  layout(uniformtext = list(minsize = lbl_size, mode = 'show')) %>%
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
   onRender(js)
+
 
 graf_A1
 
 graf_1 <- tree_data %>%
+  left_join(cols_df, by = "labels") |>
   plot_ly(
     type = "treemap",
     branchvalues = "total",
-    labels = ~tree_data$labels,
-    parents = ~tree_data$parents,
-    marker=list(colors=color_map),
-    pathbar=list(side="bottom",thickness=30),
+    labels = ~labels,
+    parents = ~parents,
+    marker = list(colors = ~color),
+    pathbar = list(side = "bottom", thickness = 30),
     values = tree_data$count,
-    textfont = list(family="Calibri",color=text_color_map),
+    textfont = list(family="Calibri", color = text_color_map),
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>",
                             " Po\u010Det zam\u011Bstnanc\u016F:",
                             format(count, big.mark = " "), "<br>", " Pod\u00EDl na celku:",
-                            round(count_perc*100,1), "%"),
-    hoverlabel = list(font=list(size=hover_size,color=text_color_map)),
+                            round(count_perc * 100, 1), "%"),
+    hoverlabel = list(font = list(size = hover_size,color = text_color_map)),
     domain = list(column = 0)
   ) %>%
-  layout(title = list(font=title_font,
+  layout(title = list(font = title_font,
                       text = paste0("<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti (2022)</b>",
                                     "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců","</sup>"),
                       y = 0.97),
          margin = mrg8) %>%
   layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout.</i>", x = 1,
                             y = -0.05, showarrow = FALSE, font = pozn_font)) %>%
-  layout(uniformtext=list(minsize=lbl_size, mode='show')) %>%
+  layout(uniformtext = list(minsize=lbl_size, mode = 'show')) %>%
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
   onRender(js)
 
