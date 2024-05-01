@@ -1,46 +1,49 @@
-kap_kod,kap_zkr,kap_name
-301,KPR,Kancelář prezidenta republiky
-302,K PSP,Poslanecká sněmovna Parlamentu
-303,K Sen,Senát Parlamentu
-304,ÚV,Úřad vlády ČR
-306,MZV,Ministerstvo zahraničních věcí
-307,MO,Ministerstvo obrany
-308,NBÚ,Národní bezpečnostní úřad
-309,KVOP,Kancelář veřejného ochránce práv
-312,MF,Ministerstvo financí
-313,MPSV,Ministerstvo práce a sociálních věcí
-314,MV,Ministerstvo vnitra
-315,MŽP,Ministerstvo životního prostředí
-317,MMR,Ministerstvo pro místní rozvoj
-321,GAČR,Grantová agentura ČR
-322,MPO,Ministerstvo průmyslu a obchodu
-327,MD,Ministerstvo dopravy
-328,ČTÚ,Český telekomunikační úřad
-329,MZe,Ministerstvo zemědělství
-333,MŠMT,"Ministerstvo školství, mládeže a tělovýchovy"
-334,MK,Ministerstvo kultury
-335,MZd,Ministerstvo zdravotnictví
-336,MSp,Ministerstvo spravedlnosti
-343,ÚOOÚ,Úřad pro ochranu osobních údajů
-344,ÚPV,Úřad průmyslového vlastnictví
-345,ČSÚ,Český statistický úřad
-346,ČÚZK,Český úřad zeměměřický a katastrální
-348,ČBÚ,Český báňský úřad
-349,ERÚ,Energetický regulační úřad
-353,ÚOHS,Úřad pro ochranu hospodářské soutěže
-355,ÚSTR,Ústav pro studium totalitních režimů
-358,ÚS,Ústavní soud
-361,AVČR,Akademie věd ČR
-364,DIA,Digitální a informační agentura
-372,RRTV,Rada pro rozhlasové a televizní vysílání
-374,SSHR,Správa státních hmotných rezerv
-375,SÚJB,Státní úřad pro jadernou bezpečnost
-377,TA ČR,Technologická agentura ČR
-381,NKÚ,Nejvyšší kontrolní úřad
-376,GIBS,Generální inspekce bezpečnostních sborů
-371,ÚDHPSH,Úřad pro dohled nad hospodařením politických stran a politických hnutí
-373,ÚPDI,Úřad pro přístup k dopravní infrastruktuře
-378,NÚKIB,Národní úřad pro kybernetickou a informační bezpečnost
-359,ÚNRR,Úřad Národní rozpočtové rady
-362,NSA,Národní sportovní agentura
-C E L K E M, Celkem, Celkem
+kap_kod,kap_zkr,kap_name,kap_uo,kap_vladni,kap_ancient
+301,KPR,Kancelář prezidenta republiky,FALSE,FALSE,FALSE
+302,K PSP,Poslanecká sněmovna Parlamentu,FALSE,FALSE,FALSE
+303,K Sen,Senát Parlamentu,FALSE,FALSE,FALSE
+304,ÚV,Úřad vlády ČR,TRUE,TRUE,FALSE
+306,MZV,Ministerstvo zahraničních věcí,TRUE,TRUE,FALSE
+307,MO,Ministerstvo obrany,TRUE,TRUE,FALSE
+308,NBÚ,Národní bezpečnostní úřad,TRUE,FALSE,FALSE
+309,KVOP,Kancelář veřejného ochránce práv,FALSE,FALSE,FALSE
+312,MF,Ministerstvo financí,TRUE,TRUE,FALSE
+313,MPSV,Ministerstvo práce a sociálních věcí,TRUE,TRUE,FALSE
+314,MV,Ministerstvo vnitra,TRUE,TRUE,FALSE
+315,MŽP,Ministerstvo životního prostředí,TRUE,TRUE,FALSE
+317,MMR,Ministerstvo pro místní rozvoj,TRUE,TRUE,FALSE
+321,GAČR,Grantová agentura ČR,FALSE,FALSE,FALSE
+322,MPO,Ministerstvo průmyslu a obchodu,TRUE,TRUE,FALSE
+327,MD,Ministerstvo dopravy,TRUE,TRUE,FALSE
+328,ČTÚ,Český telekomunikační úřad,TRUE,FALSE,FALSE
+329,MZe,Ministerstvo zemědělství,TRUE,TRUE,FALSE
+333,MŠMT,"Ministerstvo školství, mládeže a tělovýchovy",TRUE,TRUE,FALSE
+334,MK,Ministerstvo kultury,TRUE,TRUE,FALSE
+335,MZd,Ministerstvo zdravotnictví,TRUE,TRUE,FALSE
+336,MSp,Ministerstvo spravedlnosti,TRUE,TRUE,FALSE
+343,ÚOOÚ,Úřad pro ochranu osobních údajů,TRUE,FALSE,FALSE
+344,ÚPV,Úřad průmyslového vlastnictví,TRUE,FALSE,FALSE
+345,ČSÚ,Český statistický úřad,TRUE,FALSE,FALSE
+346,ČÚZK,Český úřad zeměměřický a katastrální,TRUE,FALSE,FALSE
+348,ČBÚ,Český báňský úřad,TRUE,FALSE,FALSE
+349,ERÚ,Energetický regulační úřad,TRUE,FALSE,FALSE
+353,ÚOHS,Úřad pro ochranu hospodářské soutěže,TRUE,FALSE,FALSE
+355,ÚSTR,Ústav pro studium totalitních režimů,FALSE,FALSE,FALSE
+358,ÚS,Ústavní soud,FALSE,FALSE,FALSE
+361,AVČR,Akademie věd ČR,FALSE,FALSE,FALSE
+364,DIA,Digitální a informační agentura,TRUE,FALSE,FALSE
+372,RRTV,Rada pro rozhlasové a televizní vysílání,TRUE,FALSE,FALSE
+374,SSHR,Správa státních hmotných rezerv,TRUE,FALSE,FALSE
+375,SÚJB,Státní úřad pro jadernou bezpečnost,TRUE,FALSE,FALSE
+377,TA ČR,Technologická agentura ČR,FALSE,FALSE,FALSE
+381,NKÚ,Nejvyšší kontrolní úřad,FALSE,FALSE,FALSE
+376,GIBS,Generální inspekce bezpečnostních sborů,FALSE,FALSE,FALSE
+371,ÚDHPSH,Úřad pro dohled nad hospodařením politických stran a politických hnutí,TRUE,FALSE,FALSE
+373,ÚPDI,Úřad pro přístup k dopravní infrastruktuře,TRUE,FALSE,FALSE
+378,NÚKIB,Národní úřad pro kybernetickou a informační bezpečnost,TRUE,FALSE,FALSE
+359,ÚNRR,Úřad Národní rozpočtové rady,FALSE,FALSE,FALSE
+362,NSA,Národní sportovní agentura,TRUE,FALSE,FALSE
+338,MI,Ministerstvo informatiky,TRUE,TRUE,TRUE
+341,ÚVIS,Úřad pro veřejné informační systémy,TRUE,FALSE,TRUE
+347,KCP,Komise pro cenné papíry,TRUE,FALSE,TRUE
+C E L K E M, Celkem, Celkem,FALSE,FALSE,FALSE
