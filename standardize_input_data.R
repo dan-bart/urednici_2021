@@ -18,7 +18,7 @@ options("scipen" = 100, "digits" = 4)
 #   select(dataset_id, title, description)
 
 # load new data
-input <- read_excel_allsheets("./data-input/data_2022.xls")
+input <- read_excel_allsheets("./data-input/data_2023.xlsx")
 # load old data
 chapters_old <- read.csv("./data-input/legacy/chapters_ALL.csv", encoding = "UTF-8")
 grp_old <- read.csv("./data-input/legacy/groups_ALL.csv", encoding = "UTF-8")
@@ -271,12 +271,12 @@ df_infl <- czso_get_table("010022", dest_dir = "data-input/czso", force_redownlo
   select(contains("obdobi"),rok, hodnota) %>%
   mutate(inflation=hodnota/100)%>%
   arrange(rok)%>%
-  filter(rok>=2003,rok<=2022)
+  filter(rok>=2003,rok<=2023)
 
 df_infl$base_2003 <- 0
-df_infl$base_2022 <- 0
+df_infl$base_2023 <- 0
 df_infl[1, "base_2003"] <- 1
-df_infl[nrow(df_infl), "base_2022"] <- 1
+df_infl[nrow(df_infl), "base_2023"] <- 1
 
 
 for (i in 2:nrow(df_infl)) {
@@ -285,7 +285,7 @@ for (i in 2:nrow(df_infl)) {
 
 
 for (i in (nrow(df_infl) - 1):1) {
-  df_infl[i, "base_2022"] <- df_infl[i + 1, "base_2022"] * df_infl[i+1, "inflation"]
+  df_infl[i, "base_2023"] <- df_infl[i + 1, "base_2023"] * df_infl[i+1, "inflation"]
 }
 
 main_df_recat <- main_df %>%
@@ -320,10 +320,10 @@ main_df_update <- bind_rows(main_df_recat,
   mutate(mzda_prumer_skut_ke_skut = (prumerny_plat / lag(prumerny_plat) - 1)) %>%
   mutate(plat_base = prostredky_na_platy[1]) %>%
   mutate(cum_pct_wage_change_real = (prostredky_na_platy / base_2003 - plat_base) / plat_base) %>%
-  mutate(wage_in_2022 = prumerny_plat * base_2022) %>%
-  mutate(wage_in_2022_change = wage_in_2022 / lag(wage_in_2022) - 1) %>%
-  mutate(wage_base = wage_in_2022[1]) %>%
-  mutate(cum_pct_wage_change = (wage_in_2022 - wage_base) / wage_base) %>%
+  mutate(wage_in_2023 = prumerny_plat * base_2023) %>%
+  mutate(wage_in_2023_change = wage_in_2023 / lag(wage_in_2023) - 1) %>%
+  mutate(wage_base = wage_in_2023[1]) %>%
+  mutate(cum_pct_wage_change = (wage_in_2023 - wage_base) / wage_base) %>%
   mutate(wage_to_general = (ifelse(kategorie_2014 %in% c("Ministerstva", "Ostatni ustredni"), prumerny_plat / phasal_all, prumerny_plat / czsal_all))) %>%
   mutate(mzda_k_nh = wage_to_general / lag(wage_to_general) - 1) %>%
   ungroup() %>%
@@ -332,8 +332,8 @@ main_df_update <- bind_rows(main_df_recat,
 
 
 
-main_df_update %>% filter( typ_rozpoctu == "SCHV", rok == 2022) %>% select("kategorie_2014") %>% unique()
-main_df %>% filter( typ_rozpoctu == "SCHV", rok == 2022) %>% select(kap_num,name) %>% unique()
+main_df_update %>% filter( typ_rozpoctu == "SCHV", rok == 2023) %>% select("kategorie_2014") %>% unique()
+main_df %>% filter( typ_rozpoctu == "SCHV", rok == 2023) %>% select(kap_num,name) %>% unique()
 # save all dataframes
 saveRDS(main_df_update, file = "./data-interim/sections.rds")
 saveRDS(jednotl_df, file = "./data-interim/jednotlivci.rds")

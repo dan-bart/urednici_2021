@@ -102,7 +102,9 @@ load_szu_sheet <- function(sheet_tibble, detection_string) {
 
 szu_augment <- function(szu) {
   szu_augmented <- szu |>
-    rows_update(read_csv("data-input/kapitoly.csv"), by = "kap_kod") |>
+    rows_update(read_csv("data-input/kapitoly.csv") |>
+                  select(-kap_uo, -kap_vladni, -kap_ancient),
+                by = "kap_kod") |>
     relocate(rok, .after = kap_name) |>
     mutate(kap_mini = str_detect(kap_name, "^Minis|Úřad [Vv]lád"),
            date = make_date(rok, 1, 1))
@@ -150,7 +152,9 @@ szu_komplet_wide <- szu_komplet |>
          kategorie = "UO") |>
   left_join(deflators, by = join_by(rok)) |>
   left_join(wages, by = join_by(rok)) |>
-  left_join(read_csv("data-input/kapitoly.csv", col_types = "ccc"), by = join_by(kap_kod)) |>
+  left_join(read_csv("data-input/kapitoly.csv", col_types = "ccc") |>
+              select(-kap_uo, -kap_vladni, -kap_ancient),
+            by = join_by(kap_kod)) |>
   mutate(kap_mini = str_detect(kap_name, "^Minis|Úřad [Vv]lád"))
 
 range(szu_komplet$rok)
@@ -205,7 +209,9 @@ dta_uo_all0 <- dta_uo |>
   left_join(wages, by = join_by(rok)) |>
   left_join(deflators, by = join_by(rok)) |>
   rename(kap_name = kap_nazev) |>
-  rows_update(read_csv("data-input/kapitoly.csv", col_types = "ccc"), by = "kap_kod") |>
+  rows_update(read_csv("data-input/kapitoly.csv", col_types = "ccc") |>
+                select(-kap_uo, -kap_vladni, -kap_ancient),,
+              by = "kap_kod") |>
   mutate(kap_mini = str_detect(kap_name, "^Minis|Úřad [Vv]lád"),
          oppp = platy_a_oppp - platy)
 
