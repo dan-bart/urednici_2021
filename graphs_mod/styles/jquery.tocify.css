@@ -10,10 +10,13 @@
     overflow: auto;
     margin-left: 2%;
     position: relative;
-    border: 1px solid #ccc;
-    webkit-border-radius: 6px;
-    moz-border-radius: 6px;
-    border-radius: 6px;
+    border-radius: 4px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 30%) !important;
+    border-left: 1px solid #c4c4c4;
+    border-right: 1px solid #c4c4c4;
+    border-bottom: 1px solid #c4c4c4;
+    background-color: #fafafa;
+    margin-bottom: 20px;
 }
 
 /* The Table of Contents is composed of multiple nested unordered lists.  These styles remove the default styling of an unordered list because it is ugly. */
@@ -28,6 +31,7 @@
 /* Top level header elements */
 .tocify-header {
     text-indent: 10px;
+    border-top: 1px solid #ddd !important;
 }
 
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
