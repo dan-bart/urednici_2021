@@ -67,15 +67,18 @@ mrg6 <- list(t = 70,b=160, autoexpand = TRUE)
 mrg7 <- list(t = 70, autoexpand = TRUE)
 mrg8 <- list(t = 50,b=60, autoexpand = TRUE)
 
+uni_font <- "Arial"
+
 title_font <- list(color = cap_col,size=cap_size,
-                   family="Georgia,Times,Times New Roman,serif")
-pozn_font <- list(size = pozn_size)
-pozn_font_small <- list(size = pozn_long_size)
+                   # family="Georgia,Times,Times New Roman,serif")
+                   family=uni_font)
+pozn_font <- list(size = pozn_size,family=uni_font)
+pozn_font_small <- list(size = pozn_long_size,family=uni_font)
 axis_font <- list(color = "#000000",size=axis_size,
-                  family="Calibri")
-legend_below = list(x = 0, y = 0,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size,family="Calibri"))
-kat_ticks<-list(tickfont=list(size=kat_tick_size,family="Calibri"),showticklabels = T,tickangle = -90,tickmode = "array")
-num_ticks <- list(tickfont=list(size=num_tick_size,family="Calibri"))
+                  family=uni_font)
+legend_below = list(x = 0, y = 0,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size,family=uni_font))
+kat_ticks<-list(tickfont=list(size=kat_tick_size,family=uni_font),showticklabels = T,tickangle = -90,tickmode = "array")
+num_ticks <- list(tickfont=list(size=num_tick_size,family=uni_font))
 num_tilt_ticks <- list(tickfont=list(size=num_tick_size),tickangle = -45)
 frame_y<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,gridcolor = grdclr)
 frame_x<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,dtick=2)
@@ -230,7 +233,7 @@ graf_A1 <- tree_data %>%
     marker = list(colors = ~color),
     pathbar = list(side = "bottom", thickness = 30),
     values = tree_data$cost,
-    textfont = list(family = "Calibri",color = ~color_text),
+    textfont = list(family = uni_font,color = ~color_text),
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ",
                             labels, "<br>", " Rozpo\u010Det:",
                             format(cost, big.mark = " "), "K\u010D", "<br>",
@@ -262,7 +265,7 @@ graf_1 <- tree_data %>%
     marker = list(colors = ~color),
     pathbar = list(side = "bottom", thickness = 30),
     values = tree_data$count,
-    textfont = list(family="Calibri", color = ~color_text),
+    textfont = list(family=uni_font, color = ~color_text),
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ", labels, "<br>",
                             " Po\u010Det zam\u011Bstnanc\u016F:",
                             format(count, big.mark = " "), "<br>", " Pod\u00EDl na celku:",
@@ -299,7 +302,7 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
     ), ""), hoverinfo = "text",hoverlabel = list(font=list(size=hover_size))
   ) %>%
   layout(
-    hovermode = "closest",
+    hovermode = "x",
     legend = legend_below,
     annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.</i>",wrap_len),
                          font = pozn_font),
@@ -735,7 +738,7 @@ graf_5
 graf_5_static <- ggplot(graf_5_dt, aes(rok, wage_in_2023/1e3, colour = kategorie_2014_cz)) +
   geom_line(size = 1.9) +
   geom_point(colour = "black", size = 1.9) +
-  theme_minimal(base_family = "Calibri", base_size = 14) +
+  theme_minimal(base_family = uni_font, base_size = 14) +
   theme_urednici +
   scale_color_manual(values = color_map, name = NULL, limits = force) +
   scale_x_continuous(breaks = seq(2003, 2023, 2)) +
@@ -876,7 +879,7 @@ graf_6
 graf_6_static <- ggplot(graf_6_dt, aes(rok, wage_to_general, colour = kategorie_2014_cz)) +
   geom_line(size = 1.9) +
   geom_point(colour = "black", size = 1.9) +
-  theme_minimal(base_family = "Calibri", base_size = 14) +
+  theme_minimal(base_family = uni_font, base_size = 14) +
   theme_urednici +
   scale_color_manual(values = color_map, name = NULL, limits = force) +
   scale_x_continuous(breaks = seq(2003, 2023, 2)) +
