@@ -24,7 +24,6 @@ chapters_old <- read.csv("./data-input/legacy/chapters_ALL.csv", encoding = "UTF
 grp_old <- read.csv("./data-input/legacy/groups_ALL.csv", encoding = "UTF-8")
 
 sapply(input, ncol)
-sapply(input, nrow)
 
 
 # divide sheets to groups with similar format
@@ -346,5 +345,7 @@ saveRDS(jednotl_df, file = "./data-interim/jednotlivci.rds")
 saveRDS(summary, file = "./data-interim/summary.rds")
 
 
-main_df_update %>% filter(typ_rozpoctu=="SKUT",kap_num ==306,name=="SS") %>% select(name,kategorie_2014,kategorie_2014_cz) %>% unique()
+main_df_update %>%
+  filter(typ_rozpoctu=="SKUT",kap_num ==306,name=="SS") %>%
+  select(name,kategorie_2014,kategorie_2014_cz) %>% unique()
 
