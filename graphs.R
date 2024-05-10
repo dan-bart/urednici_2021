@@ -19,9 +19,13 @@ library(czso)
 library(kableExtra)
 library(htmlwidgets)
 library(coloratio)
+library(ggokabeito)
+
+library(arrow)
 options(scipen = 100, digits = 8)
 
 dta <- readRDS("./data-interim/sections.rds")
+write_parquet(dta, "dashboard/dta.parquet")
 dta_sum <- readRDS("./data-interim/summary.rds")
 
 dta$kap_name[dta$kap_name == "Ksen"] <- "KSen"
@@ -108,6 +112,15 @@ color_map <- c("Ministerstva" =             "#221669",
                "Státní správa" =            "#9BC9E9",
                "Organizační složky státu" = "#C4DFF2")
 
+
+lbls <- names(color_map)
+
+color_map <- c(ggokabeito::palette_okabe_ito(1:4),
+               "#CCCCCC",
+               ggokabeito::palette_okabe_ito(5:9))
+names(color_map) <- lbls
+
+
 text_color_map <- coloratio::cr_choose_bw(color_map)
 names(text_color_map) <- names(color_map)
 
@@ -116,6 +129,7 @@ color_map_kap <- ifelse(substr(kaps,1,1) == "M", "dimgray", "cornflowerblue")
 names(color_map_kap) <- kaps
 cols_df <- tibble(labels = names(color_map), color = unname(color_map)) |>
   mutate(color_text = cr_choose_bw(color_map))
+colorspace::swatchplot(cols_df$color)
 
 # Theme gg ----------------------------------------------------------------
 
@@ -228,8 +242,8 @@ graf_A1 <- tree_data %>%
   plot_ly(
     type = "treemap",
     branchvalues = "total",
-    labels = ~tree_data$labels,
-    parents = ~tree_data$parents,
+    labels = ~labels,
+    parents = ~parents,
     marker = list(colors = ~color),
     pathbar = list(side = "bottom", thickness = 30),
     values = tree_data$cost,
@@ -238,7 +252,7 @@ graf_A1 <- tree_data %>%
                             labels, "<br>", " Rozpo\u010Det:",
                             format(cost, big.mark = " "), "K\u010D", "<br>",
                             " Pod\u00EDl na celku:", round(cost_perc * 100, 1), "%"),
-    hoverlabel = list(font = list(size = hover_size, color = text_color_map)),
+    hoverlabel = list(font = list(size = hover_size, color = ~color_text)),
     domain = list(column = 0)
   ) %>%
   layout(title = list(font=title_font,
@@ -252,6 +266,9 @@ graf_A1 <- tree_data %>%
   config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
   onRender(js)
 
+tree_data %>%
+  left_join(cols_df, by = "labels") |>
+  count(color)
 
 graf_A1
 
