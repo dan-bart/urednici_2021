@@ -19,6 +19,8 @@ options("scipen" = 100, "digits" = 4)
 
 # load new data
 input <- read_excel_allsheets("./data-input/data_2023.xlsx")
+input21 <- read_excel_allsheets("./data-input/Data_2022.xls")
+
 # load old data
 chapters_old <- read.csv("./data-input/legacy/chapters_ALL.csv", encoding = "UTF-8")
 grp_old <- read.csv("./data-input/legacy/groups_ALL.csv", encoding = "UTF-8")
@@ -62,6 +64,30 @@ for (i in 1:length(main_names)) {
   main_df <- rbind(main_df, res)
 }
 
+main_names21 <- vector(mode = "list")
+polozky_names21 <- vector(mode = "list")
+jednotl_names21 <- vector(mode = "list")
+
+for (name in names(input21)) {
+  print(name)
+  if (name %in% main_sheets) {
+    main_names21 <- append(main_names21, input21[name])
+  } else if (name %in% sub_sheets) {
+    polozky_names21 <- append(polozky_names21, input21[name])
+  } else if (name %in% jednotl_sheets) {
+    jednotl_names21 <- append(jednotl_names21, input21[name])
+  }
+}
+
+# load excel data into clean dataframe
+
+main_df21 <- data.frame(matrix(ncol = length(section_names), nrow = 0))
+colnames(main_df21) <- section_names
+
+for (i in 1:length(main_names21)) {
+  res21 <- divide_sections(main_names21[[i]], names(main_names21[i]), section_names)
+  main_df21 <- rbind(main_df21, res21)
+}
 
 # sheets with various types of polozky
 # polozky <- data.frame(matrix(ncol = length(section_names), nrow = 0))
@@ -84,6 +110,12 @@ for (i in 1:length(jednotl_names)) {
   jednotl_df <- rbind(jednotl_df, res)
 }
 
+jednotl_df21 <- data.frame(matrix(ncol = length(jednotl_section_names), nrow = 0))
+for (i in 1:length(jednotl_names21)) {
+  res21 <- divide_jednotl(jednotl_names21[[i]], names(jednotl_names21[i]), jednotl_section_names)
+  jednotl_df21 <- rbind(jednotl_df21, res21)
+}
+
 
 # summary sheet
 summary_names <- c(
@@ -92,7 +124,11 @@ summary_names <- c(
 )
 
 summary <- divide_summary(input[[length(input)]], "Summary", summary_names)
+summary21 <- divide_summary(input[[length(input21)]], "Summary", summary_names)
 
+main_df <- bind_rows(main_df, main_df21 |> filter(rok == 2021))
+jednotl_df <- bind_rows(jednotl_df, jednotl_df21 |> filter(rok == 2021))
+summary <- bind_rows(summary, summary21 |> filter(rok == 2021))
 
 # now we will extend the new datasets with data from previous years
 
