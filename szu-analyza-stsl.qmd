@@ -213,8 +213,8 @@ dta_uo_all_mean |>
                                  `Jednotlivé úřady` = "grey",
                                  `Průměr všech úřadů` = "darkblue"),
                       name = NULL) +
-  labs(title = "Vývoj průměrných platů na úřadech ve srovnání s trhem práce v Praze, 2003-2023",
-       subtitle = "Měsíční nominální platy/mzdy v tis. Kč")
+  labs(title = "Vývoj platů na úřadech ve srovnání s trhem práce v Praze, 2003-2023",
+       subtitle = "Průměrné nominální měsíční platy/mzdy v tis. Kč")
 ```
 
 
@@ -329,7 +329,8 @@ dta_uo_all_mean |>
                                  `Jednotlivé úřady` = "grey",
                                  `Průměr všech úřadů` = "darkblue"),
                       name = NULL) +
-  labs(title = "Průměrné platy úřadů, 2003-2023, v cenách roku 2023")
+  labs(title = "Vývoj platů na úřadech ve srovnání s trhem práce v Praze, 2003-2023",
+       subtitle = "Průměrné reálné měsíční platy/mzdy v tis. Kč (ceny roku 2023)")
 ```
 
 ```{r}
@@ -508,6 +509,7 @@ make_plot_paycomp_adjusted(pv_edu_pg, syst_pocty_long_uo, dta_uo_all, rok = isvs
 ...ale při alespoň hrubém očištění o strukturu zaměstnanců se obrázek liší.
 
 ```{r}
-make_plot_paycomp_adjusted(pv_edu_pg, syst_pocty_long_uo, dta_uo_all, rok = isvs_rok)
+make_plot_paycomp_adjusted(pv_edu_pg, syst_pocty_long_uo, dta_uo_all, rok = isvs_rok) + 
+  theme_ptrr()
 ```
 
