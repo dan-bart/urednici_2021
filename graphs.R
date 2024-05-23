@@ -25,7 +25,7 @@ library(arrow)
 options(scipen = 100, digits = 8)
 
 dta <- readRDS("./data-interim/sections.rds")
-write_parquet(dta, "dashboard/dta.parquet")
+# write_parquet(dta, "dashboard/dta.parquet")
 dta_sum <- readRDS("./data-interim/summary.rds")
 
 dta$kap_name[dta$kap_name == "Ksen"] <- "KSen"
@@ -765,7 +765,7 @@ graf_5_static <- ggplot(graf_5_dt, aes(rok, wage_in_2023/1e3, colour = kategorie
        caption = "Pozn.: reálné hrubé měsíční platy, uvedené v cenách roku 2023")
 graf_5_static
 
-ggsave("graphs-static/graf-5.png", plot = graf_5_static, width = 8, height = 5, scale = 1.5, bg = "white")
+# ggsave("graphs-static/graf-5.png", plot = graf_5_static, width = 8, height = 5, scale = 1.5, bg = "white")
 
 ## ----mean_wage_pct_change_2023-----------------------------------------------------------------------------------
 graf_A7 <- dta %>%
@@ -909,7 +909,7 @@ graf_6_static <- ggplot(graf_6_dt, aes(rok, wage_to_general, colour = kategorie_
 
 graf_6_static
 
-ggsave("graphs-static/graf-6.png", plot = graf_6_static, width = 8, height = 5, scale = 1.5, bg = "white")
+# ggsave("graphs-static/graf-6.png", plot = graf_6_static, width = 8, height = 5, scale = 1.5, bg = "white")
 
 
 ## ----2023_effect-------------------------------------------------------------------------------------------------
