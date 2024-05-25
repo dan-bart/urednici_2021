@@ -446,8 +446,8 @@ ggplot(dta_plt, aes(pocet, plat, size = pocet_zamestnancu_2023)) +
          size = guide_legend(override.aes = aes(fill = "darkblue"))) +
   labs(y = "Změna průměrného platu", y = "Změna počtu zaměstnanců",
        title = "Změny počtu zaměstnanců a průměrných platů 2022 → 2023",
-       subtitle = "Ústřední orgány, ÚPDI a MO vynechány. Nominální hodnoty.",
-       caption = "Zdroj: VAÚ na základě SZÚ 2022 a 2023")
+       subtitle = "Ústřední orgány. ÚPDI a MO vynechány. Nominální hodnoty.",
+       caption = "Zdroj: VAÚ na základě dat ze SZÚ")
 ```
 
 ### Zvyšování platových tříd?
