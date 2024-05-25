@@ -136,13 +136,16 @@ summary <- bind_rows(summary, summary21 |> filter(rok == 2021))
 kap_slovnik <- main_df %>%
   select(kap_num, kap_name, full_kap_name, cz_kap_name) %>%
   filter(!is.na(kap_num)) %>%
+  rows_update(tribble(~kap_num, ~kap_name, ~full_kap_name, ~cz_kap_name,
+                      364, "DIA", "digitalni_a_informacni_agentura", "Digitální a informační agentura")) |>
   unique()
 df_addition <- data.frame(
-  c(347, 338, 341), c("KCP", "MI", "UVIS"), c("komise_pro_cenne_papiry", "ministerstvo_informatiky", "urad_pro_verejne_informacni_systemy"),
+  c(347, 338, 341), c("KCP", "MI", "UVIS"),
+  c("komise_pro_cenne_papiry", "ministerstvo_informatiky", "urad_pro_verejne_informacni_systemy"),
   c("Komise pro cenn\u00E9 pap\u00EDry", "Ministerstvo informatiky", "\u00DA\u0159ad pro ve\u0159ejn\u00E9 informa\u010Dn\u00ED syst\u00E9my")
 )
 names(df_addition) <- c("kap_num", "kap_name", "full_kap_name", "cz_kap_name")
-kap_slovnik <- rbind(kap_slovnik, df_addition)
+kap_slovnik <- rbind(kap_slovnik, df_addition) |> unique()
 
 
 old_dt <- chapters_old %>%
@@ -191,7 +194,8 @@ old_dt <- chapters_old %>%
   filter(rok != 2013)
 
 
-main_df <- rbind(main_df, old_dt)
+main_df <- rbind(main_df, old_dt) |>
+  rows_upsert(kap_slovnik)
 
 # group dataframe
 
