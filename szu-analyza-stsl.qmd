@@ -38,7 +38,12 @@ set_ptrr_ggplot_fonts()
 
 ```{r}
 dta_uo_all <- read_rds("data-interim/szu-uo-all-do2023.rds")
+dta_all <- read_parquet("data-export/data_all.parquet")
 syst_pocty_long_uo <- read_parquet("https://github.com/petrbouchal/systemizace/raw/main/data-export/systemizace_pocty_long.parquet")
+dta_uo_all <- dta_all |> 
+  filter(kategorie_2014_cz %in% c("Ministerstva", "Ostatní ústřední")) |> 
+  mutate(kap_mini = str_detect(kap_nazev, "Ministerstvo|Úřad [vV]l"),
+         phasal_all = prumerna_mzda_pha)
 ```
 
 ```{r}
@@ -47,21 +52,20 @@ dta_uo_sub <- dta_uo_all |>
   filter(faze_rozpoctu == "SKUT") |> 
   drop_na(prumerny_plat) |>
   filter(prumerny_plat != 0, prumerny_plat < Inf, 
-         !kap_zkr %in% c("NSA", "ÚS", "ÚSTR", "AVČR", "MI", "KCP"),
-         !(kap_zkr == "MO" &  rok == 2023)) |> 
+         !kap_zkr %in% c("NSA", "ÚS", "ÚSTR", "AVČR", "MI", "KCP")) |> 
   mutate(kap_zkr = as.factor(kap_zkr))
 ```
 
 ```{r}
 dta_uo_all_mean <- dta_uo_all |>
-  filter(!only_2023) |>
+  # filter(!only_2023) |>
   filter(!kap_zkr %in% c("MO", "Celkem"), faze_rozpoctu == "SKUT") |>
   mutate(platy_real = platy * ceny_deflator_2023) |>
   group_by(rok) |>
   summarise(prumerny_plat = sum(platy)/sum(pocet_zamestnancu)/12,
-            phasal_all = mean(phasal_all),
+            phasal_all = mean(prumerna_mzda_pha),
             phasal_all_c2023 = mean(phasal_all * ceny_deflator_2023),
-            czsal_all = mean(czsal_all),
+            czsal_all = mean(prumerna_mzda_cr),
             czsal_all_c2023 = mean(czsal_all * ceny_deflator_2023),
             prumerny_plat_vuciinh = mean(prumerny_plat / phasal_all),
             prumerny_plat_c2023 = sum(platy_real)/sum(pocet_zamestnancu)/12)
@@ -73,8 +77,6 @@ dta_uo_all_mean <- dta_uo_all |>
 
 - "v cenách roku 2023" znamená, že čísla za předchozí roky jsme upravili tak, aby odpovídaly cenové hladině roku 2023 na základě kumulativní inflace mezi daným rokem a rokem 2023
 - pokud není uvedeno jinak, grafy ukazující data za pouze jeden rok se týkají roku 2023
-
-Pozor: ve většině agregátních výpočtů vylučujeme Ministerstvo obrany (MO), protože pro něj není dostupná konzistentní časová řada. V grafech, kde jsou údaje MO zobrazeny samostatně, ze stejného důvodu není pro MO zobrazen rok 2023.
 
 :::
 
@@ -116,7 +118,7 @@ dta_uo_sub |>
 dta_uo_all |>
   drop_na(kap_zkr) |>
   filter(!(kap_zkr %in% c("MV", "MO", "NSA", "ÚPDI", "Celkem")),
-         faze_rozpoctu == "SKUT", !only_2023,
+         faze_rozpoctu == "SKUT",
          rok %in% 2013:2023) |>
   ggplot(aes(rok, pocet_zamestnancu, fill = kap_mini)) +
   geom_col() +
@@ -172,7 +174,7 @@ dta_uo_sub |>
 dta_uo_all |>
   drop_na(kap_zkr) |>
   filter(!(kap_zkr %in% c("MV", "MO", "NSA", "ÚPDI", "Celkem")),
-         faze_rozpoctu == "SKUT", !only_2023,
+         faze_rozpoctu == "SKUT",
          rok %in% 2013:2023) |>
   ggplot(aes(rok, platy/1e6 * ceny_deflator_2023, fill = kap_mini)) +
   geom_col() +
@@ -201,7 +203,7 @@ dta_uo_all_mean |>
   geom_line(aes(colour = "Průměr všech úřadů"), size = 1) +
   geom_point(aes(y = prumerny_plat[rok == 2023]/1e3, 
                  x = rok[rok == 2023])) +
-  geom_line(size = 1, aes(y = phasal_all/1e3, colour = "Praha - celá pracovní síla")) +
+  geom_line(linewidth = 1, aes(y = phasal_all/1e3, colour = "Praha - celá pracovní síla")) +
   geom_text(aes(y = prumerny_plat[rok == 2023]/1e3, 
                 x = rok[rok == 2023],
                 label = ptrr::label_number_cz()(prumerny_plat[rok == 2023])),
@@ -368,7 +370,7 @@ dta_delta |>
 dta_uo_all |>
   drop_na(kap_zkr) |>
   filter(faze_rozpoctu == "SKUT",
-         !only_2023,
+         # !only_2023,
          prumerny_plat < Inf, prumerny_plat > 0,
          !(kap_zkr %in% c("MV", "MO") & rok == 2023),
          !(kap_zkr %in% c("TA ČR") & rok == 2009),
@@ -402,19 +404,19 @@ dta_uo_all |>
 
 ptrr::set_ptrr_ggplot_fonts()
 
-dta_uo_sub |>
+dta_plt <- dta_uo_sub |>
   # filter(!kap_zkr %in% c("NSA", "ÚPDI", "Celkem")) |>
   filter(faze_rozpoctu == "SKUT", rok %in% 2018:2023, 
          !kap_zkr %in% c("ÚPDI")) |>
-  select(kap_zkr, rok, prumerny_plat, pocet_zamestnancu, kap_name, ceny_deflator_2023, kap_mini) |>
+  select(kap_zkr, rok, prumerny_plat, pocet_zamestnancu, kap_nazev, ceny_deflator_2023, kap_mini) |>
   group_by(kap_zkr) |>
   # mutate(prumerny_plat = prumerny_plat * ceny_deflator_2023) |>
   pivot_wider(id_cols = c(kap_zkr, kap_mini),
               names_from = c(rok),
               values_from = c(prumerny_plat, pocet_zamestnancu)) |>
   mutate(pocet = (pocet_zamestnancu_2023 - pocet_zamestnancu_2022)/(pocet_zamestnancu_2022),
-         plat = (prumerny_plat_2023 - prumerny_plat_2022)/prumerny_plat_2022) |>
-  ggplot(aes(pocet, plat, size = pocet_zamestnancu_2023)) +
+         plat = (prumerny_plat_2023 - prumerny_plat_2022)/prumerny_plat_2022) 
+ggplot(dta_plt, aes(pocet, plat, size = pocet_zamestnancu_2023)) +
   geom_vline(xintercept = 0, colour = "grey50") +
   geom_hline(yintercept = 0, colour = "grey50") +
   geom_text(aes(label = kap_zkr, colour = kap_mini), size = 2, vjust = 2.5, 
