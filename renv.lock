@@ -358,6 +358,22 @@
       ],
       "Hash": "ebaa97ac99cc2daf04e77eecc7b781d7"
     },
+    "coloratio": {
+      "Package": "coloratio",
+      "Version": "0.0.0.9004",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "matt-dray",
+      "RemoteRepo": "coloratio",
+      "RemoteRef": "main",
+      "RemoteSha": "852ac493f1dcee179d462d083aeb072082107da0",
+      "Requirements": [
+        "grDevices",
+        "graphics"
+      ],
+      "Hash": "a0cc6139c77ce98c409128315e750f32"
+    },
     "colorspace": {
       "Package": "colorspace",
       "Version": "2.1-0",
@@ -849,6 +865,22 @@
         "withr"
       ],
       "Hash": "3a147ee02e85a8941aad9909f1b43b7b"
+    },
+    "ggrepel": {
+      "Package": "ggrepel",
+      "Version": "0.9.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "ggplot2",
+        "grid",
+        "rlang",
+        "scales",
+        "withr"
+      ],
+      "Hash": "cc3361e234c4a5050e29697d675764aa"
     },
     "gh": {
       "Package": "gh",
@@ -1414,9 +1446,14 @@
     },
     "plotly": {
       "Package": "plotly",
-      "Version": "4.10.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "4.10.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "plotly",
+      "RemoteRepo": "plotly",
+      "RemoteRef": "v4.10.0",
+      "RemoteSha": "b137432625c1b173dbe244009198cd00487da408",
       "Requirements": [
         "R",
         "RColorBrewer",
@@ -1442,7 +1479,7 @@
         "vctrs",
         "viridisLite"
       ],
-      "Hash": "3781cf6971c6467fa842a63725bbee9e"
+      "Hash": "45ca81ef8ebace64e0292361c191bbc7"
     },
     "pointblank": {
       "Package": "pointblank",
@@ -1580,6 +1617,37 @@
       ],
       "Hash": "1cba04a4e9414bdefc9dcaa99649a8dc"
     },
+    "quarto": {
+      "Package": "quarto",
+      "Version": "1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cli",
+        "jsonlite",
+        "later",
+        "processx",
+        "rlang",
+        "rmarkdown",
+        "rstudioapi",
+        "tools",
+        "utils",
+        "yaml"
+      ],
+      "Hash": "c94c271f9b998d116186a78b2a9b23c1"
+    },
+    "ragg": {
+      "Package": "ragg",
+      "Version": "1.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "systemfonts",
+        "textshaping"
+      ],
+      "Hash": "14932bb6f2739c771ca4ceaba6b4248e"
+    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.3",
@@ -1648,7 +1716,12 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.5",
-      "Source": "Repository"
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "32c3f93e8360f667ca5863272ec8ba6a"
     },
     "rlang": {
       "Package": "rlang",
@@ -1951,6 +2024,18 @@
       ],
       "Hash": "4767a686ebe986e6cb01d075b3f09729"
     },
+    "textshaping": {
+      "Package": "textshaping",
+      "Version": "0.3.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cpp11",
+        "systemfonts"
+      ],
+      "Hash": "1ab6223d3670fac7143202cb6a2d43d5"
+    },
     "tibble": {
       "Package": "tibble",
       "Version": "3.2.1",
@@ -2019,6 +2104,27 @@
         "cpp11"
       ],
       "Hash": "c5f3c201b931cd6474d17d8700ccb1c8"
+    },
+    "tinyplot": {
+      "Package": "tinyplot",
+      "Version": "0.0.5.9008",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "grantmcdermott",
+      "RemoteRepo": "tinyplot",
+      "RemoteRef": "main",
+      "RemoteSha": "7218f7b785691d17818b3ffd7e8084fc5842c1b0",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "methods",
+        "stats",
+        "tools",
+        "utils"
+      ],
+      "Hash": "307d1b75acbbb0d5dfbe362536886205"
     },
     "tinytex": {
       "Package": "tinytex",
