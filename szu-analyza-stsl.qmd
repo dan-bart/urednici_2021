@@ -387,7 +387,7 @@ dta_uo_all |>
                                override.aes = aes(size = 3))) +
   ptrr::theme_ptrr("both", multiplot = TRUE, legend.position = "top") + 
   labs(title = "Průměrné platy podle úřadů, v cenách roku 2023",
-       subtitle = "červeně platová úroveň Prahy\nNominální měsíční platy/mzdy v tis. Kč")
+       subtitle = "červeně platová úroveň Prahy\nMěsíční platy/mzdy v tis. Kč")
 ```
 
 ## Sektorové srovnání
