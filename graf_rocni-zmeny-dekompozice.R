@@ -2,6 +2,7 @@ library(dplyr)
 library(ggplot2)
 library(ggokabeito)
 library(lubridate)
+unloadNamespace("plyr")
 
 dta <- readRDS("./data-interim/sections.rds")
 
@@ -39,3 +40,83 @@ dta |>
         axis.title = element_blank(),
         panel.background = element_rect("white"),
         plot.background = element_rect(fill = "grey95"))
+
+# Plotly ----
+library(plotly)
+library(htmlwidgets)
+
+color_map <- c("Ministerstva" =             "#221669",
+               "Ostatní ústřední" =         "#1C00C9",
+               "Neústřední st. správa" =    "#0069B4",
+               "Ostatní vč. armády" =       "#3CB450",
+               "Příspěvkové organizace" =   "#C3C7C4",
+               "Sbory" =                    "#BB133E",
+               "Ústřední orgány" =          "#EB96D8",
+               "Státní úředníci" =          "#C666BC",
+               "Státní správa" =            "#9BC9E9",
+               "Organizační složky státu" = "#C4DFF2")
+
+
+lbls <- names(color_map)
+
+color_map <- c(ggokabeito::palette_okabe_ito(1:4),
+               "#CCCCCC",
+               ggokabeito::palette_okabe_ito(5:9))
+names(color_map) <- lbls
+
+dta <- readRDS("./data-interim/sections.rds")
+
+dta <- dta |>
+  filter(typ_rozpoctu == "SKUT", !name %in% c("ROPO", "OSS"),
+         !kategorie_2014_cz %in% c("Státní správa", "Státní úředníci")) |>
+  mutate(kategorie = case_when(kategorie_2014_cz == "Příspěvkové organizace" & kap_name == "MŠMT" ~ "PO MŠMT - hlavně školy",
+                               .default = kategorie_2014_cz)) |>
+  summarise(pocet = sum(pocet_zamestnancu), .by = c(rok, kategorie)) |>
+  group_by(kategorie) |>
+  arrange(kategorie, rok) |>
+  mutate(delta = pocet - lag(pocet), datum = make_date(rok)) |>
+  filter(rok > 2003)
+
+color_map <- append(color_map,
+                    c("PO MŠMT - hlavně školy" = "#2c3f48"))
+
+mrg <- list(b = 150, t = 70, pad = 0, autoexpand = FALSE)
+
+graf_AX1 <- dta %>%
+  plot_ly(
+    type="bar",
+    x = ~datum, y = ~ delta / 1000, color = ~kategorie,
+    opacity = sapply(year(dta$datum),function(x)ifelse(x==2012,0.4,1)),
+    colors = color_map,
+    hovertemplate = ~ paste(
+      "<extra></extra>", "Rok:", year(datum), "<br>", "Kategorie:", kategorie, "<br>",
+      "Změna:", sapply(delta,function(x)ifelse(x>0,paste0("+",x),x)),"<br>",
+      "Počet:", pocet
+    ),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
+    hoverinfo = "text"
+  ) %>%
+  layout(hovermode = "x",
+         barmode = "relative",bargap=0.5,
+         title = list(font=title_font,
+                      text = paste0("<b>Graf AX1. Změny počtu zaměstnanců ve sféře rozpočtové regulace, podle kategorií</b>",
+                                    "<br>","<sup>","Meziroční změna skutečného počtu zaměstnanců podle Státního závěrečného účtu","</sup>"),
+                      y = 0.98),
+         annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Změna v roce 2012 způsobena změnou klasifikace některých zaměstnanců MV a MZV</i>",wrap_len),
+                                          font = pozn_font)),
+         xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",
+                                                       standoff=10),
+                                          titlefont = axis_font)),
+                      # dtick=2,
+                      # titlefont = axis_font),
+         yaxis = c(num_ticks,frame_y,list(title = "<b>Meziroční změna (v tisících)</b>",
+                                          titlefont = axis_font),
+                   tickprefix = "+",
+                   showtickprefix = "last"),
+         legend = legend_below,
+         margin = mrg ) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  onRender(js)
+graf_AX1
+
+htmlwidgets::saveWidget(as_widget(graf_AX1), paste0("graphs/","graf_AX1",".html"), libdir = "js", selfcontained = FALSE)

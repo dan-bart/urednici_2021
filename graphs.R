@@ -20,6 +20,7 @@ library(kableExtra)
 library(htmlwidgets)
 library(coloratio)
 library(ggokabeito)
+unloadNamespace("plyr")
 
 library(arrow)
 options(scipen = 100, digits = 8)
@@ -76,14 +77,14 @@ uni_font <- "Arial"
 title_font <- list(color = cap_col,size=cap_size,
                    # family="Georgia,Times,Times New Roman,serif")
                    family=uni_font)
-pozn_font <- list(size = pozn_size,family=uni_font)
+pozn_font <- list(size = pozn_size)
 pozn_font_small <- list(size = pozn_long_size,family=uni_font)
 axis_font <- list(color = "#000000",size=axis_size,
                   family=uni_font)
 legend_below = list(x = 0, y = 0,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size,family=uni_font))
 kat_ticks<-list(tickfont=list(size=kat_tick_size,family=uni_font),showticklabels = T,tickangle = -90,tickmode = "array")
 num_ticks <- list(tickfont=list(size=num_tick_size,family=uni_font))
-num_tilt_ticks <- list(tickfont=list(size=num_tick_size),tickangle = -45)
+num_tilt_ticks <- list(tickfont=list(size=num_tick_size,family=uni_font),tickangle = -45)
 frame_y<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,gridcolor = grdclr)
 frame_x<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,dtick=2)
 annot_below<-list(                       align='left',
@@ -316,7 +317,7 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
       "Po\u010Det zam\u011Bstnanc\u016F:",
       format(pocet_zamestnancu, big.mark = " "), "<br>", "Celkem za kapitolu: ",
       format(pocet_zamestnancu_agg, big.mark = " ")
-    ), ""), hoverinfo = "text",hoverlabel = list(font=list(size=hover_size))
+    ), ""), hoverinfo = "text",hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
   layout(
     hovermode = "x",
@@ -346,7 +347,7 @@ annot_below_A2 <- list(align='left',
                        bordercolor = 'rgba(0,0,0,0)',
                        borderwidth=1,
                        showarrow = FALSE)
-legend_below_A2 = list(x = 0, y = -0.25,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size))
+legend_below_A2 = list(x = 0, y = -0.25,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size,family=uni_font))
 
 graf_A2 <- plot_ly(bar_dt,
                    x = ~kap_name, y = ~ prostredky_na_platy / 1e9,
@@ -360,12 +361,12 @@ graf_A2 <- plot_ly(bar_dt,
                                                   format(prostredky_na_platy_agg, big.mark = " "),
                                                   "K\u010D"),
                                             ""),
-                   hoverlabel = list(font=list(size=hover_size)),
+                   hoverlabel = list(font=list(size=hover_size,family=uni_font)),
                    hoverinfo = "text") %>%
   add_bars() %>%
   layout(
     legend = legend_below_A2,
-    hovermode = "closest",
+    hovermode = "x",
     annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.</i>",wrap_len),
                          font = pozn_font),
                     annot_below_A2),
@@ -432,7 +433,7 @@ graf_3 <- bar_dt %>%
                                          "Kapitola:", cz_kap_name, "<br>", "Pr\u016Fm\u011Brn\u00FD plat:",
                                          format(prumerny_plat, big.mark = " "), "K\u010D"),
                                    ""),
-          hoverlabel = list(font=list(size=hover_size)),
+          hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text"
   ) %>%
   add_trace(type="scatter",mode="markers",
@@ -485,7 +486,7 @@ graf_A3 <- bar_dt %>%
       format(prumerny_plat, big.mark = " "), "K\u010D", "<br>",
       "Rozd\u00EDl k pr\u016Fm\u011Brn\u00E9 mzd\u011B:",
       round(wage_to_general*100,1), "%"),
-    hoverlabel = list(font=list(size=hover_size)),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text"
   ) %>% add_bars(x = ~kap_name, y = ~ (wage_to_general) * 100,
                  type = "bar", width=~0.8,color = ~kategorie_2014_cz, colors = color_map)%>%
@@ -544,7 +545,7 @@ graf_4 <- dta %>%
       "Zam\u011Bstnanc\u016F:", format(pocet_zamestnancu, big.mark = " "), "<br>",
       "Celkem za rok: ", format(pocet_zamestnancu_agg, big.mark = " ")
     ),
-    hoverlabel = list(font=list(size=hover_size)),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text"
   ) %>%
   add_bars()%>%
@@ -594,7 +595,7 @@ graf_A4 <- vyvoj_bar %>%
       "<br>",
       "Celkem za rok: ", format(prostredky_na_platy_nom_agg, big.mark = " "), "K\u010D"
     ),
-    hoverlabel = list(font=list(size=hover_size)),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text"
   ) %>%
   layout(barmode='stack',bargap=0.5,
@@ -679,7 +680,7 @@ graf_A6 <- aux2 %>%
       " Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
       "Hodnota:", round(output, 4) * 100, "%"
     ),
-    hoverlabel = list(font=list(size=hover_size)),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text",
     legendgroup = ~kategorie_2014_cz
   ) %>%
@@ -732,7 +733,7 @@ graf_5 <- plot_ly(graf_5_dt,
                     ifelse(min_change>0,"Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"), "<br>",
                     min_change_kap, ": ",
                     min_change * 100, " %"),
-                  hoverlabel = list(font=list(size=hover_size)),
+                  hoverlabel = list(font=list(size=hover_size,family=uni_font)),
                   hoverinfo = "text",
                   legendgroup = ~kategorie_2014_cz) %>%
   layout(
@@ -804,7 +805,7 @@ graf_A7 <- dta %>%
       ifelse(min_change>0,"Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"), "<br>",
       min_change_kap, ": ", min_change * 100, " %", "<br>"
     ),
-    hoverlabel = list(font=list(size=hover_size)),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text",
     legendgroup = ~kategorie_2014_cz
   ) %>%
@@ -873,7 +874,7 @@ graf_6 <- plot_ly(graf_6_dt,
                     ifelse(min_change > 0, "Nejmen\u0161\u00ED nárůst:","Nejv\u011Bt\u0161\u00ED pokles:"),
                     "<br>", min_change_kap, ": ", min_change * 100, " %", "<br>"
                   ),
-                  hoverlabel = list(font=list(size=hover_size)),
+                  hoverlabel = list(font=list(size=hover_size,family=uni_font)),
                   hoverinfo = "text",
                   legendgroup = ~kategorie_2014_cz
 ) %>%layout(
@@ -1028,7 +1029,7 @@ graf_A9 <- dta %>%filter(!is.na(kap_name)) %>%
       "Skute\u010Dn\u00FD po\u010Det zam\u011Bstnanc\u016F", ": ",
       format(SKUT, big.mark = " ")
     ),
-    hoverlabel = list(font=list(size=hover_size))
+    hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
     add_annotations(
       text =~paste("<b>",unique(kap_name),"</b>"),
@@ -1090,7 +1091,7 @@ graf_A10 <- dta %>%filter(!is.na(kap_name)) %>%
       "Skute\u010Dn\u00FD pr\u016Fm\u011Brn\u00FD plat", ": ",
       format(round(SKUT, 0), big.mark = " "), "K\u010D"
     ),
-    hoverlabel = list(font=list(size=hover_size))
+    hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
     add_annotations(
       text = ~paste("<b>",unique(kap_name),"</b>"),
@@ -1150,7 +1151,7 @@ graf_A11 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
       "Skute\u010Dn\u00FD po\u010Det zam\u011Bstnanc\u016F", ": ",
       format(SKUT, big.mark = " ")
     ),
-    hoverlabel = list(font=list(size=hover_size))
+    hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
     add_annotations(
       text = ~paste("<b>",unique(kategorie_2014_cz),"</b>"),
@@ -1209,7 +1210,7 @@ graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
       "Skute\u010Dn\u00FD pr\u016Fm\u011Brn\u00FD plat", ": ",
       format(round(SKUT, 0), big.mark = " "), "K\u010D"
     ),
-    hoverlabel = list(font=list(size=hover_size))
+    hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
     add_annotations(
       text = ~paste("<b>",unique(kategorie_2014_cz),"</b>"),
@@ -1222,7 +1223,7 @@ graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
       yanchor = "top",
       showarrow = FALSE
     ) %>%
-    layout(bargap=0.5,margin = list(t = 150,b=100,l=70),
+    layout(bargap=0.5,margin = list(t = 120,b=100,l=70),
            xaxis = c(num_ticks,frame_y,list(title="<b>Rok</b>",titlefont = axis_font)),
            yaxis = c(frame_y,list(title = "",
                                   titlefont = axis_font,range = c(0, 16))),
@@ -1230,7 +1231,7 @@ graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
   keep = TRUE) %>%
   subplot(nrows = 2, shareY = F, margin = c(0.07,0.07,0.15,0.15),titleY =T) %>%
   layout(title = list(font=title_font,
-                      text = "<b>Graf A12. Rozdíl v průměrných platech mezi\n schváleným rozpočtem a skutečností</b>",
+                      text = "<b>Graf A12. Rozdíl v průměrných platech mezi schváleným rozpočtem a skutečností</b>",
                       y = 0.98), annotations = list(x = 0 , y = 0.5, text = "<b>Kladné = skutečný průměrný plat vyšší než schválený</b>",
                                                     font = list(size = axis_size),
                                                     xshift = -70, textangle = 270,
@@ -1271,7 +1272,7 @@ graf_A13 <- dta %>%filter(!is.na(kategorie_2014_cz))%>%
       format(round(prumerny_plat_2023, 0), big.mark = " "), "K\u010D", "<br>",
       "Zm\u011Bna", ": ", format(round(plat_change*100, 1),big.mark = " "), "%"
     ),
-    hoverlabel = list(font=list(size=hover_size))
+    hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
     add_annotations(
       text = ~paste("<b>",unique(kategorie_2014_cz),"</b>"),
@@ -1327,7 +1328,7 @@ graf_A14 <- dta %>%
       "Zam\u011Bstnanc\u016F:", format(pocet_zamestnancu, big.mark = " "), "<br>",
       "Celkem: ", format(pocet_zamestnancu_agg, big.mark = " ")
     ),
-    hoverlabel = list(font=list(size=hover_size)),
+    hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text"
   ) %>% add_bars()%>%
   layout(barmode='stack',bargap=0.5,
@@ -1368,7 +1369,7 @@ graf_A15 <- plot_ly(pubsec, type = "scatter", mode = "lines+markers",
     xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",standoff=10),titlefont = axis_font)),showlegend=FALSE,
     annotations = c(list(text ='<i>Pozn.: Zdroj: Statistické ročenky České republiky za jednotlivé roky, zde například údaje za rok 2020:</i><br><a href="https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om" target="_blank"><i>https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om</i></a>',
                          font = pozn_font),annot_below),
-    title = list(font=list(color = cap_col,size=cap_size),
+    title = list(font=list(color = cap_col,size=cap_size,family=uni_font),
                  text = "<b>Graf A15. Počet zaměstnanců veřejného sektoru</b>",
                  y = 0.98), margin = mrg2) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%

@@ -84,10 +84,77 @@
 </div>
 </div>
 
-// extra script here
+<script>
+function placeLegendAnnot(id) {
+gr = $("#"+id);
+
+plot_height = gr.outerHeight();
+plot_width = gr.outerWidth();
+
+annot = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g.annotation > g > g.cursor-pointer");
+annotation_width = annot.find("rect").outerWidth();
+
+leg = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g.legend");
+legend_width = leg.find("rect").outerWidth();
+
+title = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g > text.gtitle");
+
+if (title.length == 1){
+
+	if(id == "graf_6" | id == "graf_A6"){
+		title_tranform_y = -10;
+	} else if(id == "graf_A12"){
+		title_tranform_y = 10;
+	} else {
+		title_tranform_y = 0;
+	}
+	title.css('transform','translate(0px,'+title_tranform_y+'px)');
+	};
+	
+if (annot.length != 0){
+
+	annot_tranform_x = (plot_width-annotation_width)/2;
+	annot_tranform_y = plot_height;
+	
+	if(id == "graf_6"){
+		annot_tranform_y = annot_tranform_y - 60;
+	} else if(id == "graf_3" | id == "graf_A8"){
+		annot_tranform_y = annot_tranform_y - 70;
+	} else if(id == "graf_1" | id == "graf_A1"){
+		annot_tranform_y = annot_tranform_y - 30;
+	} else if(id == "graf_2" | id == "graf_A2" | id == "graf_4" | id == "graf_A4" | id == "graf_5" | id == "graf_A5" | id == "graf_A6" | id == "graf_A7" | id == "graf_A14"){
+		annot_tranform_y = annot_tranform_y - 50;
+	} else {
+		annot_tranform_y = annot_tranform_y - 80;
+	}
+	
+	annot.css('transform','translate('+annot_tranform_x+'px, '+annot_tranform_y+'px)');
+	};
+	
+if (leg.length == 1){
+
+	leg_tranform_x = (plot_width-legend_width)/2;
+	leg_tranform_y = plot_height;
+	
+	
+	if(id == "graf_A3"){
+		leg_tranform_y = leg_tranform_y - 30;
+	} else if(id == "graf_6"){
+		leg_tranform_y = leg_tranform_y - 100;
+	} else {
+		leg_tranform_y = leg_tranform_y - 90;
+	}
+	
+	leg.css('transform','translate('+leg_tranform_x+'px, '+leg_tranform_y+'px)');
+	};
+};
+</script>
 
 <script>
   $(document).ready(function() {
+  
+  // extra script here
+
     if ($.cookie("dismiss") == null) {
       $('#PozorModal').appendTo("body");
       function show_modal(){

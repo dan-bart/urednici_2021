@@ -43,30 +43,26 @@ line-height: 30px !important;
 
 .tocify-subheader li {
 font-size: 15px !important;
-text-indent: 0px !important;
-}
-
-.tocify-subheader > li > a {
-padding-left: 20px !important;
 }
 
 
 .tocify {
+position: fixed !important;
 margin-left: 0px !important;
-width: 100% !important;
+width: 20% !important;
 font-size: 16px !important;
 padding-bottom: 10px !important;
 }
 
 div.span2 {
-overflow-x: hidden !important;
 padding-right: 9px !important;
 padding-left: 9px !important;
 width: 22% !important;
+margin-left: 0% !important;
+margin-right: 0% !important;
 }
 
 div.span10 {
-overflow-x: hidden !important;
 margin-left: 2% !important;
 margin-right: 2% !important;
 width: 74% !important;

@@ -170,11 +170,15 @@ gr_all <- unlist(lapply(as.list(template), function(x)
 gr_content_all <- vector(mode = "character")
 extra_script_all <- vector(mode = "character")
 
+graph_titles <- graph_titles[order(factor(graph_titles$graph_cat,levels=c("hlav","dodat")),graph_titles$graph_group),]
+
+lfiles <- graph_titles$graph
+
 inx <- 1:length(lfiles)
 # inx <- c(1,3)
 for(i in inx){
-  f <- lfiles[i]
-  gr_id <- gsub("\\.html","",f)
+  f <- paste0(lfiles[i],".html")
+  gr_id <- lfiles[i]
   gr_group <- graph_titles$graph_group[graph_titles$graph==gr_id]
   gr_cat <- graph_titles$graph_cat[graph_titles$graph==gr_id]
   title_sub <- graph_titles$title_sub[graph_titles$graph==gr_id]
@@ -202,10 +206,12 @@ for(i in inx){
 
   extra_script <- paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'"), false);')
 
-  gr_content <- c(header_toc,gr_content)
+  if(!(gr_id %in% c("graf_A3","graf_A9","graf_A10","graf_A11","graf_A12","graf_A13"))){
+    extra_script_all <- append(extra_script_all,extra_script)
+  }
 
-  gr_content_all <- append(gr_content_all,c(gr_content, "</div><br>"))
-  extra_script_all <- append(extra_script_all,extra_script)
+  gr_content <- c(header_toc,gr_content)
+  gr_content_all <- append(gr_content_all,c(gr_content, "</div><br><br><br>"))
 }
 
 gr_all <- unlist(lapply(as.list(template), function(x)

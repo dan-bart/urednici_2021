@@ -2,6 +2,8 @@ $('#graf_1').tooltip();
 
 $('#graf_A1').tooltip();
 
+$('#graf_AX1').tooltip();
+
 $('#graf_2').tooltip();
 
 $('#graf_A2').tooltip();
@@ -39,4 +41,6 @@ $('#graf_A13').tooltip();
 $('#graf_A14').tooltip();
 
 $('#graf_A15').tooltip();
+
+$('#graf_AX').tooltip();
 

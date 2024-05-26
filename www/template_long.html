@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+<head>
+<meta charset="utf-8" />
+<title>
+// page title here
+</title>
+
+<script src="js/htmlwidgets.js"></script>
+<script src="js/plotly-htmlwidgets.js"></script>
+<script src="js/global.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/crosstalk.js"></script>
+<script src="js/plotly.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.tocify.min.js""></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/2e777dc322.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<link href="styles/bootstrap-old.css" rel="stylesheet">
+<link href="styles/jquery.tocify.css" rel="stylesheet">
+<link href="styles/crosstalk.css" rel="stylesheet" >
+<link href="styles/keywords.css?version=10" rel="stylesheet" >
+
+<link rel="shortcut icon" type="image/png" href="icons/idea-logo-bookmark.png">
+<link rel="shortcut icon" type="image/x-icon" href="icons/idea-logo-bookmark.ico">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/idea-logo-bookmark-retina.png">
+
+</head>
+
+<body style="background-color: white; padding-top: 20px; padding-bottom: 10px; height:95%;">
+
+<div class="modal fade" id="TitleModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body" style="font-size:16px;">
+        <img src="img/title_v2.svg">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" >
+<div class="row-fluid" >
+
+<div class="modal fade" id="infomodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="font-size: 22px">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Disclaimer</h4>
+      </div>
+      <div class="modal-body" style="font-size:16px;">
+        <p>Autoři děkují IDEA za podporu a Danielu Münichovi, *, * za komentáře. Veškeré případné nepřesnosti a chyby včetně vyjádřených názorů však jdou na vrub autorů. Studie vznikla díky podpoře Akademie věd ČR v rámci programu Strategie AV21 „Společnost v pohybu a veřejné politiky“ a díky podpoře Pale Fire Capital.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default dismiss" data-dismiss="modal" aria-hidden="true" style="font-size: 15px !important;">Rozumím</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="span2">
+
+<div style="position:fixed;width:20%">
+
+<div class="btn btn-light" style="display:flex;margin-left:auto;margin-right:auto;margin-bottom:20px; background-color: #c90239 !important; color: #fff !important; border-radius: 0px; font-size:20px;">
+<span>
+<a href="https://idea.cerge-ei.cz/images/studie/2022/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.pdf" target="_blank" style="color:#fff!important;decoration:none!important;">Podrobnosti ve studii IDEA:<br>„Státní zaměstnanci a úředníci: kde pracují a za kolik?“</a>
+<a href="#infomodal" data-toggle="modal" data-target="#infomodal" style="color:#fff!important;decoration:none!important;"><i class="fa-solid fa-circle-info"></i></a>
+</span>
+</div>
+
+<div class="tocify" style="position:relative!important;width:100%!important;">
+
+<ul class="tocify-header nav nav-list" style="display: block;">
+  <li class="tocify-item" style="cursor: pointer;"><a href="https://idea.cerge-ei.cz/images/studie/2022/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.pdf#page=6"
+   onclick="window.open(this.href,'targetWindow',
+                                   `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=600,
+                                    height=800`);
+ return false;">Seznam zkratek</a></li>
+  <li class="tocify-item" style="cursor: pointer;"><a href="https://idea.cerge-ei.cz/images/studie/2022/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.pdf#page=19"
+   onclick="window.open(this.href,'targetWindow',
+                                   `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=600,
+                                    height=800`);
+ return false;">Data a metodologie</a></li>
+</ul>
+
+</div> 
+
+<div id="toc"></div>
+
+</div>
+   
+</div>
+
+<div class="span10">
+
+// graph content here
+
+</div>
+
+</div>
+</div>
+
+<script>
+function placeLegendAnnot(id) {
+gr = $("#"+id);
+
+plot_height = gr.outerHeight();
+plot_width = gr.outerWidth();
+
+annot = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g.annotation > g > g.cursor-pointer");
+annotation_width = annot.find("rect").outerWidth();
+
+leg = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g.legend");
+legend_width = leg.find("rect").outerWidth();
+
+title = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g > text.gtitle");
+
+if (title.length == 1){
+
+	if(id == "graf_6" | id == "graf_A6"){
+		title_tranform_y = -10;
+	} else if(id == "graf_AX1"){
+		title_tranform_y = 10;
+	} else {
+		title_tranform_y = 0;
+	}
+	title.css('transform','translate(0px,'+title_tranform_y+'px)');
+	};
+	
+if (annot.length != 0){
+
+	annot_tranform_x = (plot_width-annotation_width)/2;
+	annot_tranform_y = plot_height;
+	
+	if(id == "graf_6"){
+		annot_tranform_y = annot_tranform_y - 60;
+	} else if(id == "graf_3" | id == "graf_A8"){
+		annot_tranform_y = annot_tranform_y - 70;
+	} else if(id == "graf_1" | id == "graf_A1" | id == "graf_AX1"){
+		annot_tranform_y = annot_tranform_y - 30;
+	} else if(id == "graf_2" | id == "graf_A2" | id == "graf_4" | id == "graf_A4" | id == "graf_5" | id == "graf_A5" | id == "graf_A6" | id == "graf_A7" | id == "graf_A14" | id == "graf_AX"){
+		annot_tranform_y = annot_tranform_y - 50;
+	} else {
+		annot_tranform_y = annot_tranform_y - 80;
+	}
+	
+	annot.css('transform','translate('+annot_tranform_x+'px, '+annot_tranform_y+'px)');
+	};
+	
+if (leg.length == 1){
+
+	leg_tranform_x = (plot_width-legend_width)/2;
+	leg_tranform_y = plot_height;
+	
+	
+	if(id == "graf_A3"){
+		leg_tranform_y = leg_tranform_y - 30;
+	} else if(id == "graf_6"){
+		leg_tranform_y = leg_tranform_y - 100;
+	} else {
+		leg_tranform_y = leg_tranform_y - 90;
+	}
+	
+	leg.css('transform','translate('+leg_tranform_x+'px, '+leg_tranform_y+'px)');
+	};
+};
+</script>
+
+<script>
+
+$(function() {
+  	//Calls the tocify method on your HTML div.
+  	$("#toc").tocify();
+});
+  
+  $(document).ready(function() {
+  
+  // extra script here
+
+    if ($.cookie("dismiss") == null) {
+      $('#PozorModal').appendTo("body");
+      function show_modal(){
+        $('#PozorModal').modal();
+      }
+      window.setTimeout(show_modal, 0);
+      }
+    $(".dismiss").click(function() {
+      document.cookie = "dismiss=true";
+    });
+    
+    if ($.cookie("dismiss-title") == undefined) {
+      $('#TitleModal').appendTo("body");
+      function show_modal(){
+        $('#TitleModal').modal();
+      }
+      window.setTimeout(show_modal, 0);
+      }
+    
+    $(document).keydown(function(event) { 
+    if (event.keyCode == 27) { 
+    	$('#infomodal').modal('hide');
+    	$('#TitleModal').modal('hide');
+    	$.cookie('dismiss-title', 'yes', { expires: 7, path: '/' });
+    	document.cookie = "dismiss-title='yes'";
+    }
+	});
+	
+	$('#TitleModal').on('hidden.bs.modal', function (e) {
+    	$.cookie('dismiss-title', 'yes', { expires: 7, path: '/' });
+    	document.cookie = "dismiss-title='yes'";
+})
+});
+</script>
+
+<script src="js/tooltips.js"></script>
+
+</body>
+</html>
+

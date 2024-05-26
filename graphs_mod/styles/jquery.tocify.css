@@ -31,7 +31,7 @@
 /* Top level header elements */
 .tocify-header {
     text-indent: 10px;
-    border-top: 1px solid #ddd !important;
+/*    border-top: 1px solid #ddd !important;*/
 }
 
 /* Top level subheader elements.  These are the first nested items underneath a header element. */

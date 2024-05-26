@@ -4,6 +4,7 @@ library(ggplot2)
 library(lubridate)
 library(forcats)
 library(tidyr)
+unloadNamespace("plyr")
 
 source("theme.R")
 
@@ -140,8 +141,101 @@ ggsave(plot = zm_plt_y, "plt_facebook.png", bg = "white", scale = 3, dpi = 300, 
        width = 1200, height = 630, limitsize = FALSE, units = "px")
 
 
-zm_plt_dt_y |> filter(tm > "2021-12-31", is.na(odvetvi_kod))
-zm_plt_dt_y2 |> filter(tm > "2021-12-31", is.na(odvetvi_kod))
-make_nace_plot(zm_plt_dt_y2)
+# zm_plt_dt_y |> filter(tm > "2021-12-31", is.na(odvetvi_kod))
+# zm_plt_dt_y2 |> filter(tm > "2021-12-31", is.na(odvetvi_kod))
+# make_nace_plot(zm_plt_dt_y2)
+#
+# writexl::write_xlsx(zm_plt_dt_y2, "data-export/platy_nace_realne.xlsx")
 
-writexl::write_xlsx(zm_plt_dt_y2, "data-export/platy_nace_realne.xlsx")
+# Plotly ---------------------------------------------------------
+library(plyr)
+library(plotly)
+library(htmlwidgets)
+
+add_years <- 5
+
+data <- zm_plt_dt_y |>
+  drop_na(realna_zmena) |>
+  group_by(tm) |>
+  mutate(is_minmax = realna_zmena == max(realna_zmena) | realna_zmena == min(realna_zmena)) |>
+  ungroup() |>
+  mutate(is_last_period = tm == max(tm),
+         needs_label = is_last_period & (is_minmax | clr != "Ostatní"),
+         name_for_label = ifelse(is_minmax, odvetvi_txt, as.character(clr)) |> str_wrap(30))
+
+new_labels <- c(seq(year(min(data$tm)), year(max(data$tm))), rep(" ", times = add_years))
+print(new_labels)
+
+new_breaks <- make_date(seq(year(min(data$tm)), year(max(data$tm))))
+print(new_breaks)
+
+fmt_pct_change <- scales::label_number(.1, 100, suffix = " %", decimal.mark = ",",
+                                       style_positive = "plus", style_negative = "minus")
+fmt_pct_change_axis <- scales::label_number(1, 100, suffix = " %", decimal.mark = ",",
+                                            style_positive = "plus", style_negative = "minus")
+
+color_map <- c(Ostatní = "grey40", Profesní = "blue3",
+               `Celá ekonomika` = "grey20",
+               `ICT` = "goldenrod", `Veřejná správa` = "red3")
+color_map <- setNames(col2hex(color_map),names(color_map))
+
+linewidth_map <- c(Ostatní = 0, Profesní = 0,
+                   `Celá ekonomika` = 7,
+                   `ICT` = 0, `Veřejná správa` = 7)
+
+marker_clr_map <- c(Ostatní = "grey40", Profesní = "blue3",
+                    `Celá ekonomika` = "white",
+                    `ICT` = "goldenrod", `Veřejná správa` = "white")
+marker_clr_map <- setNames(col2hex(marker_clr_map),names(marker_clr_map))
+
+marker_size_map <- c(Ostatní = 1, Profesní = 2,
+                     `Celá ekonomika` = 2,
+                     `ICT` = 2, `Veřejná správa` = 2)*4
+
+marker_opac_map <- c(Ostatní = 0.6, Profesní = 1,
+                     `Celá ekonomika` = 1,
+                     `ICT` = 1, `Veřejná správa` = 1)
+
+text_size_map <- c(Ostatní = 0, Profesní = hover_size,
+                   `Celá ekonomika` = hover_size,
+                   `ICT` = hover_size, `Veřejná správa` = hover_size)
+
+graf_AX <- data %>%
+  plot_ly(
+    x = ~tm, y = ~ realna_zmena * 100, type = "scatter",
+    color = ~clr, colors = color_map, mode = "line",
+    line = list(width = revalue(data$clr,linewidth_map),
+                color = revalue(as.character(data$clr),color_map)),
+    marker = list(symbol = "circle",
+                  line = list(width = 1,color=revalue(data$clr,color_map)),
+                  opacity=revalue(data$clr,marker_opac_map),
+                  size=revalue(data$clr,marker_size_map),
+                  color = revalue(as.character(data$clr),marker_clr_map)),
+    text = ~ paste(
+      " Rok:", year(tm), "<br>", "Skupina NACE (odvětví):", clr, "<br>", "Hodnota:",
+      round(realna_zmena * 100,2), "%"
+    ),
+    hoverlabel = list(font=list(size=revalue(data$clr,text_size_map),
+                                family=uni_font),
+                      bgcolor=revalue(as.character(data$clr),color_map)),
+    hoverinfo = "text",
+    legendgroup = ~clr
+  ) %>%
+  layout(
+    hovermode = "x",
+    title = list(font=title_font,
+                 text="<b>Graf AX. Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %</b>",
+                 y = 0.96),
+    annotations = c(list(text = str_wrap("<i>Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)</i>",wrap_len),
+                         font = pozn_font),annot_below),
+    xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",standoff=10),
+                                     titlefont = axis_font)),
+    yaxis = c(num_ticks,frame_y,list(title = "<b>Reálná meziroční změna (očištěno o inflaci)</b>",
+                                     tickprefix = "+", ticksuffix = " %",
+                                     showtickprefix = "last",
+                                     titlefont = axis_font)),
+    legend = legend_below, margin = mrg6) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  onRender(js)
+
+htmlwidgets::saveWidget(as_widget(graf_AX), paste0("graphs/","graf_AX",".html"), libdir = "js", selfcontained = FALSE)
