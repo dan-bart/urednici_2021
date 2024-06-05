@@ -34,6 +34,9 @@ template <- readLines("www/template_long.html")
 keywords <- data.table::fread("keywords.csv")
 keywords_template <- readLines("www/keywords_template.html")
 
+annotations <- data.table::fread("annotations.csv")
+annotations_template <- readLines("www/annotation_template.html")
+
 lfiles <- list.files("graphs", full.names = FALSE)
 lfiles <- lfiles[grepl("html",lfiles) & !grepl("mod",lfiles)]
 lfiles <- lfiles[order(as.numeric(gsub("[^0-9]","",lfiles)))]
@@ -131,45 +134,6 @@ names(toc_list) <- c("open",
 gr_content_all <- vector(mode = "character")
 extra_script_all <- vector(mode = "character")
 
-inx <- 1:length(lfiles)
-# inx <- c(1,3)
-for(i in inx){
-  f <- lfiles[i]
-  gr_id <- gsub("\\.html","",f)
-  toc_id <- paste(graph_titles$graph_cat[graph_titles$graph==gr_id],graph_titles$graph_group[graph_titles$graph==gr_id],sep="_")
-  cat(f,"\n")
-
-  # gr_keywords <- keywords[keywords$graph==gsub("\\.html$","",f),c("keyword_name","keyword_definition")]
-  # gr_keywords <- setNames(as.character(gr_keywords$keyword_definition),gr_keywords$keyword_name)
-  # gr_keywords <- c(sapply(gr_keywords, function(k) gsub("keyword_definition",unname(k),gsub("keyword_name",names(gr_keywords)[unname(gr_keywords)==k],keywords_template[grep("details",keywords_template)[1]:grep("details",keywords_template)[2]]))))
-  # gr_keywords <- c(keywords_template[1:(grep("details",keywords_template)[1]-1)],gr_keywords,keywords_template[(grep("details",keywords_template)[2]+1):length(keywords_template)])
-
-  gr <- readLines(file.path("graphs", f))
-  gr_content <- gr[grepl('id="htmlwidget',gr) | grepl('type="application',gr)]
-  gr_content <- gsub('id=\\"htmlwidget_container\\"',
-                     paste0('id="',gr_id,'" class="htmlwidget_container" style="height:100%"'),
-                     gr_content)
-  gr_content <- gsub('height\\:400px','height:100%; min-height:700px"',gr_content)
-
-  extra_script <- paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'"), false);')
-
-  gr_content_all <- append(gr_content_all,c(gr_content, "</div><br><br>"))
-  extra_script_all <- append(extra_script_all,extra_script)
-}
-
-gr_all <- unlist(lapply(as.list(template), function(x)
-  if(grepl("page title here",x)) "Státní zaměstnanci a úředníci: kde pracují a za kolik?"
-  else if(grepl("list of graphs here",x)) paste(unlist(toc_list),collapse="\n")
-  else if(grepl("graph content here",x)) gr_content_all
-  else if(grepl("keywords here",x)) ""
-  else if(grepl("extra script here",x)) extra_script_all
-  else x
-))
-
-
-gr_content_all <- vector(mode = "character")
-extra_script_all <- vector(mode = "character")
-
 graph_titles <- graph_titles[order(factor(graph_titles$graph_cat,levels=c("hlav","dodat")),graph_titles$graph_group),]
 
 lfiles <- graph_titles$graph
@@ -197,6 +161,14 @@ for(i in inx){
   header_page <- graph_titles$title[graph_titles$graph==gr_id]
   cat(f,"\n")
 
+  gr_keywords <- keywords[keywords$graph==gr_id,c("keyword_name","keyword_definition")]
+  gr_keywords <- setNames(as.character(gr_keywords$keyword_definition),gr_keywords$keyword_name)
+  gr_keywords <- c(sapply(gr_keywords, function(k) gsub("keyword_definition",unname(k),gsub("keyword_name",names(gr_keywords)[unname(gr_keywords)==k],keywords_template[grep("details",keywords_template)[1]:grep("details",keywords_template)[2]]))))
+  gr_keywords <- c(keywords_template[1:(grep("details",keywords_template)[1]-1)],gr_keywords,keywords_template[(grep("details",keywords_template)[2]+1):length(keywords_template)])
+
+  gr_annotation <- unname(annotations[annotations$graph==gr_id,][["annotation_text"]])
+  gr_annotation <- c(annotations_template[1:(grep("div",annotations_template)[1])],gr_annotation,annotations_template[(grep("div",annotations_template)[2]):length(annotations_template)])
+
   gr <- readLines(file.path("graphs", f))
   gr_content <- gr[grepl('id="htmlwidget',gr) | grepl('type="application',gr)]
   gr_content <- gsub('id=\\"htmlwidget_container\\"',
@@ -211,7 +183,7 @@ for(i in inx){
   }
 
   gr_content <- c(header_toc,gr_content)
-  gr_content_all <- append(gr_content_all,c(gr_content, "</div><br><br><br>"))
+  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_keywords,"<br><br>"))
 }
 
 gr_all <- unlist(lapply(as.list(template), function(x)
