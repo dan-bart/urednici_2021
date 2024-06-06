@@ -37,6 +37,9 @@ keywords_template <- readLines("www/keywords_template.html")
 annotations <- data.table::fread("annotations.csv")
 annotations_template <- readLines("www/annotation_template.html")
 
+text_par <- data.table::fread("text.csv")
+text_template <- readLines("www/text_template.html")
+
 lfiles <- list.files("graphs", full.names = FALSE)
 lfiles <- lfiles[grepl("html",lfiles) & !grepl("mod",lfiles)]
 lfiles <- lfiles[order(as.numeric(gsub("[^0-9]","",lfiles)))]
@@ -169,6 +172,9 @@ for(i in inx){
   gr_annotation <- unname(annotations[annotations$graph==gr_id,][["annotation_text"]])
   gr_annotation <- c(annotations_template[1:(grep("div",annotations_template)[1])],gr_annotation,annotations_template[(grep("div",annotations_template)[2]):length(annotations_template)])
 
+  gr_text <- unname(text_par[text_par$graph==gr_id,][["text"]])
+  gr_text <- c(text_template[1:(grep("div",text_template)[1])],gr_text,text_template[(grep("div",text_template)[2]):length(text_template)])
+
   gr <- readLines(file.path("graphs", f))
   gr_content <- gr[grepl('id="htmlwidget',gr) | grepl('type="application',gr)]
   gr_content <- gsub('id=\\"htmlwidget_container\\"',
@@ -183,7 +189,7 @@ for(i in inx){
   }
 
   gr_content <- c(header_toc,gr_content)
-  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_keywords,"<br><br>"))
+  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_keywords,"<br>",gr_text,"<br><br>"))
 }
 
 gr_all <- unlist(lapply(as.list(template), function(x)
