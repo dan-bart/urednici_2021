@@ -98,3 +98,7 @@ width: 75% !important;
 .modal-body {
 padding: 25px !important;
 }
+
+sup {
+font-size: 85% !important;
+}

@@ -105,6 +105,11 @@
 
 <div id="toc"></div>
 
+<div id="logos" style="margin-top: 0">
+<a href="https://idea.cerge-ei.cz" target="_blank"><img src="img/IDEA_logo_CZ_RGB.png" align="left" style="max-width:180px; margin-bottom:15px"></a>
+<a href="https://strategie.avcr.cz/" target="_blank"><img src="img/strategie-av21-logo.png" align="left" style="max-width:180px"></a>
+</div>
+
 </div>
    
 </div>
@@ -145,43 +150,54 @@ if (title.length == 1){
 	title.css('transform','translate(0px,'+title_tranform_y+'px)');
 	};
 	
-if (annot.length != 0){
-
-	annot_tranform_x = (plot_width-annotation_width)/2;
-	annot_tranform_y = plot_height;
-	
-	if(id == "graf_6"){
-		annot_tranform_y = annot_tranform_y - 60;
-	} else if(id == "graf_3" | id == "graf_A8"){
-		annot_tranform_y = annot_tranform_y - 70;
-	} else if(id == "graf_1" | id == "graf_A1" | id == "graf_AX1"){
-		annot_tranform_y = annot_tranform_y - 30;
-	} else if(id == "graf_2" | id == "graf_A2" | id == "graf_4" | id == "graf_A4" | id == "graf_5" | id == "graf_A5" | id == "graf_A6" | id == "graf_A7" | id == "graf_A14" | id == "graf_AX"){
-		annot_tranform_y = annot_tranform_y - 50;
-	} else {
-		annot_tranform_y = annot_tranform_y - 80;
-	}
-	
-	annot.css('transform','translate('+annot_tranform_x+'px, '+annot_tranform_y+'px)');
-	};
+// if (annot.length != 0){
+// 
+// 	annot_tranform_x = (plot_width-annotation_width)/2;
+// 	annot_tranform_y = plot_height;
+// 	
+// 	if(id == "graf_6"){
+// 		annot_tranform_y = annot_tranform_y - 60;
+// 	} else if(id == "graf_3" | id == "graf_A8"){
+// 		annot_tranform_y = annot_tranform_y - 70;
+// 	} else if(id == "graf_1" | id == "graf_A1" | id == "graf_AX1"){
+// 		annot_tranform_y = annot_tranform_y - 30;
+// 	} else if(id == "graf_2" | id == "graf_A2" | id == "graf_4" | id == "graf_A4" | id == "graf_5" | id == "graf_A5" | id == "graf_A6" | id == "graf_A7" | id == "graf_A14" | id == "graf_AX"){
+// 		annot_tranform_y = annot_tranform_y - 50;
+// 	} else {
+// 		annot_tranform_y = annot_tranform_y - 80;
+// 	}
+// 	
+// 	annot.css('transform','translate('+annot_tranform_x+'px, '+annot_tranform_y+'px)');
+// 	};
 	
 if (leg.length == 1){
 
 	leg_tranform_x = (plot_width-legend_width)/2;
 	leg_tranform_y = plot_height;
 	
-	
-	if(id == "graf_A3"){
-		leg_tranform_y = leg_tranform_y - 30;
-	} else if(id == "graf_6"){
-		leg_tranform_y = leg_tranform_y - 100;
-	} else {
-		leg_tranform_y = leg_tranform_y - 90;
-	}
+	leg_tranform_y = leg_tranform_y - 30;
 	
 	leg.css('transform','translate('+leg_tranform_x+'px, '+leg_tranform_y+'px)');
 	};
 };
+</script>
+
+<script>
+function adjustLogosPosition() {
+    var toc = document.getElementById('toc');
+    var logos = document.getElementById('logos');
+    
+    // Get the height of the fixed element
+    var shift = toc.offsetHeight + 40;
+    
+    // Set the margin-top of the dynamic element to the height of the fixed element
+   logos.style.marginTop = shift + 'px';
+}
+
+// Adjust on window resize
+window.addEventListener('resize', adjustLogosPosition);
+window.addEventListener('scroll', adjustLogosPosition);
+
 </script>
 
 <script>
@@ -191,7 +207,7 @@ $(function() {
   	$("#toc").tocify();
 });
   
-  $(document).ready(function() {
+$(document).ready(function() {
   
   // extra script here
 
@@ -227,6 +243,9 @@ $(function() {
     	$.cookie('dismiss-title', 'yes', { expires: 7, path: '/' });
     	document.cookie = "dismiss-title='yes'";
 })
+
+adjustLogosPosition();
+
 });
 </script>
 

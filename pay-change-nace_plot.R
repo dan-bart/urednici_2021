@@ -200,6 +200,8 @@ text_size_map <- c(Ostatní = 0, Profesní = hover_size,
                    `Celá ekonomika` = hover_size,
                    `ICT` = hover_size, `Veřejná správa` = hover_size)
 
+data$tm <- year(data$tm)
+
 graf_AX <- data %>%
   plot_ly(
     x = ~tm, y = ~ realna_zmena * 100, type = "scatter",
@@ -226,10 +228,11 @@ graf_AX <- data %>%
     title = list(font=title_font,
                  text="<b>Graf AX. Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %</b>",
                  y = 0.96),
-    annotations = c(list(text = str_wrap("<i>Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)</i>",wrap_len),
-                         font = pozn_font),annot_below),
+    # annotations = c(list(text = str_wrap("<i>Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)</i>",wrap_len),
+    #                      font = pozn_font),annot_below),
     xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",standoff=10),
-                                     titlefont = axis_font)),
+                                     titlefont = axis_font),
+              list(tickvals = seq(2003,2023,5))),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Reálná meziroční změna (očištěno o inflaci)</b>",
                                      tickprefix = "+", ticksuffix = " %",
                                      showtickprefix = "last",
