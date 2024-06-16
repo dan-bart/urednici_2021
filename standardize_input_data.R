@@ -136,6 +136,7 @@ summary <- bind_rows(summary, summary21 |> filter(rok == 2021))
 kap_slovnik <- main_df %>%
   select(kap_num, kap_name, full_kap_name, cz_kap_name) %>%
   filter(!is.na(kap_num)) %>%
+  filter(!(kap_name == "TAČR" & kap_num == 378)) |>
   rows_update(tribble(~kap_num, ~kap_name, ~full_kap_name, ~cz_kap_name,
                       364, "DIA", "digitalni_a_informacni_agentura", "Digitální a informační agentura")) |>
   unique()
