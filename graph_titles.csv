@@ -9,16 +9,16 @@
 "graf_A2","hlav",2,"Výdaje na platy státních zaměstnanců dle rozpočtových kapitol (rok 2023, mld. Kč)","Státní zam. dle rozpočtových kapitol","Výdaje na platy"
 "graf_A3","hlav",3,"Průměrné platy státních zaměstnanců ve vztahu k průměrné mzdě v národním hospodářství (2023)","Průměrné platy státních zam.","Ve vztahu k průměrné mzdě"
 "graf_A4","hlav",4,"Výdaje na platy státních úředníků (2003-2023)","Státní úředníci","Výdaje na platy"
-"graf_A5","dodat",7,"Blah long","blah short",
-"graf_A6","dodat",8,"Blah long","blah short",
-"graf_A7","dodat",9,"Blah long","blah short",
-"graf_A8","dodat",10,"Blah long","blah short",
-"graf_A9","dodat",11,"Blah long","blah short",
-"graf_A10","dodat",12,"Blah long","blah short",
-"graf_A11","dodat",13,"Blah long","blah short",
-"graf_A12","dodat",14,"Blah long","blah short",
-"graf_A13","dodat",15,"Blah long","blah short",
-"graf_A14","dodat",16,"Blah long","blah short",
-"graf_A15","dodat",17,"Blah long","blah short",
-"graf_AX","dodat",18,"Blah long","blah short",
-"graf_AX1","dodat",19,"Blah long","blah short",
+"graf_A5","dodat",7,"Reálné výdaje na platy v cenách roku 2023","Reálné výdaje na platy","V čase"
+"graf_A6","dodat",7,"Změna reálných výdajů na platy státních úředníků od roku 2003","Reálné výdaje na platy","% změna"
+"graf_A7","dodat",8,"Změna reálných průměrných platů státních úředníků od roku 2003","Změna reálných průměrných platů",
+"graf_A8","dodat",10,"Celkové změny platů a počtů zaměstnanců v období 2004-2023","Změny platů a počtů",
+"graf_A9","dodat",11,"Rozdíl mezi schváleným a skutečným počtem zaměstnanců podle kapitol, 2003-2023","Plnění rozpočtu", "Počty zam."
+"graf_A10","dodat",11,"Rozdíl mezi schváleným a skutečným průměrným platem podle kapitol, 2003-2023","Plnění rozpočtu", "Prům. platy"
+"graf_A11","dodat",11,"Rozdíl mezi schváleným a skutečným počtem zaměstnanců podle skupin, 2003-2023","Plnění rozpočtu", "Počty zam. - skupiny"
+"graf_A12","dodat",11,"Rozdíl mezi schváleným a skutečným průměrným platem podle skupin, 2003-2023","Plnění rozpočtu", "Prům. platy - skupiny"
+"graf_A13","dodat",15,"Nárůst průměrných platů podle skupin a kapitol, 2003-2023","Nárůst prům. platů",
+"graf_A14","dodat",16,"Počet státních úředníků včetně MV a MZV","Počet státních úředníků",
+"graf_AX1","dodat",17,"Změny počtu zaměstnanců ve sféře rozpočtové regulace, 2003-2023","Změny počtu zaměstnanců podle skupin",
+"graf_A15","dodat",18,"Počet zaměstnanců veřejného sektoru","Širší kontext", "Počet zam. veř. sektoru"
+"graf_AX","dodat",18,"Meziroční změny průměrných reálných mezd podle odvětví NACE","Širší kontext", "Změna platů podle odvětví"
