@@ -1248,7 +1248,7 @@ graf_A11 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
            xaxis = c(num_ticks,frame_y,title="<b>Rok</b>",titlefont = axis_font,
                      list(tickvals = seq(2003,2023,5))),
            yaxis = c(num_ticks,frame_y,list(title = "<b></b>",titlefont = axis_font,
-                                            range = c(-15, 1))),showlegend = F),keep = TRUE) %>%
+                                            range = c(-18, 1))),showlegend = F),keep = TRUE) %>%
   subplot(nrows = 2, shareY = F, margin = c(0.07,0.07,0.15,0.15),titleY =T) %>%
   layout(title = list(font=title_font,
                       text = "<b>Graf A11. Rozdíl mezi schváleným a skutečným počtem zaměstnanců (%)</b>",
@@ -1376,7 +1376,7 @@ graf_A13 <- dta %>%filter(!is.na(kategorie_2014_cz))%>%
     ) %>%
     layout(
       yaxis = c(num_ticks,frame_y,list(title = "Nárůst průměrného platu od roku 2003",titlefont = axis_font,
-                                       range = c(0, 35),
+                                       range = c(-2, 37),
                                        ticktext = lapply(seq(0,30,10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
                                        tickvals = seq(0,30,10),
                                        tickmode = "array",
