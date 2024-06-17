@@ -1117,8 +1117,8 @@ graf_A9 <- dta %>%filter(!is.na(kap_name)) %>%
            xaxis = c(list(title= "<b>Rok</b>",titlefont = axis_font,tickangle = -90),
                      list(tickvals = seq(2003,2023,5))),
            yaxis = c(list(title = "",titlefont = axis_font,range = c(-30, 10),
-                          ticktext = lapply(seq(-30, 10, 10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
-                          tickvals = seq(-30, 10, 10),
+                          ticktext = lapply(seq(-30, 0, 10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                          tickvals = seq(-30, 0, 10),
                           tickmode = "array"))),
   keep = TRUE,margin=mrg2) %>%
   subplot(nrows = 5,shareX = T,shareY = T,titleY = FALSE,titleX=T) %>%
@@ -1181,7 +1181,12 @@ graf_A10 <- dta %>%filter(!is.na(kap_name)) %>%
     ) %>%
     layout(margin = mrg7,
            xaxis = list(title = "<b>Rok</b>",titlefont = axis_font,
-                        tickangle = -90,tickvals = seq(2003,2023,5)), legend = list(x = 100, y = 0.5)),
+                        tickangle = -90,tickvals = seq(2003,2023,5)),
+           yaxis = c(list(title = "",titlefont = axis_font,range = c(-30, 10),
+                          ticktext = lapply(seq(-30, 10, 10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                          tickvals = seq(-30, 10, 10),
+                          tickmode = "array")),
+           legend = list(x = 100, y = 0.5)),
   keep = TRUE) %>%
   subplot(nrows = 5, shareX = TRUE, shareY = T, margin = c(0.01,0.01,0.05,0),
           titleY = F) %>%
