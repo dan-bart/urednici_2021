@@ -87,7 +87,7 @@ kat_ticks_rotated<-list(tickfont=list(size=kat_tick_size,family=uni_font),showti
 num_ticks <- list(tickfont=list(size=num_tick_size,family=uni_font))
 num_tilt_ticks <- list(tickfont=list(size=num_tick_size,family=uni_font),tickangle = -45)
 frame_y<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,gridcolor = grdclr)
-frame_x<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,dtick=2)
+frame_x<-list(mirror=T,linewidth = 2,ticks='outside',showline=T,dtick=5)
 annot_below<-list(                       align='left',
                                          xref='paper',
                                          yref="paper",
@@ -244,25 +244,27 @@ root_color <- "#f0f0f0"
 graf_A1 <- tree_data %>%
   left_join(cols_df, by = "labels")
 
-graf_A1$labels[graf_A1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")] <-
+graf_A1$labels_tree <- graf_A1$labels
+graf_A1$labels_tree[graf_A1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")] <-
   paste0(graf_A1$labels[graf_A1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")],"<br><sup>",
          gsub("^\\s+","",format(round(graf_A1$cost[graf_A1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")]/10^9,1))),
          " mld. Kč</sup>")
 graf_A1$parents[graf_A1$parents==""] <- root_label
 graf_A1 <- rbind(graf_A1,data.frame(labels = root_label,
-                                  cost = sum(graf_A1$cost[graf_A1$parents==root_label]),
-                                  count = sum(graf_A1$count[graf_A1$parents==root_label]),
-                                  cost_perc = sum(graf_A1$cost_perc[graf_A1$parents==root_label]),
-                                  count_perc = sum(graf_A1$count_perc[graf_A1$parents==root_label]),
-                                  color = root_color,
-                                  color_text = "black",
-                                  parents = ""))
+                                    labels_tree = root_label,
+                                    cost = sum(graf_A1$cost[graf_A1$parents==root_label]),
+                                    count = sum(graf_A1$count[graf_A1$parents==root_label]),
+                                    cost_perc = sum(graf_A1$cost_perc[graf_A1$parents==root_label]),
+                                    count_perc = sum(graf_A1$count_perc[graf_A1$parents==root_label]),
+                                    color = root_color,
+                                    color_text = "black",
+                                    parents = ""))
 
 graf_A1 <- graf_A1 |>
   plot_ly(
     type = "treemap",
     branchvalues = "total",
-    labels = ~labels,
+    labels = ~labels_tree,
     parents = ~parents,
     marker = list(colors = ~color),
     pathbar = list(side = "bottom", thickness = 30),
@@ -294,25 +296,27 @@ graf_A1
 
 graf_1 <- tree_data %>%
   left_join(cols_df, by = "labels")
-graf_1$labels[graf_1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")] <-
+graf_1$labels_tree <- graf_1$labels
+graf_1$labels_tree[graf_1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")] <-
   paste0(graf_1$labels[graf_1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")],"<br><sup>",
         gsub("^\\s+","",format(graf_1$count[graf_1$labels %in% c("Příspěvkové organizace","Sbory","Neústřední st. správa","Ministerstva","Ostatní vč. armády")],big.mark = " ")),
         " zaměst.</sup>")
 graf_1$parents[graf_1$parents==""] <- root_label
 graf_1 <- rbind(graf_1,data.frame(labels = root_label,
-                           cost = sum(graf_1$cost[graf_1$parents==root_label]),
-                           count = sum(graf_1$count[graf_1$parents==root_label]),
-                           cost_perc = sum(graf_1$cost_perc[graf_1$parents==root_label]),
-                           count_perc = sum(graf_1$count_perc[graf_1$parents==root_label]),
-                           color = root_color,
-                           color_text = "black",
-                           parents = ""))
+                                  labels_tree = root_label,
+                                  cost = sum(graf_1$cost[graf_1$parents==root_label]),
+                                  count = sum(graf_1$count[graf_1$parents==root_label]),
+                                  cost_perc = sum(graf_1$cost_perc[graf_1$parents==root_label]),
+                                  count_perc = sum(graf_1$count_perc[graf_1$parents==root_label]),
+                                  color = root_color,
+                                  color_text = "black",
+                                  parents = ""))
 
 graf_1 <- graf_1 |>
   plot_ly(
     type = "treemap",
     branchvalues = "total",
-    labels = ~labels,
+    labels = ~labels_tree,
     parents = ~parents,
     marker = list(colors = ~color),
     pathbar = list(side = "bottom", thickness = 30),
@@ -354,7 +358,7 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
     ), ""), hoverinfo = "text",hoverlabel = list(font=list(size=hover_size,family=uni_font))
   ) %>%
   layout(
-    hovermode = "x",
+    # hovermode = "x",
     legend = legend_below,
     # annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.</i>",wrap_len),
     #                      font = pozn_font_small),
@@ -400,7 +404,7 @@ graf_A2 <- plot_ly(bar_dt,
   add_bars() %>%
   layout(
     legend = legend_below_A2,
-    hovermode = "x",
+    # hovermode = "x",
     # annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.</i>",wrap_len),
     #                      font = pozn_font_small),
     #                 annot_below_A2),
@@ -461,6 +465,7 @@ graf_3 <- bar_dt %>%
   plot_ly(line = list(color='#D3D3D3',width=2),
           x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz,
           colors = color_map,marker=list(size=mrk_min_size),
+          opacity = 0.7,
           type = "scatter" , mode = "line+markers",
           hovertemplate = ~ ifelse(prostredky_na_platy > 0,
                                    paste("<extra></extra>", " Zdroj:", name, "<br>",
@@ -471,6 +476,7 @@ graf_3 <- bar_dt %>%
           hoverinfo = "text"
   ) %>%
   add_trace(type="scatter",mode="markers",
+            opacity=1,
             hovertemplate = ~ ifelse(prostredky_na_platy > 0,
                                      paste("<extra></extra>", "Pr\u016Fm\u011Br za kategorii:", "<br>",
                                            format(round(prumerny_plat_mean*1e3,0), big.mark = " "),
@@ -538,6 +544,9 @@ graf_A3 <- bar_dt %>%
     layout(margin = list(t = 150,b=100,l=20),
            yaxis = c(kat_ticks,frame_y,list(title = list(text="<b>Procenta</b>"),
                                             titlefont = axis_font,range=c(-65,65),
+                                            ticktext = lapply(seq(-50,50,50), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                            tickvals = seq(-50,50,50),
+                                            tickmode = "array",
                                             ticksuffix="%")),
            xaxis = c(kat_ticks_rotated,frame_x,list("categoryorder" = "total ascending"),
                      titlefont = axis_font),
@@ -729,8 +738,11 @@ graf_A6 <- aux2 %>%
     xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",standoff=10),
                                      titlefont = axis_font),
               list(tickvals = seq(2003,2023,5))),
-    yaxis = c(num_ticks,frame_y,list(title = str_wrap("<b>Změna reálných výdajů na platy oproti roku 2003
-(v %, ceny roku 2023)</b>",50), ticksuffix = "%",titlefont = axis_font)),
+    yaxis = c(num_ticks,frame_y,list(title = str_wrap("<b>Změna reálných výdajů na platy oproti roku 2003 (v %, ceny roku 2023)</b>",50),
+                                     ticksuffix = "%",titlefont = axis_font,
+                                     ticktext = lapply(seq(-10,70,10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                     tickvals = seq(-10,70,10),
+                                     tickmode = "array")),
     margin = mrg5,
     legend=legend_below) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
@@ -860,8 +872,11 @@ graf_A7 <- plot_ly(graf_A7_dt,
                                      titlefont = axis_font),
               list(tickvals = seq(2003,2023,5))),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Změna reálného průměrného platu oproti roku 2003 \n (v %, ceny roku 2023)</b>",
-                                     tickprefix = "+",
-                                     showtickprefix = "last",
+                                     # tickprefix = "+",
+                                     # showtickprefix = "last",
+                                     ticktext = lapply(seq(0,40,10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                     tickvals = seq(0,40,10),
+                                     tickmode = "array",
                                      ticksuffix = "%",
                                      showticksuffix = "all",
                                      titlefont = axis_font)),
@@ -933,7 +948,8 @@ graf_6 <- plot_ly(graf_6_dt,
   xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font),
             list(tickvals = seq(2003,2023,5))),
   yaxis = c(num_ticks,frame_y,list(title = "<b>Poměr platů státních úředníku a prům. mzdy (v %)</b>",
-                                   ticksuffix = "%",titlefont = axis_font)),
+                                   # ticksuffix = "%",
+                                   titlefont = axis_font)),
   margin = mrg5,
   legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
@@ -976,7 +992,7 @@ line <- list(
 
 infl <- dta %>% filter(rok == 2004) %>% select(base_2023) %>% first() %>% pull()
 
-graf_A8 <- dta %>%
+graf_A8_dt <- dta %>%
   filter(!is.na(kategorie_2014_cz), typ_rozpoctu == "SKUT",
          !kategorie_2014 %in% c("Statni sprava", "Statni urednici")) %>%
   filter(rok %in% c(2004, 2023)) %>%
@@ -992,7 +1008,9 @@ graf_A8 <- dta %>%
   mutate(
     zam_change = (zam_skutecnost_2023/zam_skutecnost_2004 - 1),
     plat_change = (plat_skutecnost_2023/(plat_skutecnost_2004*infl) - 1)
-  ) %>%
+  )
+
+graf_A8 <- graf_A8_dt %>%
   plot_ly(
     x = ~ plat_change * 100, y = ~ zam_change * 100, color = ~kategorie_2014_cz,
     colors = color_map,
@@ -1010,14 +1028,18 @@ graf_A8 <- dta %>%
     # annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. </i>",wrap_len),
     #                                  font = pozn_font_small)),
     showlegend = FALSE,
-    xaxis = c(num_tilt_ticks,frame_x,list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu (v %)",
+    xaxis = c(num_ticks,frame_x,list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu (v %)",
                                           titlefont = axis_font,
                                           ticksuffix = "%",range = c(-5,65))),
     yaxis = c(num_ticks,frame_y,list(title = "Zm\u011Bna po\u010Dtu zam\u011Bstnanc\u016F (v %)",
-                                     titlefont = axis_font,range = c(-20,15),
-                                     tickprefix = "+",
-                                     showtickprefix = "last",
+                                     titlefont = axis_font,
+                                     range = c(-20,20),
+                                     # tickprefix = "+",
+                                     # showtickprefix = "last",
                                      ticksuffix = "%",
+                                     ticktext = lapply(seq(-20,20,5), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                     tickvals = seq(-20,20,10),
+                                     tickmode = "array",
                                      showticksuffix = "all")),
     legend = legend_below, margin = mrg2
   ) %>%
@@ -1094,7 +1116,10 @@ graf_A9 <- dta %>%filter(!is.na(kap_name)) %>%
     layout(margin=c(t=5),
            xaxis = c(list(title= "<b>Rok</b>",titlefont = axis_font,tickangle = -90),
                      list(tickvals = seq(2003,2023,5))),
-           yaxis = c(list(title = "",titlefont = axis_font,range = c(-30, 10)))),
+           yaxis = c(list(title = "",titlefont = axis_font,range = c(-30, 10),
+                          ticktext = lapply(seq(-30, 10, 10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                          tickvals = seq(-30, 10, 10),
+                          tickmode = "array"))),
   keep = TRUE,margin=mrg2) %>%
   subplot(nrows = 5,shareX = T,shareY = T,titleY = FALSE,titleX=T) %>%
   layout(title = list(font=title_font,
@@ -1279,9 +1304,13 @@ graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
                      list(tickvals = seq(2003,2023,5))),
            yaxis = c(frame_y,list(title = "",
                                   titlefont = axis_font,
-                                  tickprefix = "+",
+                                  # tickprefix = "+",
                                   ticksuffix = "%",
-                                  showticksuffix = "all")),
+                                  # showticksuffix = "all",
+                                  ticktext = lapply(seq(0,20,5), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                  tickvals = seq(0,20,5),
+                                  tickmode = "array"
+                                  )),
            showlegend = F),
   keep = TRUE) %>%
   subplot(nrows = 2, shareY = F, margin = c(0.07,0.07,0.15,0.15),titleY =T) %>%
@@ -1343,6 +1372,9 @@ graf_A13 <- dta %>%filter(!is.na(kategorie_2014_cz))%>%
     layout(
       yaxis = c(num_ticks,frame_y,list(title = "Nárůst průměrného platu od roku 2003",titlefont = axis_font,
                                        range = c(0, 35),
+                                       ticktext = lapply(seq(0,30,10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                       tickvals = seq(0,30,10),
+                                       tickmode = "array",
                                        ticksuffix = "%")),
       xaxis = c(num_ticks,frame_y,list(title = "Pr\u016Fm\u011Brn\u00FD plat v roce 2003 (tisíce Kč)", titlefont = axis_font,range = c(15, 35))),
       legend = list(x = 100, y = 0.5), showlegend = F) %>%
@@ -1407,11 +1439,11 @@ graf_A14 <- dta %>%
   onRender(js)
 
 
-## ----graf_A15----------------------------------------------------------------------------------------------------
+## ----graf_A16----------------------------------------------------------------------------------------------------
 pubsec <- read_csv("./data-input/ver-sektor-csu-rocenka.csv")
-graf_A15_dt <- plyr::rbind.fill(pubsec,data.frame(rok = 1993))
+graf_A16_dt <- plyr::rbind.fill(pubsec,data.frame(rok = 1993))
 
-graf_A15 <- plot_ly(graf_A15_dt, type = "scatter", mode = "lines+markers",
+graf_A16 <- plot_ly(graf_A16_dt, type = "scatter", mode = "lines+markers",
                     line = list(width = 7),
                     marker = list(size = 5,symbol = "circle",
                                   line = list(width = 2,color="black")),
@@ -1430,11 +1462,11 @@ graf_A15 <- plot_ly(graf_A15_dt, type = "scatter", mode = "lines+markers",
     # annotations = c(list(text ='<i>Pozn.: Zdroj: Statistické ročenky České republiky za jednotlivé roky, zde například údaje za rok 2020:</i><br><a href="https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om" target="_blank"><i>https://www.czso.cz/csu/czso/10-trh-prace-o73cun42om</i></a>',
     #                      font = pozn_font_small),annot_below),
     title = list(font=list(color = cap_col,size=cap_size,family=uni_font),
-                 text = "<b>Graf A15. Počet zaměstnanců veřejného sektoru</b>",
+                 text = "<b>Graf A16. Počet zaměstnanců veřejného sektoru</b>",
                  y = 0.98), margin = mrg3) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
-graf_A15
+graf_A16
 
 
 ## ----graphs, eval = FALSE, include = FALSE-----------------------------------------------------------------------
@@ -1459,7 +1491,7 @@ graf_list<-list(
   graf_A12,
   graf_A13,
   graf_A14,
-  graf_A15)
+  graf_A16)
 names(graf_list)<-c(
   "graf_1",
   "graf_2",
@@ -1481,7 +1513,7 @@ names(graf_list)<-c(
   "graf_A12",
   "graf_A13",
   "graf_A14",
-  "graf_A15")
+  "graf_A16")
 
 saveRDS(graf_list,"data-interim/graf_list.rds")
 saveRDS(tree_data,"data-interim/tree_data.rds")

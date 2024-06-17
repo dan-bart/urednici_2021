@@ -165,9 +165,11 @@ for(i in inx){
   cat(f,"\n")
 
   gr_keywords <- keywords[keywords$graph==gr_id,c("keyword_name","keyword_definition")]
-  gr_keywords <- setNames(as.character(gr_keywords$keyword_definition),gr_keywords$keyword_name)
-  gr_keywords <- c(sapply(gr_keywords, function(k) gsub("keyword_definition",unname(k),gsub("keyword_name",names(gr_keywords)[unname(gr_keywords)==k],keywords_template[grep("details",keywords_template)[1]:grep("details",keywords_template)[2]]))))
-  gr_keywords <- c(keywords_template[1:(grep("details",keywords_template)[1]-1)],gr_keywords,keywords_template[(grep("details",keywords_template)[2]+1):length(keywords_template)])
+  if(nrow(gr_keywords)>0){
+    gr_keywords <- setNames(as.character(gr_keywords$keyword_definition),gr_keywords$keyword_name)
+    gr_keywords <- c(sapply(gr_keywords, function(k) gsub("keyword_definition",unname(k),gsub("keyword_name",names(gr_keywords)[unname(gr_keywords)==k],keywords_template[grep("details",keywords_template)[1]:grep("details",keywords_template)[2]]))))
+    gr_keywords <- c(keywords_template[1:(grep("details",keywords_template)[1]-1)],gr_keywords,keywords_template[(grep("details",keywords_template)[2]+1):length(keywords_template)])
+  }
 
   gr_annotation <- unname(annotations[annotations$graph==gr_id,][["annotation_text"]])
   gr_annotation <- c(annotations_template[1:(grep("div",annotations_template)[1])],gr_annotation,annotations_template[(grep("div",annotations_template)[2]):length(annotations_template)])

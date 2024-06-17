@@ -214,7 +214,7 @@ graf_AX <- data %>%
                   size=revalue(data$clr,marker_size_map),
                   color = revalue(as.character(data$clr),marker_clr_map)),
     text = ~ paste(
-      " Rok:", year(tm), "<br>", "Skupina NACE (odvětví):", clr, "<br>", "Hodnota:",
+      " Rok:", tm, "<br>", "Skupina NACE (odvětví):", clr, "<br>", "Hodnota:",
       round(realna_zmena * 100,2), "%"
     ),
     hoverlabel = list(font=list(size=revalue(data$clr,text_size_map),
@@ -224,9 +224,9 @@ graf_AX <- data %>%
     legendgroup = ~clr
   ) %>%
   layout(
-    hovermode = "x",
+    # hovermode = "x",
     title = list(font=title_font,
-                 text="<b>Graf AX. Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %</b>",
+                 text="<b>Graf A15. Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %</b>",
                  y = 0.96),
     # annotations = c(list(text = str_wrap("<i>Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)</i>",wrap_len),
     #                      font = pozn_font),annot_below),
@@ -234,11 +234,15 @@ graf_AX <- data %>%
                                      titlefont = axis_font),
               list(tickvals = seq(2003,2023,5))),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Reálná meziroční změna (očištěno o inflaci)</b>",
-                                     tickprefix = "+", ticksuffix = " %",
-                                     showtickprefix = "last",
+                                     # tickprefix = "+",
+                                     ticksuffix = " %",
+                                     # showtickprefix = "last",
+                                     ticktext = lapply(seq(-15,10,5), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                                     tickvals = seq(-15,10,5),
+                                     tickmode = "array",
                                      titlefont = axis_font)),
     legend = legend_below, margin = mrg6) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
 
-htmlwidgets::saveWidget(as_widget(graf_AX), paste0("graphs/","graf_AX",".html"), libdir = "js", selfcontained = FALSE)
+htmlwidgets::saveWidget(as_widget(graf_AX), paste0("graphs/","graf_A15",".html"), libdir = "js", selfcontained = FALSE)

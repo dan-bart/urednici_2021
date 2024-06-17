@@ -96,28 +96,33 @@ graf_AX1 <- dta %>%
     hoverlabel = list(font=list(size=hover_size,family=uni_font)),
     hoverinfo = "text"
   ) %>%
-  layout(hovermode = "x",
-         barmode = "relative",bargap=0.5,
-         title = list(font=title_font,
-                      text = paste0("<b>Graf AX1. Změny počtu zaměstnanců ve sféře rozpočtové regulace, podle kategorií</b>",
-                                    "<br>","<sup>","Meziroční změna skutečného počtu zaměstnanců podle Státního závěrečného účtu","</sup>"),
-                      y = 0.98),
-         # annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Změna v roce 2012 způsobena změnou klasifikace některých zaměstnanců MV a MZV</i>",wrap_len),
-         #                                  font = pozn_font)),
-         xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",
-                                                       standoff=10),
-                                          titlefont = axis_font),
-                   list(tickvals = seq(2003,2023,5))),
-                      # dtick=2,
-                      # titlefont = axis_font),
-         yaxis = c(num_ticks,frame_y,list(title = "<b>Meziroční změna (v tisících)</b>",
-                                          titlefont = axis_font),
-                   tickprefix = "+",
-                   showtickprefix = "last"),
-         legend = legend_below,
-         margin = mrg6 ) %>%
+  layout(
+    # hovermode = "x",
+    barmode = "relative",bargap=0.5,
+    title = list(font=title_font,
+                 text = paste0("<b>Graf A17. Změny počtu zaměstnanců ve sféře rozpočtové regulace, podle kategorií</b>",
+                               "<br>","<sup>","Meziroční změna skutečného počtu zaměstnanců podle Státního závěrečného účtu","</sup>"),
+                 y = 0.98),
+    # annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Změna v roce 2012 způsobena změnou klasifikace některých zaměstnanců MV a MZV</i>",wrap_len),
+    #                                  font = pozn_font)),
+    xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",
+                                                  standoff=10),
+                                     titlefont = axis_font),
+              list(tickvals = seq(2003,2023,5))),
+    # dtick=2,
+    # titlefont = axis_font),
+    yaxis = c(num_ticks,frame_y,list(title = "<b>Meziroční změna (v tisících)</b>",
+                                     titlefont = axis_font),
+              # tickprefix = "+",
+              # showtickprefix = "last",
+              list(ticktext = lapply(seq(-10,15,5), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
+                   tickvals = seq(-10,15,5),
+                   tickmode = "array")
+              ),
+    legend = legend_below,
+    margin = mrg6 ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
 graf_AX1
 
-htmlwidgets::saveWidget(as_widget(graf_AX1), paste0("graphs/","graf_AX1",".html"), libdir = "js", selfcontained = FALSE)
+htmlwidgets::saveWidget(as_widget(graf_AX1), paste0("graphs/","graf_A17",".html"), libdir = "js", selfcontained = FALSE)
