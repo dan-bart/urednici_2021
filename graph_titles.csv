@@ -13,11 +13,11 @@
 "graf_A6","dodat",7,"Změna reálných výdajů na platy státních úředníků od roku 2003","Reálné výdaje na platy","% změna"
 "graf_A7","dodat",8,"Změna reálných průměrných platů státních úředníků od roku 2003","Změna reálných průměrných platů",
 "graf_A8","dodat",10,"Celkové změny platů a počtů zaměstnanců v období 2004-2023","Změny platů a počtů",
-"graf_A9","dodat",11,"Rozdíl mezi schváleným a skutečným počtem zaměstnanců podle kapitol, 2003-2023","Plnění rozpočtu","Počty zam."
-"graf_A10","dodat",11,"Rozdíl mezi schváleným a skutečným průměrným platem podle kapitol, 2003-2023","Plnění rozpočtu","Prům. platy"
-"graf_A11","dodat",11,"Rozdíl mezi schváleným a skutečným počtem zaměstnanců podle kategorií, 2003-2023","Plnění rozpočtu","Počty zam. - kategorie"
-"graf_A12","dodat",11,"Rozdíl mezi schváleným a skutečným průměrným platem podle kategorií, 2003-2023","Plnění rozpočtu","Prům. platy - kategorie"
-"graf_A13","dodat",15,"Nárůst průměrných platů podle kategorií a kapitol, 2003-2023","Nárůst prům. platů",
+"graf_A9","dodat",11,"Rozdíl mezi schváleným a skutečným počtem zaměstnanců podle kapitol, 2003-2023","Plnění rozpočtu","Počty zaměstnanců"
+"graf_A10","dodat",11,"Rozdíl mezi schváleným a skutečným průměrným platem podle kapitol, 2003-2023","Plnění rozpočtu","Průměrné platy"
+"graf_A11","dodat",11,"Rozdíl mezi schváleným a skutečným počtem zaměstnanců podle kategorií, 2003-2023","Plnění rozpočtu","Počty zaměstnanců ‒ kategorie"
+"graf_A12","dodat",11,"Rozdíl mezi schváleným a skutečným průměrným platem podle kategorií, 2003-2023","Plnění rozpočtu","Průměrné platy ‒ kategorie"
+"graf_A13","dodat",15,"Nárůst průměrných platů podle kategorií a kapitol, 2003-2023","Nárůst průměrných platů",
 "graf_A14","dodat",16,"Počet státních úředníků včetně MV a MZV","Počet státních úředníků",
 "graf_A15","dodat",17,"Meziroční změny průměrných reálných mezd podle odvětví NACE","Širší kontext","Změna platů podle odvětví"
 "graf_A16","dodat",17,"Počet zaměstnanců veřejného sektoru","Širší kontext","Počet zam. veř. sektoru"
