@@ -464,7 +464,7 @@ graf_3 <- bar_dt %>%
   mutate(prumerny_plat = prumerny_plat/1e3) %>%
   plot_ly(line = list(color='#D3D3D3',width=2),
           x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz,
-          colors = color_map,marker=list(size=mrk_min_size, line = list(color = "white")),
+          colors = color_map,marker=list(size=mrk_min_size, line = list(color = "white",width=1)),
           opacity = 1,
           type = "scatter" , mode = "line+markers",
           hovertemplate = ~ ifelse(prostredky_na_platy > 0,
