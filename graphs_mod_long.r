@@ -40,6 +40,8 @@ annotations_template <- readLines("www/annotation_template.html")
 text_par <- data.table::fread("text.csv")
 text_template <- readLines("www/text_template.html")
 
+script_template <- readLines("www/template_script.js")
+
 lfiles <- list.files("graphs", full.names = FALSE)
 lfiles <- lfiles[grepl("html",lfiles) & !grepl("mod",lfiles)]
 lfiles <- lfiles[order(as.numeric(gsub("[^0-9]","",lfiles)))]
@@ -135,7 +137,8 @@ names(toc_list) <- c("open",
                      "close")
 
 gr_content_all <- vector(mode = "character")
-extra_script_all <- vector(mode = "character")
+extra_script1_all <- vector(mode = "character")
+extra_script2_all <- vector(mode = "character")
 
 graph_titles <- graph_titles[order(factor(graph_titles$graph_cat,levels=c("hlav","dodat")),graph_titles$graph_group),]
 
@@ -162,6 +165,7 @@ for(i in inx){
                        paste0("<h1 style='font-size:0px!important;margin:1px'>",ifelse(gr_cat=="hlav","Hlavní grafy","Dodatečné grafy"),"</h1>",header_toc),
                        header_toc)
   header_page <- graph_titles$title[graph_titles$graph==gr_id]
+  copy_link <- paste0('<div style="height:0px"><a href="" id="copy-link-',gr_id,'" style="color:#333333!important;position:relative;z-index:999;"><i class="fa-solid fa-link"></i></a></div>')
   cat(f,"\n")
 
   gr_keywords <- keywords[keywords$graph==gr_id,c("keyword_name","keyword_definition")]
@@ -184,13 +188,16 @@ for(i in inx){
                      gr_content)
   gr_content <- gsub('height\\:400px','height:100%; min-height:700px"',gr_content)
 
-  extra_script <- paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'"), false);')
+  extra_script1 <- paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'"), false);')
+  extra_script2 <- gsub("graph_id",gr_id,script_template)
 
   if(!(gr_id %in% c("graf_A3","graf_A9","graf_A10","graf_A11","graf_A12","graf_A13"))){
-    extra_script_all <- append(extra_script_all,extra_script)
+    extra_script1_all <- append(extra_script1_all,extra_script1)
   }
+  extra_script2_all <- append(extra_script2_all,extra_script2)
 
-  gr_content <- c(header_toc,gr_content)
+
+  gr_content <- c(header_toc,copy_link,gr_content)
   gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_keywords,"<br>",gr_text,"<br><br>"))
 }
 
@@ -199,7 +206,8 @@ gr_all <- unlist(lapply(as.list(template), function(x)
   # else if(grepl("list of graphs here",x)) paste(unlist(toc_list),collapse="\n")
   else if(grepl("graph content here",x)) gr_content_all
   # else if(grepl("keywords here",x)) ""
-  else if(grepl("extra script here",x)) extra_script_all
+  else if(grepl("extra script1 here",x)) extra_script1_all
+  else if(grepl("extra script2 here",x)) extra_script2_all
   else x
 ))
 
