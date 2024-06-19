@@ -464,8 +464,8 @@ graf_3 <- bar_dt %>%
   mutate(prumerny_plat = prumerny_plat/1e3) %>%
   plot_ly(line = list(color='#D3D3D3',width=2),
           x = ~prumerny_plat, y = ~ kategorie_2014_cz, color = ~kategorie_2014_cz,
-          colors = color_map,marker=list(size=mrk_min_size),
-          opacity = 0.7,
+          colors = color_map,marker=list(size=mrk_min_size, line = list(color = "white")),
+          opacity = 1,
           type = "scatter" , mode = "line+markers",
           hovertemplate = ~ ifelse(prostredky_na_platy > 0,
                                    paste("<extra></extra>", " Zdroj:", name, "<br>",
@@ -790,7 +790,7 @@ graf_5 <- plot_ly(graf_5_dt,
     legend = legend_below,
     # annotations = c(list(text = str_wrap("<i>Pozn.: Reálné hrubé měsíční platy jsou uvedeny v cenách roku 2023.</i>",wrap_len),
     #                      font = pozn_font_small),annot_below),
-    title =list(text = "<b>Graf 5. Průměrné platy státních úředníků (2004–2023)</b>",
+    title =list(text = "<b>Graf 5. Průměrné platy státních úředníků (2004–2023) v cenách roku 2023</b>",
                 y =0.98,
                 font=title_font),
     xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font),
@@ -811,7 +811,7 @@ graf_5_static <- ggplot(graf_5_dt, aes(rok, wage_in_2023/1e3, colour = kategorie
   theme_urednici +
   scale_color_manual(values = color_map, name = NULL, limits = force) +
   scale_x_continuous(breaks = seq(2003, 2023, 2)) +
-  labs(title = "Graf 5. Průměrné platy státních úředníků (2004–2023)",
+  labs(title = "Graf 5. Průměrné platy státních úředníků (2004–2023) v cenách roku 2023",
        x = "Rok",
        y = "Reálné průměrné hrubé měsíční mzdy (tis. Kč) v cenách roku 2023",
        caption = "Pozn.: reálné hrubé měsíční platy, uvedené v cenách roku 2023")
