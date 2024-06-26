@@ -183,13 +183,20 @@ for(i in inx){
 
   gr <- readLines(file.path("graphs", f))
   gr_content <- gr[grepl('id="htmlwidget',gr) | grepl('type="application',gr)]
+
+  widget_id <- gsub('.*(htmlwidget-[0-9a-z]+)\".*',"\\1",gr_content[grepl('id="htmlwidget-',gr_content)])
+
   gr_content <- gsub('id=\\"htmlwidget_container\\"',
                      paste0('id="',gr_id,'" class="htmlwidget_container" style="height:100%"'),
                      gr_content)
   gr_content <- gsub('height\\:400px','height:100%; min-height:700px"',gr_content)
 
-  extra_script1 <- paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'"), false);')
-  extra_script2 <- gsub("graph_id",gr_id,script_template)
+  # extra_script1 <- paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'"), false);')
+  extra_script1 <- c(paste0('window.addEventListener("resize", function(e) {placeLegendAnnot("',gr_id,'","',widget_id,'")});'),
+                     paste0('window.addEventListener("DOMContentLoaded", placeLegendAnnot("',gr_id,'","',widget_id,'"), false);'))
+  # extra_script1 <- ""
+  # extra_script2 <- gsub("graph_id",gr_id,script_template)
+  extra_script2 <- ""
 
   if(!(gr_id %in% c("graf_A3","graf_A9","graf_A10","graf_A11","graf_A12","graf_A13"))){
     extra_script1_all <- append(extra_script1_all,extra_script1)
@@ -197,7 +204,8 @@ for(i in inx){
   extra_script2_all <- append(extra_script2_all,extra_script2)
 
 
-  gr_content <- c(header_toc,copy_link,gr_content)
+  # gr_content <- c(header_toc,copy_link,gr_content)
+  gr_content <- c(header_toc,gr_content)
   gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_keywords,"<br>",gr_text,"<br><br>"))
 }
 
