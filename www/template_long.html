@@ -140,7 +140,7 @@
   <li class="tocify-item" style="cursor: pointer;"><a href="https://idea.cerge-ei.cz/images/studie/2022/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.pdf" target="_blank">Studie z roku 2022</a></li>
 </ul>
 
-</div> 
+</div>
 
 <div id="toc"></div>
 
@@ -151,7 +151,7 @@
 </div>
 
 </div>
-   
+
 </div>
 
 <div class="right">
@@ -188,11 +188,11 @@ if (title.length == 1){
 	}
 	title.css('transform','translate(0px,'+title_tranform_y+'px)');
 };
-		
+
 if (leg.length == 1){
 
 	leg_tranform_x = (plot_width-legend_width)/2;
-	
+
 	if(id == "graf_A17"){
 		leg_tranform_y = plot_height - 80 / (plot_width * 0.001);
 	}else if(id == "graf_A2" | id == "graf_2"){
@@ -200,10 +200,10 @@ if (leg.length == 1){
 	}else{
 		leg_tranform_y = plot_height - 40 / (plot_width * 0.001);
 	}
-	
-	
+
+
 	leg.css('transform','translate('+leg_tranform_x+'px, '+leg_tranform_y+'px)');
-	
+
 	if(id == "graf_1" | id == "graf_A1"){
 		margin_t = 50;
 		margin_r = 0;
@@ -270,7 +270,7 @@ if (leg.length == 1){
 		margin_b = 150;
 		margin_l = 10;
 	}
-	
+
 	Plotly.relayout(widget, { margin: {
             t: margin_t,
             r: margin_r,
@@ -284,10 +284,10 @@ if (leg.length == 1){
 function adjustLogosPosition() {
     var toc = document.getElementById('toc');
     var logos = document.getElementById('logos');
-    
+
     // Get the height of the fixed element
     var shift = toc.offsetHeight + 40;
-    
+
     // Set the margin-top of the dynamic element to the height of the fixed element
    logos.style.marginTop = shift + 'px';
 }
@@ -304,9 +304,9 @@ $(function() {
   	//Calls the tocify method on your HTML div.
   	$("#toc").tocify();
 });
-  
+
 $(document).ready(function() {
-  
+
   // extra script1 here
 
     if ($.cookie("dismiss") == null) {
@@ -319,7 +319,7 @@ $(document).ready(function() {
     $(".dismiss").click(function() {
       document.cookie = "dismiss=true";
     });
-    
+
     if ($.cookie("dismiss-title") == undefined) {
       $('#TitleModal').appendTo("body");
       function show_modal(){
@@ -327,16 +327,16 @@ $(document).ready(function() {
       }
       window.setTimeout(show_modal, 0);
       }
-    
-    $(document).keydown(function(event) { 
-    if (event.keyCode == 27) { 
+
+    $(document).keydown(function(event) {
+    if (event.keyCode == 27) {
     	$('#infomodal').modal('hide');
     	$('#TitleModal').modal('hide');
     	$.cookie('dismiss-title', 'yes', { expires: 7, path: '/' });
     	document.cookie = "dismiss-title='yes'";
     }
 	});
-	
+
 	$('#TitleModal').on('hidden.bs.modal', function (e) {
     	$.cookie('dismiss-title', 'yes', { expires: 7, path: '/' });
     	document.cookie = "dismiss-title='yes'";
