@@ -206,7 +206,7 @@ for(i in inx){
 
   # gr_content <- c(header_toc,copy_link,gr_content)
   gr_content <- c(header_toc,gr_content)
-  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_keywords,"<br>",gr_text,"<br><br>"))
+  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_text,"<br>",gr_keywords,"<br><br>"))
 }
 
 gr_all <- unlist(lapply(as.list(template), function(x)
