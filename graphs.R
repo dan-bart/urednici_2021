@@ -278,7 +278,7 @@ graf_A1 <- graf_A1 |>
     domain = list(column = 0)
   ) %>%
   layout(title = list(font=title_font,
-                      text = paste0("<b>Graf A1. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti (2023)</b>",
+                      text = paste0("<b>Graf A1. Výdaje na platy zaměstnanců státu dle regulace zaměstnanosti (2023)</b>",
                                     "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkových výdajích","</sup>"),
                       y = 0.97),
          margin = mrg8) %>%
@@ -330,8 +330,8 @@ graf_1 <- graf_1 |>
     domain = list(column = 0)
   ) %>%
   layout(title = list(font = title_font,
-                      text = paste0("<b>Graf 1. Počet státních zaměstnanců dle regulace zaměstnanosti (2023)</b>",
-                                    "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců","</sup>"),
+                      text = paste0("<b>Graf 1. Počet zaměstnanců státu dle regulace zaměstnanosti (2023)</b>",
+                                    "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu zaměstnanců státu","</sup>"),
                       y = 0.97),
          margin = mrg8) %>%
   # layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout.</i>", x = 1,
@@ -409,7 +409,7 @@ graf_A2 <- plot_ly(bar_dt,
     #                      font = pozn_font_small),
     #                 annot_below_A2),
     title = list(font=title_font,
-                 text = str_wrap("<b>Graf A2. Výdaje na platy státních zaměstnanců dle rozpo\u010Dtov\u00FDch kapitol (rok 2023, mld. K\u010D)</b>",70), y = 0.96),
+                 text = str_wrap("<b>Graf A2. Výdaje na platy zaměstnanců státu dle rozpo\u010Dtov\u00FDch kapitol (rok 2023, mld. K\u010D)</b>",70), y = 0.96),
     xaxis = c(kat_ticks_rotated,frame_x, list(title="<b>Kapitoly</b>",titlefont = axis_font,categoryorder = "array", categoryarray = arrange(bar_dt, desc(prostredky_na_platy_agg))$kap_name)),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Platy (mld. Kč)</b>",titlefont = axis_font)),
     barmode = "stack",
