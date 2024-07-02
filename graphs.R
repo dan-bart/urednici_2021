@@ -360,7 +360,7 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
   layout(
     # hovermode = "x",
     legend = legend_below,
-    # annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.</i>",wrap_len),
+    # annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odfiltrovat v legendě nebo v grafu.</i>",wrap_len),
     #                      font = pozn_font_small),
     #                 annot_below),
     title = list(font=title_font,
@@ -405,7 +405,7 @@ graf_A2 <- plot_ly(bar_dt,
   layout(
     legend = legend_below_A2,
     # hovermode = "x",
-    # annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odflitrovat v legendě nebo v grafu.</i>",wrap_len),
+    # annotations = c(list(text = str_wrap("<i>Pozn.: Ministerstvo školství, mládeže a tělovýchovy zkresluje graf vzhledem k zahrnutí učitelů v kategorii “Příspěvkové organizace”. Lze odfiltrovat v legendě nebo v grafu.</i>",wrap_len),
     #                      font = pozn_font_small),
     #                 annot_below_A2),
     title = list(font=title_font,
