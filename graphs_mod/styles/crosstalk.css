@@ -138,4 +138,36 @@ border-top: 2px solid #c90239;
 #tocify-header0 > ul.tocify-subheader > li.tocify-item,
 #tocify-header1 > ul.tocify-subheader > li.tocify-item {
 border-top: 1px solid #ccc !important;
+background-color: #f3f3f3 !important;
+}
+
+#tocify-header0 > li.tocify-item,
+#tocify-header1 > li.tocify-item {
+font-weight: 800 !important;
+}
+
+#TitleModal > div.modal-dialog > div.modal-content > div.modal-footer > button.btn{
+background-color: #e8194e;
+color:#FFF;
+border-color: #FFF;
+}
+ 
+#TitleModal > div.modal-dialog > div.modal-content > div.modal-footer > button.btn:hover,
+#TitleModal > div.modal-dialog > div.modal-content > div.modal-footer > button.btn:active,
+#TitleModal > div.modal-dialog > div.modal-content > div.modal-footer > button.btn.active {
+background-color: #8b0f2e;
+color:#fff;
+border-color: #adadad;
+}
+
+#TitleModal > div.modal-dialog > div.modal-content > div.modal-footer > button.btn:focus{
+background-color: #8b0f2e;
+color:#fff;
+border-color: #adadad;
+outline:0;
+box-shadow:0 0 0 0rem rgba(201,2,57,.25)
+}
+
+hr {
+border-top: 5px solid #c90239 !important;
 }

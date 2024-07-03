@@ -750,7 +750,7 @@ graf_A4 <- vyvoj_bar_shares %>%
   add_bars(x = ~as.character(rok), y = ~prostredky_na_platy_nom / 1e9) %>%
   layout(barmode='stack',bargap=0.5,
          title = list(font=title_font,
-                      text = "<b>Graf 4b. Výdaje na platy státních úředníků (2003-2023)</b>",
+                      text = "<b>Graf 4c. Výdaje na platy státních úředníků (2003-2023)</b>",
                       y = 0.98),
          xaxis = c(num_ticks,frame_x,list(title = list(text="<b>Rok</b>",standoff=10),
                                           dtick=2,titlefont = axis_font),
@@ -814,7 +814,7 @@ graf_A5 <- vyvoj_bar_shares %>%
   add_bars(x = ~as.character(rok), y = ~prostredky_na_platy_real / 1e9) %>%
   layout(barmode='stack',bargap=0.5,
          title = list(font=title_font,
-                      text = "<b>Graf 4c. Reálné výdaje na platy státních úředníků (2003-2023)</b>",
+                      text = "<b>Graf 4d. Reálné výdaje na platy státních úředníků (2003-2023)</b>",
                       y = 0.98),
          xaxis = c(num_ticks,frame_x,list(title = list(text="<b>Rok</b>",standoff=10),
                                           dtick=2,titlefont = axis_font),
