@@ -28,6 +28,7 @@ fs::dir_copy("www/icons/","graphs_mod/icons", overwrite = TRUE)
 fs::dir_copy("www/js/","graphs_mod/js", overwrite = TRUE)
 fs::dir_copy("www/styles/","graphs_mod/styles", overwrite = TRUE)
 fs::dir_copy("www/img/","graphs_mod/img", overwrite = TRUE)
+fs::dir_copy("www/pdf/","graphs_mod/pdf", overwrite = TRUE)
 
 template <- readLines("www/template_long.html")
 

@@ -49,23 +49,27 @@ font-size: 15px !important;
 .tocify {
 position: fixed !important;
 margin-left: 0px !important;
-width: 20% !important;
+max-width: 300px !important;
 font-size: 16px !important;
-padding-bottom: 10px !important;
+padding-bottom: 5px !important;
 }
 
-div.span2 {
+div.left {
 padding-right: 9px !important;
 padding-left: 9px !important;
-width: 22% !important;
+width: 320px !important;
+max-width: 320px !important;
 margin-left: 0% !important;
 margin-right: 0% !important;
+display: table-cell;
 }
 
-div.span10 {
+div.right {
 margin-left: 2% !important;
 margin-right: 2% !important;
-width: 74% !important;
+display: table-cell;
+padding-right: 19px !important;
+padding-left: 29px !important;
 }
 
 button {
@@ -105,4 +109,29 @@ font-size: 85% !important;
 
 #logos {
 text-align: center !important;
+}
+
+rect.updatemenu-item-rect {
+stroke: #c90239 !important;
+stroke-opacity: 0.9 !important;
+fill: #c90239 !important;
+fill-opacity: 0.2 !important;
+}
+
+g.updatemenu-button:hover > rect.updatemenu-item-rect,
+g.updatemenu-button:active > rect.updatemenu-item-rect {
+stroke: #c90239 !important;
+stroke-opacity: 1 !important;
+fill: #c90239 !important;
+fill-opacity: 0.3 !important;
+}
+
+#tocify-header1 {
+border-top: 2px solid #c90239;
+}
+
+
+#tocify-header0 > ul.tocify-subheader > li.tocify-item,
+#tocify-header1 > ul.tocify-subheader > li.tocify-item {
+border-top: 1px solid #ccc !important;
 }

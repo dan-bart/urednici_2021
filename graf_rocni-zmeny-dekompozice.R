@@ -146,7 +146,7 @@ graf_AX1 <- dta %>%
     # hovermode = "x",
     barmode = "relative",bargap=0.5,
     title = list(font=title_font,
-                 text = paste0("<b>Graf A17. Změny počtu zaměstnanců ve sféře rozpočtové regulace, podle kategorií</b>",
+                 text = paste0("<b>Graf 10. Změny počtu zaměstnanců ve sféře rozpočtové regulace, podle kategorií</b>",
                                "<br>","<sup>","Meziroční změna skutečného počtu zaměstnanců podle Státního závěrečného účtu","</sup>"),
                  y = 0.98),
     # annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Změna v roce 2012 způsobena změnou klasifikace některých zaměstnanců MV a MZV</i>",wrap_len),

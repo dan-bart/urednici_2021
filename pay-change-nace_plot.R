@@ -226,7 +226,7 @@ graf_AX <- data %>%
   layout(
     # hovermode = "x",
     title = list(font=title_font,
-                 text="<b>Graf A15. Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %</b>",
+                 text="<b>Graf 9b. Meziroční změny průměrných reálných mezd (v odvětvích dle NACE), v %</b>",
                  y = 0.96),
     # annotations = c(list(text = str_wrap("<i>Zdroj: vlastní výpočet z dat ČSÚ (sady 110079 Mzdy, náklady práce - časové řady a 010022 Indexy spotř. cen)</i>",wrap_len),
     #                      font = pozn_font),annot_below),
