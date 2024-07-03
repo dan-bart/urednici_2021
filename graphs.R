@@ -887,7 +887,7 @@ graf_A6 <- aux2 %>%
                                      ticktext = lapply(seq(-10,70,10), function(x) ifelse(x > 0, paste0("+", x), as.character(x))),
                                      tickvals = seq(-10,70,10),
                                      tickmode = "array")),
-    margin = mrg5,
+    margin = mrg2,
     legend=legend_below) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)

@@ -181,7 +181,7 @@ title = $("#" + id + " > div > div > div > svg.main-svg > g.infolayer > g > text
 
 if (title.length == 1){
 
-	if(id == "graf_6" | id == "graf_A6"){
+	if(id == "graf_6"){
 		title_tranform_y = -10;
 	} else if(id == "graf_A17"){
 		title_tranform_y = 10;
@@ -216,6 +216,11 @@ if (leg.length == 1){
 		margin_r = 0;
 		margin_b = 120;
 		margin_l = 10;
+	}else if(id == "graf_A6"){
+		margin_t = 50;
+		margin_r = 0;
+		margin_b = 100;
+		margin_l = 10;
 	}else if(id == "graf_6"){
 		margin_t = 70;
 		margin_r = 0;
@@ -231,7 +236,7 @@ if (leg.length == 1){
 		margin_r = 0;
 		margin_b = 100;
 		margin_l = 20;
-	}else if(id == "graf_A7" | id == "graf_A15" | id == "graf_A6"){
+	}else if(id == "graf_A7" | id == "graf_A15"){
 		margin_t = 70;
 		margin_r = 0;
 		margin_b = 100;
