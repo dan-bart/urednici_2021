@@ -184,7 +184,10 @@ for(i in inx){
   gr_annotation <- c(annotations_template[1:(grep("div",annotations_template)[1])],gr_annotation,annotations_template[(grep("div",annotations_template)[2]):length(annotations_template)])
 
   gr_text <- unname(text_par[text_par$graph==gr_id,][["text"]])
-  gr_text <- c(text_template[1:(grep("div",text_template)[1])],gr_text,text_template[(grep("div",text_template)[2]):length(text_template)])
+  if(nchar(gsub("\\s","",gr_text))>0){
+    gr_text <- c(text_template[1:(grep("div",text_template)[1])],
+                 gr_text,text_template[(grep("div",text_template)[2]):length(text_template)])
+  }
 
   gr <- readLines(file.path("graphs", f))
   gr_content <- gr[grepl('id="htmlwidget',gr) | grepl('type="application',gr)]
