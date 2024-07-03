@@ -43,6 +43,10 @@ text_template <- readLines("www/text_template.html")
 
 script_template <- readLines("www/template_script.js")
 
+title_modal <- readLines("www/img/title_v3.svg")
+title_modal <- gsub("a xlink:href",'a target="_blank" xlink:href',title_modal)
+template <- gsub("title\\_svg",paste(title_modal,collapse="\n"),template)
+
 lfiles <- list.files("graphs", full.names = FALSE)
 lfiles <- lfiles[grepl("html",lfiles) & !grepl("mod",lfiles)]
 lfiles <- lfiles[order(as.numeric(gsub("[^0-9]","",lfiles)))]

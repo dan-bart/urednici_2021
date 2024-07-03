@@ -51,10 +51,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body" style="font-size:16px;">
-        <img src="img/title_v3.svg">
+        title_svg
       </div>
       <div class="modal-footer">
-        <button class="btn btn-default dismiss" data-dismiss="modal" aria-hidden="true" style="font-size: 15px !important;">Rozumím</button>
+        <button class="btn btn-default dismiss" data-dismiss="modal" aria-hidden="true" style="font-size: 15px !important;">Prozkoumávat data o úřednících</button>
       </div>
     </div>
   </div>
@@ -97,14 +97,14 @@
 
 <div class="left">
 
-<div style="position:fixed;width:300px;max-width:300px;">
+<div style="position:fixed;width:310px;max-width:310px;">
 
 <div class="btn btn-light" style="display:flex;margin-left:auto;margin-right:auto;margin-bottom:20px; background-color: #c90239 !important; color: #fff !important; border-radius: 0px; font-size:20px;">
 <span>
 <!--
 <a href="https://idea.cerge-ei.cz/images/studie/2022/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.pdf" target="_blank" style="color:#fff!important;decoration:none!important;">Podrobnosti ve studii IDEA:<br>„Státní zaměstnanci a úředníci: kde pracují a za kolik?“</a>
 -->
-<p style="color:#fff!important;display:inline;">Státní zaměstnanci a úředníci:<br>kde pracují a za kolik?</p>
+<p style="color:#fff!important;display:inline;">Zaměstnanci státu a úředníci:<br>kde pracují a za kolik (2024)</p>
 <a href="#infomodal" data-toggle="modal" data-target="#infomodal" style="color:#fff!important;decoration:none!important;"><i class="fa-solid fa-circle-info"></i></a>
 </span>
 </div>
@@ -122,8 +122,8 @@
                                     menubar=no,
                                     scrollbars=yes,
                                     resizable=yes,
-                                    width=600,
-                                    height=800`);
+                                    width=800,
+                                    height=1000`);
   return false;">Seznam zkratek</a></li>
   <li class="tocify-item" style="cursor: pointer;"><a href="pdf/metodologie.pdf"
    onclick="window.open(this.href,'targetWindow',
@@ -133,8 +133,8 @@
                                     menubar=no,
                                     scrollbars=yes,
                                     resizable=yes,
-                                    width=600,
-                                    height=800`);
+                                    width=800,
+                                    height=1000`);
   return false;">Data a metodologie</a></li>
 
   <li class="tocify-item" style="cursor: pointer;"><a href="https://idea.cerge-ei.cz/images/studie/2022/IDEA_Studie_2_2022_Statni_zamestnanci_a_urednici.pdf" target="_blank">Studie z roku 2022</a></li>
@@ -309,6 +309,10 @@ $(document).ready(function() {
 
   // extra script1 here
 
+	$("#tocify-header0 > ul.tocify-subheader").each(function() {
+	$(this).show();
+	});
+	
     if ($.cookie("dismiss") == null) {
       $('#PozorModal').appendTo("body");
       function show_modal(){
