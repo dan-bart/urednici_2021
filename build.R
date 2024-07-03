@@ -14,6 +14,7 @@ system2("netlify", args = c("deploy",
                             "--prod"))
 
 rmarkdown::render("results.Rmd")
+
 source("graphs.R")
 source("graphs_mod.R")
 source("graphs_mod_long.r")
