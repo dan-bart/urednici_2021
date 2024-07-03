@@ -176,12 +176,14 @@ for(i in inx){
   gr_keywords <- keywords[keywords$graph==gr_id,c("keyword_name","keyword_definition")]
   if(nrow(gr_keywords)>0){
     gr_keywords <- setNames(as.character(gr_keywords$keyword_definition),gr_keywords$keyword_name)
-    gr_keywords <- c(sapply(gr_keywords, function(k) gsub("keyword_definition",unname(k),gsub("keyword_name",names(gr_keywords)[unname(gr_keywords)==k],keywords_template[grep("details",keywords_template)[1]:grep("details",keywords_template)[2]]))))
-    gr_keywords <- c(keywords_template[1:(grep("details",keywords_template)[1]-1)],gr_keywords,keywords_template[(grep("details",keywords_template)[2]+1):length(keywords_template)])
+    gr_keywords <- c(sapply(gr_keywords, function(k) gsub("keyword_definition",unname(k),gsub("keyword_name",names(gr_keywords)[unname(gr_keywords)==k],keywords_template[grep("details",keywords_template)[2]:grep("details",keywords_template)[3]]))))
+    gr_keywords <- c(keywords_template[1:(grep("details",keywords_template)[2]-1)],gr_keywords,keywords_template[(grep("details",keywords_template)[3]+1):length(keywords_template)])
   }
 
   gr_annotation <- unname(annotations[annotations$graph==gr_id,][["annotation_text"]])
-  gr_annotation <- c(annotations_template[1:(grep("div",annotations_template)[1])],gr_annotation,annotations_template[(grep("div",annotations_template)[2]):length(annotations_template)])
+  if(nchar(gsub("\\s","",gr_annotation))>0){
+    gr_annotation <- c(annotations_template[1:(grep("div",annotations_template)[1])],gr_annotation,annotations_template[(grep("div",annotations_template)[2]):length(annotations_template)])
+  }
 
   gr_text <- unname(text_par[text_par$graph==gr_id,][["text"]])
   if(nchar(gsub("\\s","",gr_text))>0){
@@ -214,7 +216,7 @@ for(i in inx){
 
   # gr_content <- c(header_toc,copy_link,gr_content)
   gr_content <- c(header_toc,gr_content)
-  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,"<br>",gr_text,"<br>",gr_keywords,"<hr><br>"))
+  gr_content_all <- append(gr_content_all,c(gr_content, "</div>",gr_annotation,gr_text,"<br>",gr_keywords,"<hr><br>"))
 }
 
 gr_all <- unlist(lapply(as.list(template), function(x)

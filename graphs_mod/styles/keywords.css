@@ -23,7 +23,7 @@ h1 {
   font-size: 18px !important;
   font-weight: 500;
 }
-details[open] summary ~ * {
+details.sub[open] summary.sub ~ * {
   animation: open 0.3s ease-in-out;
 }
 
@@ -35,11 +35,11 @@ details[open] summary ~ * {
     opacity: 1;
   }
 }
-details summary::-webkit-details-marker {
+details.sub summary.sub::-webkit-details-marker {
   display: none;
 }
 
-details summary {
+details.sub summary.sub {
   width: 100%;
   padding: 0.5rem 0;
   border-top: 1px solid black;
@@ -51,7 +51,7 @@ details summary {
   list-style: none;
 }
 
-details summary:after {
+details.sub summary.sub:after {
   content: "+";
   color: black;
   position: absolute;
@@ -63,16 +63,69 @@ details summary:after {
   transform-origin: center;
   transition: 200ms linear;
 }
-details[open] summary:after {
+details.sub[open] summary.sub:after {
   transform: rotate(45deg);
   font-size: 1.6rem;
 }
-details summary {
+details.sub summary.sub {
   outline: 0;
 }
-details p {
+details.sub p {
   /*font-size: 0.95rem;*/
   font-size: 14px !important;
   margin: 0 0 1rem;
   padding-top: 0.5rem;
 }
+
+
+
+
+
+details.top[open] summary.top ~ * {
+  animation: open 0.3s ease-in-out;
+}
+
+details.top summary.top::-webkit-details-marker {
+  display: none;
+}
+
+details.top summary.top {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-top: 1px solid black;
+  position: relative;
+  cursor: pointer;
+  /*font-size: 1.25rem;*/
+  font-size: 16px !important;
+  font-weight: 300;
+  list-style: none;
+}
+
+details.top summary.top:after {
+  content: ">";
+  color: black;
+  position: absolute;
+  font-size: 1.15rem;
+  line-height: 0;
+  margin-top: 0.75rem;
+  right: 0;
+  font-weight: 200;
+  transform-origin: center;
+  transition: 200ms linear;
+}
+details.top[open] summary.top:after {
+  transform: rotate(90deg);
+  font-size: 1.15rem;
+}
+details.top summary.top {
+  outline: 0;
+}
+details.top p {
+  /*font-size: 0.95rem;*/
+  font-size: 14px !important;
+  margin: 0 0 1rem;
+  padding-top: 0.5rem;
+}
+
+
+
