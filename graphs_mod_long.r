@@ -220,7 +220,7 @@ for(i in inx){
 }
 
 gr_all <- unlist(lapply(as.list(template), function(x)
-  if(grepl("page title here",x)) "Státní zaměstnanci a úředníci: kde pracují a za kolik?"
+  if(grepl("page title here",x)) "Zaměstnanci státu a úředníci: kde pracuji a za kolik?"
   # else if(grepl("list of graphs here",x)) paste(unlist(toc_list),collapse="\n")
   else if(grepl("graph content here",x)) gr_content_all
   # else if(grepl("keywords here",x)) ""
