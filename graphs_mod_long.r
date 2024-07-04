@@ -231,3 +231,5 @@ gr_all <- unlist(lapply(as.list(template), function(x)
 
 
 writeLines(gr_all,paste0("graphs_mod/graphs_long.html"))
+
+# system("scp -r graphs_mod/* root@194.182.65.144:/srv/shiny-server/urednici_2024_single_page")
