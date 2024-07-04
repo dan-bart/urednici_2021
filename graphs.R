@@ -82,7 +82,9 @@ pozn_font <- list(size = pozn_size)
 pozn_font_small <- list(size = pozn_long_size)
 axis_font <- list(color = "#000000",size=axis_size,
                   family=uni_font)
-legend_below = list(x = 0, y = 0,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size,family=uni_font))
+legend_below = list(x = 0.5, y = -0.2,orientation = "h",xanchor = "center",yanchor = "top",font=list(size=lgnd_size,family=uni_font))
+legend_below_small = list(x = 0.5, y = -0.1,orientation = "h",xanchor = "center",yanchor = "top",font=list(size=lgnd_size,family=uni_font))
+legend_below_mid = list(x = 0.5, y = -0.15,orientation = "h",xanchor = "center",yanchor = "top",font=list(size=lgnd_size,family=uni_font))
 kat_ticks<-list(tickfont=list(size=kat_tick_size,family=uni_font),showticklabels = T,tickangle = 0,tickmode = "array")
 kat_ticks_rotated<-list(tickfont=list(size=kat_tick_size,family=uni_font),showticklabels = T,tickangle = -90,tickmode = "array")
 num_ticks <- list(tickfont=list(size=num_tick_size,family=uni_font))
@@ -440,15 +442,15 @@ graf_2
 
 ## ----costs, include = F------------------------------------------------------------------------------------------
 
-annot_below_A2 <- list(align='left',
-                       xref='paper',
-                       yref="paper",
-                       x=0,
-                       y=-0,
-                       bordercolor = 'rgba(0,0,0,0)',
-                       borderwidth=1,
-                       showarrow = FALSE)
-legend_below_A2 = list(x = 0, y = 0,orientation = "h",xanchor = "left",xref='paper',yref="paper",font=list(size=lgnd_size,family=uni_font))
+# annot_below_A2 <- list(align='left',
+#                        xref='paper',
+#                        yref="paper",
+#                        x=0,
+#                        y=-0,
+#                        bordercolor = 'rgba(0,0,0,0)',
+#                        borderwidth=1,
+#                        showarrow = FALSE)
+legend_below_A2 = list(x = 0.5, y = -0.2,orientation = "h",xanchor = "center",yanchor = "top",font=list(size=lgnd_size,family=uni_font))
 
 graf_A2 <- plot_ly(bar_dt,
                    x = ~kap_name, y = ~ prostredky_na_platy / 1e9,
@@ -674,7 +676,7 @@ graf_4 <- graf_4_dta %>%
                    list(tickvals = seq(2003,2023,2))),
          yaxis = c(num_ticks,frame_y,list(title = "<b>Počet státních úředníků (v tisících)</b>",
                                           titlefont = axis_font)),
-         legend = legend_below,
+         legend = legend_below_small,
          margin = mrg2 ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
@@ -703,7 +705,7 @@ graf_4 <- graf_4_dta_shares %>%
          yaxis = c(num_ticks,frame_y,list(title = "<b>Počet státních úředníků (v tisících)</b>",
                                           titlefont = axis_font,
                                           dtick = 10, range = c(0,68))),
-         legend = legend_below, margin = mrg2,
+         legend = legend_below_small, margin = mrg2,
          updatemenus = list( chart_type(title_y = "<b>Počet státních úředníků (v tisících)</b>",
                                         title_y_share = "<b>Podíl státních úředníků (v %)</b>",
                                         label_bar = "Sloupce (v tisících)",
@@ -756,7 +758,7 @@ graf_A4 <- vyvoj_bar %>%
                            list(tickvals = seq(2003,2023,2))),
          yaxis = c(num_ticks,frame_y,list(title = "<b>Výdaje na platy (v mld. Kč)</b>",titlefont = axis_font,
                                           dtick = 5)),
-         legend = legend_below, margin = mrg2
+         legend = legend_below_small, margin = mrg2
   ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
@@ -791,7 +793,7 @@ graf_A4 <- vyvoj_bar_shares %>%
                    list(tickvals = seq(2003,2023,2))),
          yaxis = c(num_ticks,frame_y,list(title = "<b>Výdaje na platy (v mld. Kč)</b>",titlefont = axis_font,
                                           dtick = 5, range = c(0,38))),
-         legend = legend_below, margin = mrg2,
+         legend = legend_below_small, margin = mrg2,
          updatemenus = list( chart_type(title_y = "<b>Výdaje na platy (v mld. Kč)</b>",
                                         title_y_share = "<b>Výdaje na platy (v %)</b>",
                                         label_bar = "Sloupce (v mld. Kč)",
@@ -829,7 +831,7 @@ graf_A5 <- vyvoj_bar %>%
                                           # xaxis = list(categoryarray = seq(2003,2023), categoryorder = "array"),
                    list(tickvals = seq(2003,2023,5))),
          yaxis = c(num_ticks,frame_y,list(title = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",titlefont = axis_font)),
-         legend = legend_below, margin = mrg2
+         legend = legend_below_small, margin = mrg2
   ) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
@@ -859,7 +861,7 @@ graf_A5 <- vyvoj_bar_shares %>%
                    list(tickvals = seq(2003,2023,2))),
          yaxis = c(num_ticks,frame_y,list(title = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",titlefont = axis_font,
                                           dtick = 5)),
-         legend = legend_below, margin = mrg2,
+         legend = legend_below_small, margin = mrg2,
          updatemenus = list( chart_type(title_y = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",
                                         title_y_share = "<b>Reálné výdaje na platy (v %)</b>",
                                         label_bar = "Sloupce (v mld. Kč)",
@@ -919,7 +921,7 @@ graf_A6 <- aux2 %>%
                                      tickvals = seq(-10,70,10),
                                      tickmode = "array")),
     margin = mrg2,
-    legend=legend_below) %>%
+    legend=legend_below_small) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
@@ -962,7 +964,7 @@ graf_5 <- plot_ly(graf_5_dt,
                   hoverinfo = "text",
                   legendgroup = ~kategorie_2014_cz) %>%
   layout(
-    legend = legend_below,
+    legend = legend_below_mid,
     # annotations = c(list(text = str_wrap("<i>Pozn.: Reálné hrubé měsíční platy jsou uvedeny v cenách roku 2023.</i>",wrap_len),
     #                      font = pozn_font_small),annot_below),
     title =list(text = "<b>Graf 5a. Reálné průměrné platy státních úředníků 2004-2023 (v cenách roku 2023)</b>",
@@ -979,18 +981,18 @@ graf_5
 
 # G5 static ---------------------------------------------------------------
 
-graf_5_static <- ggplot(graf_5_dt, aes(rok, wage_in_2023/1e3, colour = kategorie_2014_cz)) +
-  geom_line(size = 1.9) +
-  geom_point(colour = "black", size = 1.9) +
-  theme_minimal(base_family = uni_font, base_size = 14) +
-  theme_urednici +
-  scale_color_manual(values = color_map, name = NULL, limits = force) +
-  scale_x_continuous(breaks = seq(2003, 2023, 2)) +
-  labs(title = "Graf 5. Průměrné platy státních úředníků (2004–2023) v cenách roku 2023",
-       x = "Rok",
-       y = "Reálné průměrné hrubé měsíční mzdy (tis. Kč) v cenách roku 2023",
-       caption = "Pozn.: reálné hrubé měsíční platy, uvedené v cenách roku 2023")
-graf_5_static
+# graf_5_static <- ggplot(graf_5_dt, aes(rok, wage_in_2023/1e3, colour = kategorie_2014_cz)) +
+#   geom_line(size = 1.9) +
+#   geom_point(colour = "black", size = 1.9) +
+#   theme_minimal(base_family = uni_font, base_size = 14) +
+#   theme_urednici +
+#   scale_color_manual(values = color_map, name = NULL, limits = force) +
+#   scale_x_continuous(breaks = seq(2003, 2023, 2)) +
+#   labs(title = "Graf 5. Průměrné platy státních úředníků (2004–2023) v cenách roku 2023",
+#        x = "Rok",
+#        y = "Reálné průměrné hrubé měsíční mzdy (tis. Kč) v cenách roku 2023",
+#        caption = "Pozn.: reálné hrubé měsíční platy, uvedené v cenách roku 2023")
+# graf_5_static
 
 # ggsave("graphs-static/graf-5.png", plot = graf_5_static, width = 8, height = 5, scale = 1.5, bg = "white")
 
@@ -1055,7 +1057,7 @@ graf_A7 <- plot_ly(graf_A7_dt,
                                      ticksuffix = "%",
                                      showticksuffix = "all",
                                      titlefont = axis_font)),
-    legend = legend_below, margin = mrg6) %>%
+    legend = legend_below_small, margin = mrg6) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
@@ -1126,28 +1128,28 @@ graf_6 <- plot_ly(graf_6_dt,
                                    # ticksuffix = "%",
                                    titlefont = axis_font)),
   margin = mrg5,
-  legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
+  legend=legend_below_mid) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 graf_6
 
 # G6 static ---------------------------------------------------------------
 
-graf_6_static <- ggplot(graf_6_dt, aes(rok, wage_to_general, colour = kategorie_2014_cz)) +
-  geom_line(size = 1.9) +
-  geom_point(colour = "black", size = 1.9) +
-  theme_minimal(base_family = uni_font, base_size = 14) +
-  theme_urednici +
-  scale_color_manual(values = color_map, name = NULL, limits = force) +
-  scale_x_continuous(breaks = seq(2003, 2023, 2)) +
-  ptrr::scale_y_percent_cz() +
-  labs(title = "Graf 6. Průměrný plat státních úředníků \nvůči průměrné mzdě v národním hospodářství (2004-2023)",
-       y = "Poměr platů státních úředníku a prům. mzdy (v %)",
-       x = "Rok",
-       caption = str_wrap("Pozn.: pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.",
-                          150))
-
-graf_6_static
+# graf_6_static <- ggplot(graf_6_dt, aes(rok, wage_to_general, colour = kategorie_2014_cz)) +
+#   geom_line(size = 1.9) +
+#   geom_point(colour = "black", size = 1.9) +
+#   theme_minimal(base_family = uni_font, base_size = 14) +
+#   theme_urednici +
+#   scale_color_manual(values = color_map, name = NULL, limits = force) +
+#   scale_x_continuous(breaks = seq(2003, 2023, 2)) +
+#   ptrr::scale_y_percent_cz() +
+#   labs(title = "Graf 6. Průměrný plat státních úředníků \nvůči průměrné mzdě v národním hospodářství (2004-2023)",
+#        y = "Poměr platů státních úředníku a prům. mzdy (v %)",
+#        x = "Rok",
+#        caption = str_wrap("Pozn.: pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.",
+#                           150))
+#
+# graf_6_static
 
 # ggsave("graphs-static/graf-6.png", plot = graf_6_static, width = 8, height = 5, scale = 1.5, bg = "white")
 
@@ -1618,7 +1620,7 @@ graf_A14 <- graf_A14_dta_shares %>%
          yaxis = c(num_ticks,frame_y,list(title = "<b>Počet státních úředníků (v tisících)</b>",
                                           titlefont = axis_font,
                                           dtick = 10, range = c(0,86))),
-         legend = legend_below, margin = mrg2,
+         legend = legend_below_small, margin = mrg2,
          updatemenus = list( chart_type(title_y = "<b>Počet státních úředníků (v tisících)</b>",
                                         title_y_share = "<b>Podíl státních úředníků (v %)</b>",
                                         label_bar = "Sloupce (v tisících)",

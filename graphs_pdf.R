@@ -1,0 +1,12 @@
+pdf_dir <- "graphs_pdf/"
+zip_file <- "Grafy_balik.zip"
+
+graph_titles <- data.table::fread("graph_titles.csv")
+
+for(graph_id in graph_titles$graph){
+  f_name <- paste0(gsub("^([^\\.]+)\\..*","\\1",graph_titles$title[graph_titles$graph==graph_id]),".pdf")
+  orca(get(graph_id),paste0(pdf_dir,f_name),width = 1094,height = 700)
+}
+
+if(!dir.exists("graphs_mod/files")){dir.create("graphs_mod/files")}
+system(paste("7z a ",paste0("graphs_mod/files/",zip_file),"graphs_pdf/."))

@@ -202,7 +202,7 @@ text_size_map <- c(Ostatní = 0, Profesní = hover_size,
 
 data$tm <- year(data$tm)
 
-graf_AX <- data %>%
+graf_A15 <- data %>%
   plot_ly(
     x = ~tm, y = ~ realna_zmena * 100, type = "scatter",
     color = ~clr, colors = color_map, mode = "line",
@@ -241,8 +241,8 @@ graf_AX <- data %>%
                                      tickvals = seq(-15,10,5),
                                      tickmode = "array",
                                      titlefont = axis_font)),
-    legend = legend_below, margin = mrg6) %>%
+    legend = legend_below_mid, margin = mrg6) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js)
 
-htmlwidgets::saveWidget(as_widget(graf_AX), paste0("graphs/","graf_A15",".html"), libdir = "js", selfcontained = FALSE)
+htmlwidgets::saveWidget(as_widget(graf_A15), paste0("graphs/","graf_A15",".html"), libdir = "js", selfcontained = FALSE)

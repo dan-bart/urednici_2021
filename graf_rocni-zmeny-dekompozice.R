@@ -128,7 +128,7 @@ color_map <- append(color_map,
 
 mrg <- list(b = 130, t = 70, pad = 0, autoexpand = TRUE)
 
-graf_AX1 <- dta %>%
+graf_A17 <- dta %>%
   plot_ly(
     type="bar",
     x = ~year(datum), y = ~ delta / 1000, color = ~kategorie,
@@ -148,7 +148,7 @@ graf_AX1 <- dta %>%
     title = list(font=title_font,
                  text = paste0("<b>Graf 10. Změny počtu zaměstnanců ve sféře rozpočtové regulace, podle kategorií</b>",
                                "<br>","<sup>","Meziroční změna skutečného počtu zaměstnanců podle Státního závěrečného účtu","</sup>"),
-                 y = 0.98),
+                 y = 0.96),
     # annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Změna v roce 2012 způsobena změnou klasifikace některých zaměstnanců MV a MZV</i>",wrap_len),
     #                                  font = pozn_font)),
     xaxis = c(num_ticks,frame_y,list(title = list(text="<b>Rok</b>",
@@ -171,4 +171,4 @@ graf_AX1 <- dta %>%
   onRender(js)
 graf_AX1
 
-htmlwidgets::saveWidget(widget = as_widget(graf_AX1), paste0("graphs/","graf_A17",".html"), libdir = "js", selfcontained = FALSE)
+htmlwidgets::saveWidget(widget = as_widget(graf_A17), paste0("graphs/","graf_A17",".html"), libdir = "js", selfcontained = FALSE)
