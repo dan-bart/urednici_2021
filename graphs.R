@@ -599,7 +599,7 @@ graf_A3 <- bar_dt %>%
       y = 1.25,
       yref = "paper",
       xref = "paper",
-      font = list(family = "verdana", size = axis_size),
+      font = list(family = uni_font, size = axis_size),
       xanchor = "center",
       yanchor = "top",
       showarrow = FALSE
@@ -866,7 +866,7 @@ graf_A5 <- vyvoj_bar_shares %>%
                                         max_bar = 45,max_line = 32,dtick = 5) )) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js) %>%
-  style(visible = FALSE, traces = 4:6)
+  style(visible = FALSE, traces = 4:9)
 
 
 ## ----cost_cumsum_2014--------------------------------------------------------------------------------------------
@@ -971,7 +971,7 @@ graf_5 <- plot_ly(graf_5_dt,
     xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font),
               list(tickvals = seq(2003,2023,5))),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Reálné průměrné mzdy (tis. Kč, ceny roku 2023)</b>",titlefont = axis_font)),
-    margin = mrg4
+    margin = mrg2
   ) %>% config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_5
@@ -1203,10 +1203,10 @@ graf_A8 <- graf_A8_dt %>%
     # annotations = c(annot_below,list(text = str_wrap("<i>Pozn.: Pro srovnatelnost v čase graf nezahrnuje zaměstnance ministerstev vnitra a zahraničních věcí, viz Příloha 1: Data a metodologie. </i>",wrap_len),
     #                                  font = pozn_font_small)),
     showlegend = FALSE,
-    xaxis = c(num_ticks,frame_x,list(title = "Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu (v %)",
+    xaxis = c(num_ticks,frame_x,list(title = "<b>Zm\u011Bna pr\u016Fm\u011Brn\u00E9ho platu (v %)</b>",
                                           titlefont = axis_font,
                                           ticksuffix = "%",range = c(-5,65))),
-    yaxis = c(num_ticks,frame_y,list(title = "Zm\u011Bna po\u010Dtu zam\u011Bstnanc\u016F (v %)",
+    yaxis = c(num_ticks,frame_y,list(title = "<b>Zm\u011Bna po\u010Dtu zam\u011Bstnanc\u016F (v %)</b>",
                                      titlefont = axis_font,
                                      range = c(-20,20),
                                      # tickprefix = "+",
@@ -1283,7 +1283,7 @@ graf_A9 <- dta %>%filter(!is.na(kap_name)) %>%
       y = 1.05,
       yref = "paper",
       xref = "paper",
-      font = list(family = "verdana", size = kat_tick_size),
+      font = list(family = uni_font, size = kat_tick_size),
       xanchor = "center",
       yanchor = "top",
       showarrow = FALSE
@@ -1349,7 +1349,7 @@ graf_A10 <- dta %>%filter(!is.na(kap_name)) %>%
       y = 1.15,
       yref = "paper",
       xref = "paper",
-      font = list(family = "verdana", size = kat_tick_size),
+      font = list(family = uni_font, size = kat_tick_size),
       xanchor = "center",
       yanchor = "top",
       showarrow = FALSE
@@ -1414,7 +1414,7 @@ graf_A11 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
       y = 1.25,
       yref = "paper",
       xref = "paper",
-      font = list(family = "verdana", size = axis_size),
+      font = list(family = uni_font, size = axis_size),
       xanchor = "center",
       yanchor = "top",
       showarrow = FALSE
@@ -1474,7 +1474,7 @@ graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
       y = 1.25,
       yref = "paper",
       xref = "paper",
-      font = list(family = "verdana", size = axis_size),
+      font = list(family = uni_font, size = axis_size),
       xanchor = "center",
       yanchor = "top",
       showarrow = FALSE
@@ -1544,7 +1544,7 @@ graf_A13 <- dta %>%filter(!is.na(kategorie_2014_cz))%>%
       y = 1.2,
       yref = "paper",
       xref = "paper",
-      font = list(family = "verdana", size = axis_size),
+      font = list(family = uni_font, size = axis_size),
       xanchor = "center",
       yanchor = "top",
       showarrow = F
@@ -1565,11 +1565,11 @@ graf_A13 <- dta %>%filter(!is.na(kategorie_2014_cz))%>%
                       text = "<b>Graf 8. Nárůst průměrných platů od roku 2003 (v %)</b>",
                       xaxis = list(title = "",titlefont = axis_font), y = 0.98), margin=c(t=50,l=90,b=80),
          annotations = list(list(x = 0 , y = 0.5, text = "<b>Nárůst průměrného platu od roku 2003</b>",
-                                 font = list(size = axis_size),
+                                 font = axis_font,
                                  xshift = -80, textangle = 270, showarrow = F,
                                  xref='paper', yref='paper'),
                             list(y = 0 , x = 0.5, text = "<b>Průměrný plat v roce 2003 (tis. Kč)</b>",
-                                 font = list(size = axis_size),
+                                 font = axis_font,
                                  yshift = -70,
                                  textangle = 0, showarrow = F,
                                  xref='paper', yref='paper'
@@ -1625,7 +1625,7 @@ graf_A14 <- graf_A14_dta_shares %>%
                                         max_bar = 86,max_line = 55) )) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js) %>%
-  style(visible = FALSE, traces = 4:6)
+  style(visible = FALSE, traces = 4:9)
 
 
 ## ----graf_A16----------------------------------------------------------------------------------------------------
