@@ -344,7 +344,7 @@ graf_A1 <- graf_A1 |>
   # layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout.</i>",
   #                           x = 1, y = -0.05, showarrow = FALSE, font = pozn_font_small)) %>%
   layout(uniformtext = list(minsize = lbl_size, mode = 'show')) %>%
-  config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
+  config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm, displayModeBar = FALSE) %>%
   onRender(js)
 
 tree_data %>%
@@ -400,7 +400,7 @@ graf_1 <- graf_1 |>
   # layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout.</i>", x = 1,
   #                           y = -0.05, showarrow = FALSE, font = pozn_font_small)) %>%
   layout(uniformtext = list(minsize=lbl_size, mode = 'show')) %>%
-  config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
+  config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm,displayModeBar = FALSE) %>%
   onRender(js)
 
 graf_1
@@ -434,7 +434,7 @@ graf_2 <- bar_dt %>% group_by(kategorie_2014_cz)%>%
     yaxis = c(num_ticks,frame_y,list(title = "<b>Po\u010Det zam\u011Bstnanc\u016F (v tisících)</b>",
                                      titlefont = axis_font)),
     barmode = "stack",
-    margin = mrg4) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+    margin = mrg4) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_2
 
@@ -477,7 +477,7 @@ graf_A2 <- plot_ly(bar_dt,
     yaxis = c(num_ticks,frame_y,list(title = "<b>Platy (mld. Kč)</b>",titlefont = axis_font)),
     barmode = "stack",
     margin = mrg5) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -565,7 +565,7 @@ graf_3 <- bar_dt %>%
                                           titlefont = axis_font)),
          yaxis = c(num_ticks,frame_y,list(title = "",titlefont = axis_font)),showlegend = F,
          margin = mrg2) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_3
 
@@ -619,7 +619,7 @@ graf_A3 <- bar_dt %>%
            showlegend = F
     ), keep = TRUE) %>%
   subplot(nrows = 2, shareY = F, margin = c(0.07,0.07,0.15,0.15),titleY =T) %>%
-  config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm) %>%
+  config(displaylogo = FALSE, modeBarButtonsToRemove = btnrm,displayModeBar = FALSE) %>%
   onRender(js)
 graf_A3
 
@@ -676,7 +676,7 @@ graf_4 <- graf_4_dta %>%
                                           titlefont = axis_font)),
          legend = legend_below,
          margin = mrg2 ) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 graf_4 <- graf_4_dta_shares %>%
@@ -708,7 +708,7 @@ graf_4 <- graf_4_dta_shares %>%
                                         title_y_share = "<b>Podíl státních úředníků (v %)</b>",
                                         label_bar = "Sloupce (v tisících)",
                                         max_bar = 68,max_line = 55) )) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:9)
 
@@ -758,7 +758,7 @@ graf_A4 <- vyvoj_bar %>%
                                           dtick = 5)),
          legend = legend_below, margin = mrg2
   ) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 vyvoj_bar_shares <- vyvoj_bar %>%
@@ -797,7 +797,7 @@ graf_A4 <- vyvoj_bar_shares %>%
                                         label_bar = "Sloupce (v mld. Kč)",
                                         max_bar = 38,max_line = 25,
                                         dtick = 5) )) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:9)
 
@@ -831,7 +831,7 @@ graf_A5 <- vyvoj_bar %>%
          yaxis = c(num_ticks,frame_y,list(title = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",titlefont = axis_font)),
          legend = legend_below, margin = mrg2
   ) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -864,7 +864,7 @@ graf_A5 <- vyvoj_bar_shares %>%
                                         title_y_share = "<b>Reálné výdaje na platy (v %)</b>",
                                         label_bar = "Sloupce (v mld. Kč)",
                                         max_bar = 45,max_line = 32,dtick = 5) )) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:6)
 
@@ -920,7 +920,7 @@ graf_A6 <- aux2 %>%
                                      tickmode = "array")),
     margin = mrg2,
     legend=legend_below) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -972,7 +972,7 @@ graf_5 <- plot_ly(graf_5_dt,
               list(tickvals = seq(2003,2023,5))),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Reálné průměrné mzdy (tis. Kč, ceny roku 2023)</b>",titlefont = axis_font)),
     margin = mrg4
-  ) %>% config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  ) %>% config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_5
 
@@ -1056,7 +1056,7 @@ graf_A7 <- plot_ly(graf_A7_dt,
                                      showticksuffix = "all",
                                      titlefont = axis_font)),
     legend = legend_below, margin = mrg6) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -1126,7 +1126,7 @@ graf_6 <- plot_ly(graf_6_dt,
                                    # ticksuffix = "%",
                                    titlefont = axis_font)),
   margin = mrg5,
-  legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  legend=legend_below) %>%config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 graf_6
@@ -1221,7 +1221,7 @@ graf_A8 <- graf_A8_dt %>%
   add_markers(marker=list(size=mrk_maj_size)) %>%
   add_text(text = ~ str_wrap(kategorie_2014_cz, 10), textposition = "top center",
            textfont = list(size=num_tick_size)) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_A8
 
@@ -1306,7 +1306,7 @@ graf_A9 <- dta %>%filter(!is.na(kap_name)) %>%
                             xshift = -65, textangle = 270, showarrow = F,
                             xref='paper', yref='paper'),
          margin = mrg7) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -1372,7 +1372,7 @@ graf_A10 <- dta %>%filter(!is.na(kap_name)) %>%
                             font = list(size = axis_size),
                             xshift = -65, textangle = 270, showarrow = F,
                             xref='paper', yref='paper')) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_A10
 
@@ -1432,7 +1432,7 @@ graf_A11 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
                             font = list(size = axis_size),
                             xshift = -70, textangle = 270, showarrow = F,
                             xref='paper', yref='paper')) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 ## ----platy_skut_rozp---------------------------------------------------------------------------------------------
 graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
@@ -1501,7 +1501,7 @@ graf_A12 <- dta %>% filter(!is.na(kategorie_2014_cz)) %>%
                                                     xshift = -70, textangle = 270,
                                                     showarrow = F,
                                                     xref='paper', yref='paper')) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -1574,7 +1574,7 @@ graf_A13 <- dta %>%filter(!is.na(kategorie_2014_cz))%>%
                                  textangle = 0, showarrow = F,
                                  xref='paper', yref='paper'
                             ))) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 
 
@@ -1623,7 +1623,7 @@ graf_A14 <- graf_A14_dta_shares %>%
                                         title_y_share = "<b>Podíl státních úředníků (v %)</b>",
                                         label_bar = "Sloupce (v tisících)",
                                         max_bar = 86,max_line = 55) )) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:6)
 
@@ -1653,7 +1653,7 @@ graf_A16 <- plot_ly(graf_A16_dt, type = "scatter", mode = "lines+markers",
     title = list(font=list(color = cap_col,size=cap_size,family=uni_font),
                  text = "<b>Graf 9a. Počet zaměstnanců veřejného sektoru</b>",
                  y = 0.98), margin = mrg3) %>%
-  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
+  config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = FALSE) %>%
   onRender(js)
 graf_A16
 
