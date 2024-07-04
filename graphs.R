@@ -319,7 +319,7 @@ graf_A1 <- graf_A1 |>
     domain = list(column = 0)
   ) %>%
   layout(title = list(font=title_font,
-                      text = paste0("<b>Graf 1b. Výdaje na platy státních zaměstnanců dle regulace zaměstnanosti (2023)</b>",
+                      text = paste0("<b>Graf 1b. Výdaje na zaměstnance státu dle regulace zaměstnanosti (2023)</b>",
                                     "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkových výdajích","</sup>"),
                       y = 0.97),
          margin = mrg8) %>%
@@ -375,8 +375,8 @@ graf_1 <- graf_1 |>
     domain = list(column = 0)
   ) %>%
   layout(title = list(font = title_font,
-                      text = paste0("<b>Graf 1a. Počet státních zaměstnanců dle regulace zaměstnanosti (2023)</b>",
-                                    "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu státních zaměstnanců","</sup>"),
+                      text = paste0("<b>Graf 1a. Počet zaměstnanců státu dle regulace zaměstnanosti (2023)</b>",
+                                    "<br>","<sup>","Velikost obdélníků je úměrná podílu dané skupiny na celkovém počtu zaměstnanců státu","</sup>"),
                       y = 0.97),
          margin = mrg8) %>%
   # layout(annotations = list(text = "<i>Pozn.: Pro bližší detail lze kategorie rozkliknout.</i>", x = 1,
@@ -454,7 +454,7 @@ graf_A2 <- plot_ly(bar_dt,
     #                      font = pozn_font_small),
     #                 annot_below_A2),
     title = list(font=title_font,
-                 text = str_wrap("<b>Graf 2b. Výdaje na platy státních zaměstnanců dle rozpo\u010Dtov\u00FDch kapitol (rok 2023, mld. K\u010D)</b>",100), y = 0.96),
+                 text = str_wrap("<b>Graf 2b. Výdaje na  zaměstnance státu dle rozpo\u010Dtov\u00FDch kapitol (rok 2023, mld. K\u010D)</b>",100), y = 0.96),
     xaxis = c(kat_ticks_rotated,frame_x, list(title="<b>Kapitoly státního rozpočtu</b>",titlefont = axis_font,categoryorder = "array", categoryarray = arrange(bar_dt, desc(prostredky_na_platy_agg))$kap_name)),
     yaxis = c(num_ticks,frame_y,list(title = "<b>Platy (mld. Kč)</b>",titlefont = axis_font)),
     barmode = "stack",
@@ -596,7 +596,7 @@ graf_A3 <- bar_dt %>%
            xaxis = c(kat_ticks_rotated,frame_x,list("categoryorder" = "total ascending"),
                      titlefont = axis_font),
            title = list(font=title_font,
-                        text = str_wrap("<b>Graf 3b. Pr\u016Fm\u011Brn\u00E9 platy zaměstnanců státu ve vztahu k pr\u016Fm\u011Brn\u00E9 mzd\u011B v n\u00E1rodn\u00EDm hospod\u00E1\u0159stv\u00ED (2023)</b>",70),
+                        text = str_wrap("<b>Graf 3b. Pr\u016Fm\u011Brn\u00E9 platy zaměstnanců státu v poměru k průměrné mzdě v ekonomice (2023)</b>",70),
                         x = 50, y = 0.95), legend = list(x = 50, y = 0.5),
            showlegend = F
     ), keep = TRUE) %>%
@@ -934,7 +934,7 @@ graf_5 <- plot_ly(graf_5_dt,
     legend = legend_below,
     # annotations = c(list(text = str_wrap("<i>Pozn.: Reálné hrubé měsíční platy jsou uvedeny v cenách roku 2023.</i>",wrap_len),
     #                      font = pozn_font_small),annot_below),
-    title =list(text = "<b>Graf 5a. Průměrný plat státních úředníků v % průměrné mzdy v ekonomice (2004-2023)</b>",
+    title =list(text = "<b>Graf 5a. Průměrný plat státních úředníků v % průměrné mzdy v ekonomice</b>",
                 y =0.98,
                 font=title_font),
     xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font),
@@ -1086,7 +1086,7 @@ graf_6 <- plot_ly(graf_6_dt,
 ) %>%layout(
   shapes = list(hline(100)),
   title = list(font=title_font,
-               text = "<b>Graf 5b. Průměrný plat státních úředníků \n vůči průměrné mzdě v národním hospodářství (2004-2023)</b>"),
+               text = "<b>Graf 5b. Průměrné platy státních úředníků v poměru k průměrné mzdě v ekonomice</b>"),
   # annotations = c(annot_6,list(text = str_wrap("<i>Pozn.: Pro ministerstva a ostatní ústřední orgány použité hodnoty průměrné mzdy v Praze. V ostatních případech je jako reference použitý průměrný plat v národním hospodářství. Hodnota 100% znamená, že průměrný plat v kategorii je stejný jako průměrný plat v národním hospodářství.</i>",wrap_len),
   #                              font = pozn_font_small)),
   xaxis = c(num_ticks,frame_y,list(title = "<b>Rok</b>",titlefont = axis_font),

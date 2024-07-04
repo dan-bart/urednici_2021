@@ -102,20 +102,21 @@ details.top summary.top {
 }
 
 details.top summary.top:after {
-  content: ">";
+  font-family: "Font Awesome 5 Free";
+  content: "\f105";
   color: black;
   position: absolute;
-  font-size: 1.15rem;
+  font-size: 1rem;
   line-height: 0;
   margin-top: 0.75rem;
   right: 0;
-  font-weight: 200;
+  font-weight: 900;
   transform-origin: center;
   transition: 200ms linear;
 }
 details.top[open] summary.top:after {
   transform: rotate(90deg);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 details.top summary.top {
   outline: 0;
