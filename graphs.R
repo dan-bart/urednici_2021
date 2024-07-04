@@ -135,8 +135,12 @@ cols_df <- tibble(labels = names(color_map), color = unname(color_map)) |>
 colorspace::swatchplot(cols_df$color)
 
 chart_type <- function(title_y,
-                       label_bar = "Sloupce",label_line = "Trendy",
-                       max_bar,max_line,dtick = 10){
+                       title_y_share,
+                       label_bar,
+                       label_bar_share = "Sloupce (v %)",
+                       label_line = "Trendy",
+                       max_bar,max_bar_share=108,max_line,
+                       dtick = 10,dtick_share = 20){
   return(
     list(
       type = "buttons",
@@ -149,15 +153,29 @@ chart_type <- function(title_y,
         list(
           label = label_bar,
           method = "update",
-          args = list( list(visible = list(TRUE,TRUE,TRUE,FALSE,FALSE,FALSE)),
+          args = list( list(visible = list(TRUE,TRUE,TRUE,
+                                           FALSE,FALSE,FALSE,
+                                           FALSE,FALSE,FALSE)),
                        list( yaxis = c(num_ticks,frame_y,list(title = title_y,titlefont = axis_font,
                                                               dtick = dtick,range = c(0,max_bar)) ),
                              margin = list(t=50,b=100,r=20,l=70, autoexpand = TRUE))
           )),
         list(
+          label = label_bar_share,
+          method = "update",
+          args = list( list(visible = list(FALSE,FALSE,FALSE,
+                                           TRUE,TRUE,TRUE,
+                                           FALSE,FALSE,FALSE)),
+                       list( yaxis = c(num_ticks,frame_y,list(title = title_y_share,titlefont = axis_font,
+                                                              dtick = dtick_share,range = c(0,max_bar_share)) ),
+                             margin = list(t=50,b=100,r=20,l=70, autoexpand = TRUE))
+          )),
+        list(
           label = label_line,
           method = "update",
-          args = list( list(visible = list(FALSE,FALSE,FALSE,TRUE,TRUE,TRUE)),
+          args = list( list(visible = list(FALSE,FALSE,FALSE,
+                                           FALSE,FALSE,FALSE,
+                                           TRUE,TRUE,TRUE)),
                        list( yaxis = c(num_ticks,frame_y,list(title = title_y,titlefont = axis_font,
                                                               dtick = dtick,range = c(0,max_line)) ),
                              margin = list(t=50,b=100,r=20,l=70, autoexpand = TRUE))
@@ -671,6 +689,7 @@ graf_4 <- graf_4_dta_shares %>%
           hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text") %>%
   add_trace(x = ~as.character(rok), y = ~pocet_zamestnancu / 1000, type = 'bar') %>%
+  add_trace(x = ~as.character(rok), y = ~pocet_zamestnancu_share*100, type = 'bar') %>%
   add_trace(x = ~as.character(rok), y = ~pocet_zamestnancu / 1000, type = 'scatter',
             mode = "line", line = list(width = 7),
             marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3))) %>%
@@ -685,10 +704,13 @@ graf_4 <- graf_4_dta_shares %>%
                                           titlefont = axis_font,
                                           dtick = 10, range = c(0,68))),
          legend = legend_below, margin = mrg2,
-         updatemenus = list( chart_type("<b>Počet státních úředníků (v tisících)</b>",max_bar = 68,max_line = 55) )) %>%
+         updatemenus = list( chart_type(title_y = "<b>Počet státních úředníků (v tisících)</b>",
+                                        title_y_share = "<b>Podíl státních úředníků (v %)</b>",
+                                        label_bar = "Sloupce (v tisících)",
+                                        max_bar = 68,max_line = 55) )) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js) %>%
-  style(visible = FALSE, traces = 4:6)
+  style(visible = FALSE, traces = 4:9)
 
 graf_4
 
@@ -756,6 +778,7 @@ graf_A4 <- vyvoj_bar_shares %>%
           hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text") %>%
   add_trace(x = ~as.character(rok), y = ~prostredky_na_platy_nom / 1e9, type = 'bar') %>%
+  add_trace(x = ~as.character(rok), y = ~prostredky_na_platy_nom_share * 100, type = 'bar') %>%
   add_trace(x = ~as.character(rok), y = ~prostredky_na_platy_nom / 1e9, type = 'scatter',
             mode = "line", line = list(width = 7),
             marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3))) %>%
@@ -769,10 +792,14 @@ graf_A4 <- vyvoj_bar_shares %>%
          yaxis = c(num_ticks,frame_y,list(title = "<b>Výdaje na platy (v mld. Kč)</b>",titlefont = axis_font,
                                           dtick = 5, range = c(0,38))),
          legend = legend_below, margin = mrg2,
-         updatemenus = list( chart_type("<b>Výdaje na platy (v mld. Kč)</b>",max_bar = 38,max_line = 25,dtick = 5) )) %>%
+         updatemenus = list( chart_type(title_y = "<b>Výdaje na platy (v mld. Kč)</b>",
+                                        title_y_share = "<b>Výdaje na platy (v %)</b>",
+                                        label_bar = "Sloupce (v mld. Kč)",
+                                        max_bar = 38,max_line = 25,
+                                        dtick = 5) )) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js) %>%
-  style(visible = FALSE, traces = 4:6)
+  style(visible = FALSE, traces = 4:9)
 
 graf_A5 <- vyvoj_bar %>%
   plot_ly(
@@ -819,6 +846,7 @@ graf_A5 <- vyvoj_bar_shares %>%
           hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text") %>%
   add_trace(x = ~as.character(rok), y = ~prostredky_na_platy_real / 1e9, type = 'bar') %>%
+  add_trace(x = ~as.character(rok), y = ~prostredky_na_platy_real_share * 100, type = 'bar') %>%
   add_trace(x = ~as.character(rok), y = ~prostredky_na_platy_real / 1e9, type = 'scatter',
             mode = "line", line = list(width = 7),
             marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3))) %>%
@@ -832,7 +860,10 @@ graf_A5 <- vyvoj_bar_shares %>%
          yaxis = c(num_ticks,frame_y,list(title = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",titlefont = axis_font,
                                           dtick = 5)),
          legend = legend_below, margin = mrg2,
-         updatemenus = list( chart_type("<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",max_bar = 45,max_line = 32,dtick = 5) )) %>%
+         updatemenus = list( chart_type(title_y = "<b>Reálné výdaje na platy (v mld. Kč, ceny roku 2023)</b>",
+                                        title_y_share = "<b>Reálné výdaje na platy (v %)</b>",
+                                        label_bar = "Sloupce (v mld. Kč)",
+                                        max_bar = 45,max_line = 32,dtick = 5) )) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:6)
@@ -1573,6 +1604,7 @@ graf_A14 <- graf_A14_dta_shares %>%
           hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text") %>%
   add_trace(x = ~as.character(rok), y = ~pocet_zamestnancu / 1000, type = 'bar') %>%
+  add_trace(x = ~as.character(rok), y = ~pocet_zamestnancu_share * 100, type = 'bar') %>%
   add_trace(x = ~as.character(rok), y = ~pocet_zamestnancu / 1000, type = 'scatter',
             mode = "line", line = list(width = 7),
             marker = list(size=5,symbol="circle-dot",line = list(color="Black",width=3))) %>%
@@ -1587,7 +1619,10 @@ graf_A14 <- graf_A14_dta_shares %>%
                                           titlefont = axis_font,
                                           dtick = 10, range = c(0,86))),
          legend = legend_below, margin = mrg2,
-         updatemenus = list( chart_type("<b>Počet státních úředníků (v tisících)</b>",max_bar = 86,max_line = 55) )) %>%
+         updatemenus = list( chart_type(title_y = "<b>Počet státních úředníků (v tisících)</b>",
+                                        title_y_share = "<b>Podíl státních úředníků (v %)</b>",
+                                        label_bar = "Sloupce (v tisících)",
+                                        max_bar = 86,max_line = 55) )) %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:6)
