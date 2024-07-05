@@ -331,7 +331,8 @@ graf_A1 <- graf_A1 |>
     textfont = list(family = uni_font,size = 18,color = ~color_text),
     hovertemplate = ~ paste("<extra></extra>", " Kategorie: ",
                             labels, "<br>", " Rozpo\u010Det:",
-                            format(cost / 1e9, big.mark = " "), "mld. K\u010D", "<br>",
+                            format(round(cost / 1e9, digits = 2),
+                                   big.mark = " "), "mld. K\u010D", "<br>",
                             " Pod\u00EDl na zaměstnancích státu:", round(cost_perc * 100, 1), "%",
                             "<br>", " Pod\u00EDl na pracovní síle:",
                             round(count_perc_sila * 100,1), "%"),
@@ -735,7 +736,8 @@ vyvoj_bar <- dta %>%
 
 graf_A4 <- vyvoj_bar %>%
   plot_ly(
-    x = ~as.character(rok), y = ~ prostredky_na_platy_nom / 1e9, type = "bar",
+    x = ~as.character(rok), y = ~ round(prostredky_na_platy_nom / 1e9, digits = 2),
+    type = "bar",
     color = ~kategorie_2014_cz, colors = color_map,
     hovertemplate = ~ paste(
       "<extra></extra>", "Rok:", rok, "<br>", "Kategorie:", kategorie_2014_cz, "<br>",
@@ -773,9 +775,9 @@ graf_A4 <- vyvoj_bar_shares %>%
   plot_ly(color = ~kategorie_2014_cz, colors = color_map,
           hovertemplate = ~ paste0(
             "<extra></extra>", "Rok: ", rok, "<br>", "Kategorie: ", kategorie_2014_cz, "<br>",
-            "Rozpo\u010Det: ", format(prostredky_na_platy_nom, big.mark = " "), " K\u010D (",round(prostredky_na_platy_nom_share * 100,0)," %)",
+            "Výdaje na platy: ", format(round(prostredky_na_platy_nom/1e6, digits = 2), big.mark = " "), " mil. K\u010D (",round(prostredky_na_platy_nom_share * 100,0)," %)",
             "<br>",
-            "Celkem za rok: ", format(prostredky_na_platy_nom_agg, big.mark = " "), " K\u010D"
+            "Celkem za rok: ", format(round(prostredky_na_platy_nom_agg/1e6, digits = 2), big.mark = " "), " mil. K\u010D"
           ),
           hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text") %>%
@@ -802,6 +804,7 @@ graf_A4 <- vyvoj_bar_shares %>%
   config(modeBarButtonsToRemove = btnrm, displaylogo = FALSE,displayModeBar = TRUE) %>%
   onRender(js) %>%
   style(visible = FALSE, traces = 4:9)
+graf_A4
 
 graf_A5 <- vyvoj_bar %>%
   plot_ly(
@@ -810,11 +813,11 @@ graf_A5 <- vyvoj_bar %>%
     hovertemplate = ~ paste(
       "<extra></extra>", "Rok:", rok, "<br>", "Kategorie:",
       kategorie_2014_cz, "<br>",
-      "Rozpo\u010Det:", format(prostredky_na_platy_real, big.mark = " "),
-      "K\u010D",
+      "Výdaje na platy:", format(round(prostredky_na_platy_real/1e6, digits = 2), big.mark = " "),
+      " mil. K\u010D",
       "<br>",
-      "Celkem za rok: ", format(prostredky_na_platy_real_agg, big.mark = " "),
-      "K\u010D"
+      "Celkem za rok: ", format(round(prostredky_na_platy_real_agg/1e6, digits = 2), big.mark = " "),
+      " mil. K\u010D"
     ),
     hoverlabel = list(font = list(size=hover_size)),
     hoverinfo = "text"
@@ -841,9 +844,9 @@ graf_A5 <- vyvoj_bar_shares %>%
   plot_ly(color = ~kategorie_2014_cz, colors = color_map,
           hovertemplate = ~ paste0(
             "<extra></extra>", "Rok: ", rok, "<br>", "Kategorie: ", kategorie_2014_cz, "<br>",
-            "Rozpo\u010Det: ", format(prostredky_na_platy_real, big.mark = " "), " K\u010D (",round(prostredky_na_platy_real_share * 100,0)," %)",
+            "Výdaje na platy: ", format(round(prostredky_na_platy_real/1e6, digits = 2), big.mark = " "), " mil. K\u010D (",round(prostredky_na_platy_real_share * 100,0)," %)",
             "<br>",
-            "Celkem za rok: ", format(prostredky_na_platy_real_agg, big.mark = " "), " K\u010D"
+            "Celkem za rok: ", format(round(prostredky_na_platy_real_agg/1e6, digits = 2), big.mark = " "), " mil. K\u010D"
           ),
           hoverlabel = list(font=list(size=hover_size,family=uni_font)),
           hoverinfo = "text") %>%
