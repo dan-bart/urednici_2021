@@ -171,3 +171,25 @@ box-shadow:0 0 0 0rem rgba(201,2,57,.25)
 hr {
 border-top: 5px solid #c90239 !important;
 }
+
+#scrollToNextBtn {
+display: block; /* Hidden by default */
+position: fixed; /* Fixed position */
+bottom: 20px; /* 20px from the bottom */
+right: 40%;
+z-index: 99; /* Make sure it does not overlap */
+border: 1px solid rgba(0, 0, 0, .1);
+outline: none; /* Remove outline */
+background-color: #fff;
+color: #c90239;
+cursor: pointer; /* Add a mouse pointer on hover */
+padding: 4px 8px;
+padding-top: 0px;
+border-radius: 25px;
+font-size: 20px !important;
+}
+
+
+#scrollToNextBtn:hover {
+background-color: #f0f0f0; /* Darker background on hover */
+}
