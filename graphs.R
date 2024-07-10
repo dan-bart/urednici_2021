@@ -255,8 +255,10 @@ to_append = tribble(
 tree_data <- bind_rows(aux, to_append)
 
 pracovni_sila <- 5194800
+state_budget <- 2202.6*1e9
 
 tree_data <- tree_data %>% mutate("cost_perc" = cost/sum(cost[which(tree_data$parents == "")]),
+                                  "cost_perc_budget" = cost/state_budget,
                                   "count_perc" = count/sum(count[which(tree_data$parents  == "")]),
                                   "count_perc_sila" = count/pracovni_sila,
                                   labels = as.character(labels))
@@ -313,6 +315,7 @@ graf_A1 <- rbind(graf_A1,data.frame(labels = root_label,
                                     cost = sum(graf_A1$cost[graf_A1$parents==root_label]),
                                     count = sum(graf_A1$count[graf_A1$parents==root_label]),
                                     cost_perc = sum(graf_A1$cost_perc[graf_A1$parents==root_label]),
+                                    cost_perc_budget = sum(graf_A1$cost_perc_budget[graf_A1$parents==root_label]),
                                     count_perc = sum(graf_A1$count_perc[graf_A1$parents==root_label]),
                                     count_perc_sila = sum(graf_A1$count_perc_sila[graf_A1$parents==root_label]),
                                     color = root_color,
@@ -333,9 +336,9 @@ graf_A1 <- graf_A1 |>
                             labels, "<br>", " Rozpo\u010Det:",
                             format(round(cost / 1e9, digits = 2),
                                    big.mark = " "), "mld. K\u010D", "<br>",
-                            " Pod\u00EDl na zaměstnancích státu:", round(cost_perc * 100, 1), "%",
-                            "<br>", " Pod\u00EDl na pracovní síle:",
-                            round(count_perc_sila * 100,1), "%"),
+                            " Podíl na celkových výdajích na platy:", round(cost_perc * 100, 1), "%",
+                            "<br>", " Podíl na výdajích státního rozpočtu:",
+                            round(cost_perc_budget * 100,1), "%"),
     hoverlabel = list(font = list(size = hover_size, color = ~color_text)),
     domain = list(column = 0)
   ) %>%
@@ -371,6 +374,7 @@ graf_1 <- rbind(graf_1,data.frame(labels = root_label,
                                   cost = sum(graf_1$cost[graf_1$parents==root_label]),
                                   count = sum(graf_1$count[graf_1$parents==root_label]),
                                   cost_perc = sum(graf_1$cost_perc[graf_1$parents==root_label]),
+                                  cost_perc_budget = sum(graf_1$cost_perc_budget[graf_1$parents==root_label]),
                                   count_perc = sum(graf_1$count_perc[graf_1$parents==root_label]),
                                   count_perc_sila = sum(graf_1$count_perc_sila[graf_1$parents==root_label]),
                                   color = root_color,
