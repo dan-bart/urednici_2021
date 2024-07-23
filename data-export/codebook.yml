@@ -7,7 +7,7 @@ locale: en
 table:
   name: tabulka
   _columns: 35
-  _rows: 13692.0
+  _rows: 1.3692e+04
   _type: tbl_df
   info: Pokud není uvedeno jinak, zdrojem jsou data MF odpovídající Státnímu závěrečnému
     účtu
