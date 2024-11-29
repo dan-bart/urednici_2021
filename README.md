@@ -29,6 +29,16 @@ Exportována v CSV a parquet do adresáře `data-export`, spolu s codebookem
 
 Názvy sloupců v exportech jsou upraveny pro srozumitelnost, neodpovídají názvům v kódu. Rozdíly lze odvodit ze skriptu `export_data.R`.
 
+### Data o platech z ČSÚ
+
+Toto je poznámka for posterity
+
+- datová sada ČSÚ 110080, kterou ČSÚ publikuje v otevřených datech vychází ze šetření struktury výdělků
+- oproti tomu čísla ve VDB pochází *většinou* z firemních výkazů
+- průměrné platy dle VDB jsou o cca 5 % nižší
+- ve VDB jsou ale místy i výstupy ze strukturálních statistik - pozná se to tak, že tam je jiný výstup než průměr (medián), např. MZD11/13 <https://vdb.czso.cz/vdbvo2/faces/cs/index.jsf?page=vystup-objekt&pvo=MZD11&z=T&f=TABULKA&katalog=30852&str=v377&c=v3~8__RP2023>, ty potom lícují přesně s čísly v open datové sadě
+- viz k tomu [dokumentaci dat od ČSÚ](https://csu.gov.cz/docs/107508/a54c8df8-eeb1-b403-5382-951daf59ab43/110080-22dds.docx?version=1.0)
+
 ## Reprodukování výstupů a dat
 
 ```r
